@@ -9,11 +9,9 @@
 /* Begin PBXBuildFile section */
 		E9CAE93B2D0FCBEA00529743 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = E9CAE93A2D0FCBEA00529743 /* SnapKit */; };
 		E9CAE93E2D0FCBFA00529743 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = E9CAE93D2D0FCBFA00529743 /* Alamofire */; };
-		E9CAEA712D0FED8700529743 /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = E9CAEA702D0FED8700529743 /* Config.xcconfig */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		E9CAEA702D0FED8700529743 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Config.xcconfig; path = "nbc-kickboard/App/Config.xcconfig"; sourceTree = "<group>"; };
 		E9D667812D0C1665001054D5 /* nbc-kickboard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "nbc-kickboard.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -21,6 +19,7 @@
 		E9D667962D0C1666001054D5 /* Exceptions for "nbc-kickboard" folder in "nbc-kickboard" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				App/Config.xcconfig,
 				App/Info.plist,
 			);
 			target = E9D667802D0C1665001054D5 /* nbc-kickboard */;
@@ -54,7 +53,6 @@
 		E9D667782D0C1665001054D5 = {
 			isa = PBXGroup;
 			children = (
-				E9CAEA702D0FED8700529743 /* Config.xcconfig */,
 				E9D667832D0C1665001054D5 /* nbc-kickboard */,
 				E9D667822D0C1665001054D5 /* Products */,
 			);
@@ -103,7 +101,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1610;
-				LastUpgradeCheck = 1610;
+				LastUpgradeCheck = 1620;
 				TargetAttributes = {
 					E9D667802D0C1665001054D5 = {
 						CreatedOnToolsVersion = 16.1;
@@ -138,7 +136,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E9CAEA712D0FED8700529743 /* Config.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
