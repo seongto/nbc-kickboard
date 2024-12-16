@@ -9,9 +9,11 @@
 /* Begin PBXBuildFile section */
 		E9CAE93B2D0FCBEA00529743 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = E9CAE93A2D0FCBEA00529743 /* SnapKit */; };
 		E9CAE93E2D0FCBFA00529743 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = E9CAE93D2D0FCBFA00529743 /* Alamofire */; };
+		E9CAEA712D0FED8700529743 /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = E9CAEA702D0FED8700529743 /* Config.xcconfig */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E9CAEA702D0FED8700529743 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Config.xcconfig; path = "nbc-kickboard/App/Config.xcconfig"; sourceTree = "<group>"; };
 		E9D667812D0C1665001054D5 /* nbc-kickboard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "nbc-kickboard.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -52,6 +54,7 @@
 		E9D667782D0C1665001054D5 = {
 			isa = PBXGroup;
 			children = (
+				E9CAEA702D0FED8700529743 /* Config.xcconfig */,
 				E9D667832D0C1665001054D5 /* nbc-kickboard */,
 				E9D667822D0C1665001054D5 /* Products */,
 			);
@@ -135,6 +138,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E9CAEA712D0FED8700529743 /* Config.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -156,8 +160,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = NJT372RG3U;
+				DEV_TEAM = "**$(DEVELOPMENT_TEAM_ID)**";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "nbc-kickboard/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -172,6 +179,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.thinkbetter.nbc-kickboard";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -187,8 +195,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = NJT372RG3U;
+				DEV_TEAM = "**$(DEVELOPMENT_TEAM_ID)**";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "nbc-kickboard/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -203,6 +214,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.thinkbetter.nbc-kickboard";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;

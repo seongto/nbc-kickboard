@@ -1,0 +1,12 @@
+//
+//  Config.xcconfig
+//  nbc-kickboard
+//
+//  Created by MaxBook on 12/16/24.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+
+DEV_TEAM_ID = "NJT372RG3U"
