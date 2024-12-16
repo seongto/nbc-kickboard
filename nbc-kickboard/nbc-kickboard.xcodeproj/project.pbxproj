@@ -6,6 +6,11 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		E9CAE93B2D0FCBEA00529743 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = E9CAE93A2D0FCBEA00529743 /* SnapKit */; };
+		E9CAE93E2D0FCBFA00529743 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = E9CAE93D2D0FCBFA00529743 /* Alamofire */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		E9D667812D0C1665001054D5 /* nbc-kickboard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "nbc-kickboard.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -14,7 +19,7 @@
 		E9D667962D0C1666001054D5 /* Exceptions for "nbc-kickboard" folder in "nbc-kickboard" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Info.plist,
+				App/Info.plist,
 			);
 			target = E9D667802D0C1665001054D5 /* nbc-kickboard */;
 		};
@@ -36,6 +41,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E9CAE93B2D0FCBEA00529743 /* SnapKit in Frameworks */,
+				E9CAE93E2D0FCBFA00529743 /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,6 +85,8 @@
 			);
 			name = "nbc-kickboard";
 			packageProductDependencies = (
+				E9CAE93A2D0FCBEA00529743 /* SnapKit */,
+				E9CAE93D2D0FCBFA00529743 /* Alamofire */,
 			);
 			productName = "nbc-kickboard";
 			productReference = E9D667812D0C1665001054D5 /* nbc-kickboard.app */;
@@ -107,6 +116,10 @@
 			);
 			mainGroup = E9D667782D0C1665001054D5;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				E9CAE9392D0FCBEA00529743 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				E9CAE93C2D0FCBFA00529743 /* XCRemoteSwiftPackageReference "Alamofire" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = E9D667822D0C1665001054D5 /* Products */;
 			projectDirPath = "";
@@ -341,6 +354,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		E9CAE9392D0FCBEA00529743 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.7.1;
+			};
+		};
+		E9CAE93C2D0FCBFA00529743 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.10.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		E9CAE93A2D0FCBEA00529743 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E9CAE9392D0FCBEA00529743 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+		E9CAE93D2D0FCBFA00529743 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E9CAE93C2D0FCBFA00529743 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = E9D667792D0C1665001054D5 /* Project object */;
 }
