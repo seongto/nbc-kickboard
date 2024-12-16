@@ -19,7 +19,6 @@
 		E9D667962D0C1666001054D5 /* Exceptions for "nbc-kickboard" folder in "nbc-kickboard" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				App/Config.xcconfig,
 				App/Info.plist,
 			);
 			target = E9D667802D0C1665001054D5 /* nbc-kickboard */;

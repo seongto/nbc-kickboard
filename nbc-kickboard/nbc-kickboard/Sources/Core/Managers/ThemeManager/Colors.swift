@@ -7,7 +7,7 @@ import UIKit
 
 
 struct Colors {
-    // 기본적용 색상값
+    // MARK: - 기본적용 색상값
     
     // 라이트에서 화이트, 다크에서 블랙
     static let label: UIColor = UIColor.label
@@ -33,5 +33,13 @@ struct Colors {
     static let green: UIColor = UIColor.systemGreen
     static let orange: UIColor = UIColor.systemOrange
     static let mint: UIColor = UIColor.systemMint
+    
+    
+    // MARK: - 피그마 디자인 커스텀 색상
+    
+    static let main: UIColor = UIColor.colorMain
+    static let sub1: UIColor = UIColor.colorSub1
+    static let sub2: UIColor = UIColor.colorSub2
+    static let placeHolder: UIColor = UIColor.placeholderText
 
 }
