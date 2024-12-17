@@ -12,6 +12,10 @@ xcuserdata/**/*
 project.xcworkspace/
 .env
 KakaoAPIKey.swift
+Config.xcconfig
+
+.env
+KakaoAPIKey.swift
 
 .DS_Store
 .Trashes

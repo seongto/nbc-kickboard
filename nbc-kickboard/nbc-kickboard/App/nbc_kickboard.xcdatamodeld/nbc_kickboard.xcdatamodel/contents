@@ -1,4 +1,29 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1" systemVersion="11A491" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="false" userDefinedModelVersionIdentifier="">
-    <elements/>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="23605" systemVersion="24A348" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="HistoryEntity" representedClassName="HistoryEntity" syncable="YES">
+        <attribute name="cost" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="rentDate" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="totalRentTime" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="kickboard" maxCount="1" deletionRule="Nullify" destinationEntity="KickboardEntity" inverseName="histories" inverseEntity="KickboardEntity"/>
+        <relationship name="user" maxCount="1" deletionRule="Nullify" destinationEntity="UserEntity" inverseName="histories" inverseEntity="UserEntity"/>
+    </entity>
+    <entity name="KickboardEntity" representedClassName="KickboardEntity" syncable="YES">
+        <attribute name="batteryStatus" attributeType="Integer 16" minValueString="0" maxValueString="100" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="isRented" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="kickboardCode" attributeType="String"/>
+        <attribute name="latitude" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="longitude" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <relationship name="histories" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="HistoryEntity" inverseName="kickboard" inverseEntity="HistoryEntity"/>
+        <relationship name="kickboardType" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="KickboardTypeEntity" inverseName="kickboards" inverseEntity="KickboardTypeEntity"/>
+    </entity>
+    <entity name="KickboardTypeEntity" representedClassName="KickboardTypeEntity" syncable="YES">
+        <attribute name="typeName" attributeType="String"/>
+        <relationship name="kickboards" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="KickboardEntity" inverseName="kickboardType" inverseEntity="KickboardEntity"/>
+    </entity>
+    <entity name="UserEntity" representedClassName="UserEntity" syncable="YES">
+        <attribute name="isAdmin" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="password" attributeType="String"/>
+        <attribute name="username" attributeType="String"/>
+        <relationship name="histories" toMany="YES" deletionRule="Cascade" destinationEntity="HistoryEntity" inverseName="user" inverseEntity="HistoryEntity"/>
+    </entity>
 </model>
