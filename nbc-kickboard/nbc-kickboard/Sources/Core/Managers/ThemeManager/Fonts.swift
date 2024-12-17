@@ -24,7 +24,7 @@ struct Fonts {
     static let h3 = UIFont.systemFont(ofSize: 20, weight: .regular)
     static let h3Bold = UIFont.systemFont(ofSize: 20, weight: .heavy)
     
-    static let p = UIFont.systemFont(ofSize: 17, weight: .regular)
+    static let regular = UIFont.systemFont(ofSize: 17, weight: .regular)
     static let bold = UIFont.systemFont(ofSize: 17, weight: .bold)
     static let small = UIFont.systemFont(ofSize: 15, weight: .regular)
     static let caption = UIFont.systemFont(ofSize: 12, weight: .regular)

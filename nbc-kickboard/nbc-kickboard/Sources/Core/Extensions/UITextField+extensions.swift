@@ -16,7 +16,7 @@ extension UITextField {
         self.placeholder = placeholder
         
         self.textColor = Colors.label
-        self.font = Fonts.p
+        self.font = Fonts.body
         
         self.snp.makeConstraints { make in
             make.height.equalTo(50)
