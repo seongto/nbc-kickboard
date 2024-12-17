@@ -19,7 +19,7 @@ final class KickboardStatusView: UIView {
     
     private let kickboardTypeImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(resource: .kickboardPower)
+        imageView.image = UIImage(resource: .kickboardPowerWithBorder)
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
