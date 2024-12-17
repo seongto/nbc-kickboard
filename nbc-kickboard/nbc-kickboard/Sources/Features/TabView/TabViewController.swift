@@ -39,8 +39,7 @@ final class CustomTabBarController: UIViewController {
     private func setupViewControllers() {
         customTabBar
             .tabBarItems
-            .enumerated()
-            .forEach { index, item in
+            .forEach { item in
                 let vc: UIViewController
                 
                 switch item {
