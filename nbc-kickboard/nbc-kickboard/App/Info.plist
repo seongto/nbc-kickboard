@@ -8,6 +8,8 @@
 		<string>paybooc OTF Medium.otf</string>
 		<string>paybooc OTF Bold.otf</string>
 	</array>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>We need your location to show nearby places and directions</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
