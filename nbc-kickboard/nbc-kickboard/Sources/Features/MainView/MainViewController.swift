@@ -4,7 +4,7 @@ import CoreLocation
 import SnapKit
 import CoreData
 
-class MapViewController: UIViewController {
+class MainViewController: UIViewController {
     private let locationManager = CLLocationManager()
     private var kickboards: [Kickboard] = []
     private var currentRoute: MKRoute?
@@ -244,7 +244,7 @@ class MapViewController: UIViewController {
 
 
 // MARK: - CLLocationManagerDelegate = 현재 사용자 위치 수집하기 위한 위임자
-extension MapViewController: CLLocationManagerDelegate {
+extension MainViewController: CLLocationManagerDelegate {
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         switch manager.authorizationStatus {
         case .authorizedWhenInUse, .authorizedAlways:
@@ -263,7 +263,7 @@ extension MapViewController: CLLocationManagerDelegate {
 
 
 // MARK: - MKMapViewDelegate
-extension MapViewController: MKMapViewDelegate {
+extension MainViewController: MKMapViewDelegate {
     /// 마커 디자인 관련 정의 메서드
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         if annotation is MKUserLocation {
@@ -366,5 +366,5 @@ extension MKPolyline {
 
 @available(iOS 17, *)
 #Preview {
-    MapViewController()
+    MainViewController()
 }
