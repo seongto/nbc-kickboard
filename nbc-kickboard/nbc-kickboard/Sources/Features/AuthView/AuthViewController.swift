@@ -39,6 +39,10 @@ class AuthViewController: UIViewController {
         view = loginView
         setupUI()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.setNavigationBarHidden(true, animated: true)
+    }
 }
 
 
@@ -50,7 +54,16 @@ extension AuthViewController {
     }
 }
 
+
+// MARK: - Navigation Controll
+
+extension AuthViewController {
+    
+}
+
+
 @available(iOS 17.0, *)
 #Preview {
     AuthViewController()
 }
+
