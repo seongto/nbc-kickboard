@@ -9,16 +9,25 @@ import UIKit
 import SnapKit
 
 
+enum AuthViewSelector {
+    case login
+    case signup
+}
+
 class AuthViewController: UIViewController {
     // MARK: - Properties
     
     let loginView = LoginView()
     let signupView = SignupView()
     
+    let currentView: AuthViewSelector
+    let testRepo: UserEntityRepository
     
     // MARK: - init & Life cycles
     
     init() {
+        self.currentView = .login
+        self.testRepo = UserEntityRepository()
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -31,6 +40,9 @@ class AuthViewController: UIViewController {
         
         view = loginView
         setupUI()
+        
+        testRepo.createUser(username: "MaxBook", password: "123456", isAdmin: true)
+        testRepo.softDeleteUser(user: UserEntity())
     }
 }
 
