@@ -8,24 +8,25 @@
 import UIKit
 
 enum FontName: String {
-    case payboocBold = "Paybooc-Bold"
-    case payboocMedium = "Paybooc-Medium"
+    case payboocBold = "paybooc OTF Bold"
+    case payboocMedium = "paybooc OTF Medium"
+    case payboocLight = "paybooc Light"
 }
 
 extension UIFont {
     static func paybooc(ofSize fontSize: CGFloat, weight: UIFont.Weight) -> UIFont {
-            let familyName = "Paybooc"
-            var weightString: String
-        
-            switch weight {
-            case .bold:
-                weightString = "Bold"
-            case .medium:
-                weightString = "Medium"
-            default:
-                weightString = "Regular"
-            }
-
-            return UIFont(name: "\(familyName)-\(weightString)", size: fontSize) ?? .systemFont(ofSize: fontSize, weight: weight)
+        let familyName = "paybooc OTF"
+        var weightString: String
+    
+        switch weight {
+        case .bold:
+            weightString = "Bold"
+        default:
+            weightString = "Medium"
         }
+
+        print("font information")
+        print("\(familyName) \(weightString)")
+        return UIFont(name: "\(familyName) \(weightString)", size: fontSize) ?? .systemFont(ofSize: fontSize, weight: .bold)
+    }
 }

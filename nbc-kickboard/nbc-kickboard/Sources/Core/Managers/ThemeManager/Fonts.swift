@@ -36,7 +36,7 @@ struct Fonts {
     static let headlineBold = UIFont.paybooc(ofSize: 26, weight: .bold)
     
     static let subtitle = UIFont.paybooc(ofSize: 20, weight: .medium)
-    static let suttitleBold = UIFont.paybooc(ofSize: 20, weight: .bold)
+    static let subtitleBold = UIFont.paybooc(ofSize: 20, weight: .bold)
     
     static let body = UIFont.paybooc(ofSize: 16, weight: .medium)
     static let bodyBold = UIFont.paybooc(ofSize: 16, weight: .bold)
