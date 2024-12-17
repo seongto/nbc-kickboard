@@ -9,16 +9,23 @@ import UIKit
 import SnapKit
 
 
+enum AuthViewSelector {
+    case login
+    case signup
+}
+
 class AuthViewController: UIViewController {
     // MARK: - Properties
     
     let loginView = LoginView()
     let signupView = SignupView()
     
+    let currentView: AuthViewSelector
     
     // MARK: - init & Life cycles
     
     init() {
+        self.currentView = .login
         super.init(nibName: nil, bundle: nil)
     }
     
