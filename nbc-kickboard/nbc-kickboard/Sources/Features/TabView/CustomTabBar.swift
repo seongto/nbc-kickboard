@@ -97,6 +97,14 @@ final class CustomTabBar: UIView {
                 tabBarButtons.append(button)
                 contentStackView.addArrangedSubview(button)
             }
+        
+        let topBorder = CALayer()
+        topBorder.frame = CGRect(x: 0.0,
+                                 y: 0.0,
+                                 width: UIScreen.main.bounds.width ,
+                                 height: 1.0)
+        topBorder.backgroundColor = UIColor.lightGray.cgColor
+        layer.addSublayer(topBorder)
     }
     
     private func setupConstraints() {
