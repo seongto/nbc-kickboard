@@ -10,7 +10,7 @@ import SnapKit
 
 
 extension UITextField {
-    func applyInputBoxStyle() {
+    func applyInputBoxStyle(placeholder: String) {
         self.backgroundColor = Colors.gray6.withAlphaComponent(0.3)
         self.borderStyle = .roundedRect
         self.placeholder = placeholder
@@ -18,8 +18,10 @@ extension UITextField {
         self.textColor = Colors.label
         self.font = Fonts.body
         
-        self.snp.makeConstraints { make in
-            make.height.equalTo(50)
+        self.snp.makeConstraints {
+            $0.height.equalTo(50)
         }
     }
+    
+    
 }
