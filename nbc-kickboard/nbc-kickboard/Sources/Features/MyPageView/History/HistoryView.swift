@@ -36,6 +36,8 @@ final class HistoryView: UIView {
     }
     
     private func configureUI() {
+        backgroundColor = .systemBackground
+        
         [
             tableView
         ].forEach { addSubview($0) }

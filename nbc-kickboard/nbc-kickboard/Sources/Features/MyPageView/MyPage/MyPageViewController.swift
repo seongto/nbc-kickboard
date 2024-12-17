@@ -15,15 +15,10 @@ final class MyPageViewController: UIViewController {
         super.viewDidLoad()
         view = myPageView
         configureDelegate()
-        configureUI()
     }
     
     func configureDelegate() {
         myPageView.delegate = self
-    }
-    
-    func configureUI() {
-        view.backgroundColor = .systemBackground
     }
 }
 
