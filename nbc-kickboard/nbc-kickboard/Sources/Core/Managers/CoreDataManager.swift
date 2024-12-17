@@ -10,18 +10,19 @@ import CoreData
 class CoreDataManager {
     static let shared = CoreDataManager()
     
-    lazy var persistentContainer: NSPersistentContainer = {
-        let container = NSPersistentContainer(name: "nbc_kickboard")
-        container.loadPersistentStores { description, error in
+    let persistentContainer: NSPersistentContainer
+    
+    var context: NSManagedObjectContext {
+        return persistentContainer.viewContext
+    }
+    
+    private init() {
+        persistentContainer = NSPersistentContainer(name: "nbc_kickboard")
+        persistentContainer.loadPersistentStores { _, error in
             if let error = error {
                 fatalError("Unable to load persistent stores: \(error)")
             }
         }
-        return container
-    }()
-    
-    var context: NSManagedObjectContext {
-        return persistentContainer.viewContext
     }
     
     func saveContext() {
