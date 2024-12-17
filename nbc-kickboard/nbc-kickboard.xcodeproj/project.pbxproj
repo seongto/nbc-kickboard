@@ -11,7 +11,18 @@
 		E9CAE93E2D0FCBFA00529743 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = E9CAE93D2D0FCBFA00529743 /* Alamofire */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		607ED97C2D11505E0058EA60 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E9D667792D0C1665001054D5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E9D667802D0C1665001054D5;
+			remoteInfo = "nbc-kickboard";
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		607ED9782D11505E0058EA60 /* nbc-kickboardTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "nbc-kickboardTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E9D667812D0C1665001054D5 /* nbc-kickboard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "nbc-kickboard.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -26,6 +37,11 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		607ED9792D11505E0058EA60 /* nbc-kickboardTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "nbc-kickboardTests";
+			sourceTree = "<group>";
+		};
 		E9D667832D0C1665001054D5 /* nbc-kickboard */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
@@ -37,6 +53,13 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		607ED9752D11505E0058EA60 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E9D6677E2D0C1665001054D5 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -53,6 +76,7 @@
 			isa = PBXGroup;
 			children = (
 				E9D667832D0C1665001054D5 /* nbc-kickboard */,
+				607ED9792D11505E0058EA60 /* nbc-kickboardTests */,
 				E9D667822D0C1665001054D5 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -61,6 +85,7 @@
 			isa = PBXGroup;
 			children = (
 				E9D667812D0C1665001054D5 /* nbc-kickboard.app */,
+				607ED9782D11505E0058EA60 /* nbc-kickboardTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -68,6 +93,29 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		607ED9772D11505E0058EA60 /* nbc-kickboardTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 607ED97E2D11505E0058EA60 /* Build configuration list for PBXNativeTarget "nbc-kickboardTests" */;
+			buildPhases = (
+				607ED9742D11505E0058EA60 /* Sources */,
+				607ED9752D11505E0058EA60 /* Frameworks */,
+				607ED9762D11505E0058EA60 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				607ED97D2D11505E0058EA60 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				607ED9792D11505E0058EA60 /* nbc-kickboardTests */,
+			);
+			name = "nbc-kickboardTests";
+			packageProductDependencies = (
+			);
+			productName = "nbc-kickboardTests";
+			productReference = 607ED9782D11505E0058EA60 /* nbc-kickboardTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		E9D667802D0C1665001054D5 /* nbc-kickboard */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = E9D667972D0C1666001054D5 /* Build configuration list for PBXNativeTarget "nbc-kickboard" */;
@@ -99,9 +147,13 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1610;
+				LastSwiftUpdateCheck = 1620;
 				LastUpgradeCheck = 1620;
 				TargetAttributes = {
+					607ED9772D11505E0058EA60 = {
+						CreatedOnToolsVersion = 16.2;
+						TestTargetID = E9D667802D0C1665001054D5;
+					};
 					E9D667802D0C1665001054D5 = {
 						CreatedOnToolsVersion = 16.1;
 					};
@@ -126,11 +178,19 @@
 			projectRoot = "";
 			targets = (
 				E9D667802D0C1665001054D5 /* nbc-kickboard */,
+				607ED9772D11505E0058EA60 /* nbc-kickboardTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		607ED9762D11505E0058EA60 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E9D6677F2D0C1665001054D5 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -141,6 +201,13 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		607ED9742D11505E0058EA60 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E9D6677D2D0C1665001054D5 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -150,7 +217,53 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		607ED97D2D11505E0058EA60 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E9D667802D0C1665001054D5 /* nbc-kickboard */;
+			targetProxy = 607ED97C2D11505E0058EA60 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		607ED97F2D11505E0058EA60 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = MV89SHQKF4;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.ericKwon.nbc-kickboardTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/nbc-kickboard.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/nbc-kickboard";
+			};
+			name = Debug;
+		};
+		607ED9802D11505E0058EA60 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = MV89SHQKF4;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.ericKwon.nbc-kickboardTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/nbc-kickboard.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/nbc-kickboard";
+			};
+			name = Release;
+		};
 		E9D667982D0C1666001054D5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -343,6 +456,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		607ED97E2D11505E0058EA60 /* Build configuration list for PBXNativeTarget "nbc-kickboardTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				607ED97F2D11505E0058EA60 /* Debug */,
+				607ED9802D11505E0058EA60 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		E9D6677C2D0C1665001054D5 /* Build configuration list for PBXProject "nbc-kickboard" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
