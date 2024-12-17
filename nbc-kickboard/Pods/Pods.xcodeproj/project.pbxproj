@@ -1,0 +1,514 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXAggregateTarget section */
+		985ED89472B93FB310ED5E4DE7CE1E2D /* KakaoMapsSDK */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 693D602A8BD8A2EE4C13C432BDE93DB0 /* Build configuration list for PBXAggregateTarget "KakaoMapsSDK" */;
+			buildPhases = (
+				073C38C133623D002C7A8970845DB3EE /* [CP] Copy XCFrameworks */,
+			);
+			dependencies = (
+			);
+			name = KakaoMapsSDK;
+		};
+/* End PBXAggregateTarget section */
+
+/* Begin PBXBuildFile section */
+		143B24ADAA6E0B4598D69751D9BD80DE /* Pods-nbc-kickboard-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 9056104CF31BB53EBD923987C2121A6E /* Pods-nbc-kickboard-umbrella.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		2EF55AA0D62D9C3EFB6C49C4F4DDCF55 /* Pods-nbc-kickboard-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = A351B180C21068DA67D6861D98468DC6 /* Pods-nbc-kickboard-dummy.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		5CCAACCA8A4E4278C6A8EB408B048B8F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 985ED89472B93FB310ED5E4DE7CE1E2D;
+			remoteInfo = KakaoMapsSDK;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		05840A00684AFAFDE693EF434D95EAC5 /* Pods-nbc-kickboard-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-nbc-kickboard-acknowledgements.plist"; sourceTree = "<group>"; };
+		0D13DBCDCD0BCA103A0A53FCC5D9AFEF /* KakaoMapsSDK.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; path = KakaoMapsSDK.xcframework; sourceTree = "<group>"; };
+		15553E84935FD169843456203CFD34E0 /* Pods-nbc-kickboard */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "Pods-nbc-kickboard"; path = "libPods-nbc-kickboard.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4B102171C2BCE5440483225DD2E9EDC7 /* KakaoMapsSDK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = KakaoMapsSDK.debug.xcconfig; sourceTree = "<group>"; };
+		5F3E1E35BE577547E434B5DED2628893 /* KakaoMapsSDK-xcframeworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "KakaoMapsSDK-xcframeworks.sh"; sourceTree = "<group>"; };
+		6883B83869A1685A88BDA4582CA6CDF1 /* Pods-nbc-kickboard.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-nbc-kickboard.modulemap"; sourceTree = "<group>"; };
+		72B8073CCDBA285F30804BE4C9E7C5D0 /* Pods-nbc-kickboard-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-nbc-kickboard-resources.sh"; sourceTree = "<group>"; };
+		7BD8A914A20D5D117D02C3416B2F70EC /* KakaoMapsSDK.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = KakaoMapsSDK.release.xcconfig; sourceTree = "<group>"; };
+		9056104CF31BB53EBD923987C2121A6E /* Pods-nbc-kickboard-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-nbc-kickboard-umbrella.h"; sourceTree = "<group>"; };
+		90D691CC76992112C1CA224D7B19F584 /* Pods-nbc-kickboard.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-nbc-kickboard.debug.xcconfig"; sourceTree = "<group>"; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		A351B180C21068DA67D6861D98468DC6 /* Pods-nbc-kickboard-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-nbc-kickboard-dummy.m"; sourceTree = "<group>"; };
+		B30976A9C77CF5A408D575588EAD4F63 /* KakaoMapsSDKBundle.bundle */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "wrapper.plug-in"; path = KakaoMapsSDKBundle.bundle; sourceTree = "<group>"; };
+		B5B50F22919E241A8DD8FF9F330591CB /* Pods-nbc-kickboard-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-nbc-kickboard-frameworks.sh"; sourceTree = "<group>"; };
+		D298D2D3D1C7F3C16280F9B41A2A5828 /* Pods-nbc-kickboard.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-nbc-kickboard.release.xcconfig"; sourceTree = "<group>"; };
+		E75E155D2EE4FFE927612FB2BC78B40E /* Pods-nbc-kickboard-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-nbc-kickboard-acknowledgements.markdown"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		86230FB8D95C9884779D8CF8911B1647 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0B306C64DDF8C1FCAE40C4532E581C94 /* KakaoMapsSDK */ = {
+			isa = PBXGroup;
+			children = (
+				3A5933AA89E5EB256F926B5B2DB24E2F /* Frameworks */,
+				CF76BA71EB27D4D7D262E40C63BD9355 /* Resources */,
+				E9FCA6905C6CA97B331E7FF27D7966C0 /* Support Files */,
+			);
+			name = KakaoMapsSDK;
+			path = KakaoMapsSDK;
+			sourceTree = "<group>";
+		};
+		1757382E4A9E9F4203B268FDC847B9C7 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				15553E84935FD169843456203CFD34E0 /* Pods-nbc-kickboard */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		221726DEB03FAC010D6D1DB0AA14A1F7 /* Targets Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				7C7FB8409164CBED43B9B5ADEF18F338 /* Pods-nbc-kickboard */,
+			);
+			name = "Targets Support Files";
+			sourceTree = "<group>";
+		};
+		3A5933AA89E5EB256F926B5B2DB24E2F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				0D13DBCDCD0BCA103A0A53FCC5D9AFEF /* KakaoMapsSDK.xcframework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		7C7FB8409164CBED43B9B5ADEF18F338 /* Pods-nbc-kickboard */ = {
+			isa = PBXGroup;
+			children = (
+				6883B83869A1685A88BDA4582CA6CDF1 /* Pods-nbc-kickboard.modulemap */,
+				E75E155D2EE4FFE927612FB2BC78B40E /* Pods-nbc-kickboard-acknowledgements.markdown */,
+				05840A00684AFAFDE693EF434D95EAC5 /* Pods-nbc-kickboard-acknowledgements.plist */,
+				A351B180C21068DA67D6861D98468DC6 /* Pods-nbc-kickboard-dummy.m */,
+				B5B50F22919E241A8DD8FF9F330591CB /* Pods-nbc-kickboard-frameworks.sh */,
+				72B8073CCDBA285F30804BE4C9E7C5D0 /* Pods-nbc-kickboard-resources.sh */,
+				9056104CF31BB53EBD923987C2121A6E /* Pods-nbc-kickboard-umbrella.h */,
+				90D691CC76992112C1CA224D7B19F584 /* Pods-nbc-kickboard.debug.xcconfig */,
+				D298D2D3D1C7F3C16280F9B41A2A5828 /* Pods-nbc-kickboard.release.xcconfig */,
+			);
+			name = "Pods-nbc-kickboard";
+			path = "Target Support Files/Pods-nbc-kickboard";
+			sourceTree = "<group>";
+		};
+		A2BBF15177A63BB5A9D7B61BA0B9028C /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				0B306C64DDF8C1FCAE40C4532E581C94 /* KakaoMapsSDK */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		CF1408CF629C7361332E53B88F7BD30C = {
+			isa = PBXGroup;
+			children = (
+				9D940727FF8FB9C785EB98E56350EF41 /* Podfile */,
+				D89477F20FB1DE18A04690586D7808C4 /* Frameworks */,
+				A2BBF15177A63BB5A9D7B61BA0B9028C /* Pods */,
+				1757382E4A9E9F4203B268FDC847B9C7 /* Products */,
+				221726DEB03FAC010D6D1DB0AA14A1F7 /* Targets Support Files */,
+			);
+			sourceTree = "<group>";
+		};
+		CF76BA71EB27D4D7D262E40C63BD9355 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				B30976A9C77CF5A408D575588EAD4F63 /* KakaoMapsSDKBundle.bundle */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		D89477F20FB1DE18A04690586D7808C4 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E9FCA6905C6CA97B331E7FF27D7966C0 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				5F3E1E35BE577547E434B5DED2628893 /* KakaoMapsSDK-xcframeworks.sh */,
+				4B102171C2BCE5440483225DD2E9EDC7 /* KakaoMapsSDK.debug.xcconfig */,
+				7BD8A914A20D5D117D02C3416B2F70EC /* KakaoMapsSDK.release.xcconfig */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/KakaoMapsSDK";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		EFDFE9D465F344FD6BBCF57C61F01959 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				143B24ADAA6E0B4598D69751D9BD80DE /* Pods-nbc-kickboard-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		50A156CFB836447CD70D19ADCEBB08D9 /* Pods-nbc-kickboard */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 23F9671131C4D43D1874DAB0AC35C885 /* Build configuration list for PBXNativeTarget "Pods-nbc-kickboard" */;
+			buildPhases = (
+				EFDFE9D465F344FD6BBCF57C61F01959 /* Headers */,
+				8E7C2F336031F4CB52344F94044D5D30 /* Sources */,
+				86230FB8D95C9884779D8CF8911B1647 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E69570D88F42E8DB4A336474179C56A4 /* PBXTargetDependency */,
+			);
+			name = "Pods-nbc-kickboard";
+			productName = "Pods-nbc-kickboard";
+			productReference = 15553E84935FD169843456203CFD34E0 /* Pods-nbc-kickboard */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		BFDFE7DC352907FC980B868725387E98 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1600;
+				LastUpgradeCheck = 1600;
+			};
+			buildConfigurationList = 4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */;
+			compatibilityVersion = "Xcode 16.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = CF1408CF629C7361332E53B88F7BD30C;
+			minimizedProjectReferenceProxies = 0;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 1757382E4A9E9F4203B268FDC847B9C7 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				985ED89472B93FB310ED5E4DE7CE1E2D /* KakaoMapsSDK */,
+				50A156CFB836447CD70D19ADCEBB08D9 /* Pods-nbc-kickboard */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		073C38C133623D002C7A8970845DB3EE /* [CP] Copy XCFrameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/KakaoMapsSDK/KakaoMapsSDK-xcframeworks-input-files.xcfilelist",
+			);
+			name = "[CP] Copy XCFrameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/KakaoMapsSDK/KakaoMapsSDK-xcframeworks-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/KakaoMapsSDK/KakaoMapsSDK-xcframeworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8E7C2F336031F4CB52344F94044D5D30 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2EF55AA0D62D9C3EFB6C49C4F4DDCF55 /* Pods-nbc-kickboard-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		E69570D88F42E8DB4A336474179C56A4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = KakaoMapsSDK;
+			target = 985ED89472B93FB310ED5E4DE7CE1E2D /* KakaoMapsSDK */;
+			targetProxy = 5CCAACCA8A4E4278C6A8EB408B048B8F /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		27EB6FB88CB2AE39C196FB4E9B8FBB67 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 90D691CC76992112C1CA224D7B19F584 /* Pods-nbc-kickboard.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				ENABLE_MODULE_VERIFIER = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-nbc-kickboard/Pods-nbc-kickboard.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		5876BC591E4F40CF5CC922202FF9E394 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_DEBUG=1",
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRIP_INSTALLED_PRODUCT = NO;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				SYMROOT = "${SRCROOT}/../build";
+			};
+			name = Debug;
+		};
+		677057429322218238929B656FFC1AC7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4B102171C2BCE5440483225DD2E9EDC7 /* KakaoMapsSDK.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		8197C3A42B3BC49D25CD65C9DDAD95C2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D298D2D3D1C7F3C16280F9B41A2A5828 /* Pods-nbc-kickboard.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				ENABLE_MODULE_VERIFIER = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-nbc-kickboard/Pods-nbc-kickboard.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		D00E4F218292A7B18E4F23A9AF7529F9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_RELEASE=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRIP_INSTALLED_PRODUCT = NO;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				SYMROOT = "${SRCROOT}/../build";
+			};
+			name = Release;
+		};
+		F42163899F37B6A6DE496DA5DE8E9B7E /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7BD8A914A20D5D117D02C3416B2F70EC /* KakaoMapsSDK.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		23F9671131C4D43D1874DAB0AC35C885 /* Build configuration list for PBXNativeTarget "Pods-nbc-kickboard" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				27EB6FB88CB2AE39C196FB4E9B8FBB67 /* Debug */,
+				8197C3A42B3BC49D25CD65C9DDAD95C2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5876BC591E4F40CF5CC922202FF9E394 /* Debug */,
+				D00E4F218292A7B18E4F23A9AF7529F9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		693D602A8BD8A2EE4C13C432BDE93DB0 /* Build configuration list for PBXAggregateTarget "KakaoMapsSDK" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				677057429322218238929B656FFC1AC7 /* Debug */,
+				F42163899F37B6A6DE496DA5DE8E9B7E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+}

@@ -1,0 +1,6 @@
+module Pods_nbc_kickboard {
+  umbrella header "Pods-nbc-kickboard-umbrella.h"
+
+  export *
+  module * { export * }
+}
