@@ -47,6 +47,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         let url = URL(fileURLWithPath: path)
+        let characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
         
         do {
             let jsonData = try Data(contentsOf: url)
@@ -58,7 +59,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 entity.longitude = location.longitude
                 entity.batteryStatus = Int16.random(in: 20...100)
                 entity.isRented = false
-                entity.kickboardCode = UUID().uuidString
+                entity.kickboardCode = String((0..<8).map { _ in
+                    characters.randomElement()!
+                })
             }
             
             try context.save()
