@@ -34,17 +34,15 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
         view.addSubview(tableView)
         
-        // SnapKit으로 레이아웃 설정
-        searchBar.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(10)
-            make.leading.equalToSuperview().offset(10)
-            make.trailing.equalToSuperview().offset(-10)
-            make.height.equalTo(50)
-        }
-        
-        tableView.snp.makeConstraints { make in
-            make.top.equalTo(searchBar.snp.bottom).offset(10)
-            make.leading.trailing.bottom.equalToSuperview()
+        // SnapKit으로 레이아웃 설정 ($0 shorthand usage)
+        searchBar.snp.makeConstraints { $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(10) }
+        searchBar.snp.makeConstraints { $0.leading.equalToSuperview().offset(10) }
+        searchBar.snp.makeConstraints { $0.trailing.equalToSuperview().offset(-10) }
+        searchBar.snp.makeConstraints { $0.height.equalTo(50) }
+                
+        tableView.snp.makeConstraints {
+            $0.top.equalTo(searchBar.snp.bottom).offset(10)
+            $0.leading.trailing.bottom.equalToSuperview()
         }
     }
     
