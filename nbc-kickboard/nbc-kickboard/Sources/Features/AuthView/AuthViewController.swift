@@ -31,7 +31,6 @@ class AuthViewController: UIViewController {
         
         view = loginView
         setupUI()
-        
     }
 }
 

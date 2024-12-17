@@ -52,10 +52,12 @@ extension LoginView {
         
         self.backgroundColor = Colors.white
         
-        coverImageView.image = UIImage(named: "coverImage")
         twoButtonsView.applyTwoButtonsViewStyle()
-        loginButton.applyFullSizeButtonStyle(bgColor: Colors.main)
-        loginButton.setTitle("Login", for: .normal)
+        loginButton.applyFullSizeButtonStyle(title: "로그인", bgColor: Colors.main)
+        signupButton.applyFullSizeButtonStyle(title: "회원가입", bgColor: Colors.blue)
+        
+        coverImageView.image = UIImage(named: "coverImage")
+        
         
         coverImageView.snp.makeConstraints {
             $0.top.equalToSuperview().inset(100)
@@ -70,6 +72,11 @@ extension LoginView {
         
         loginButton.snp.makeConstraints {
             $0.top.equalTo(twoButtonsView.snp.bottom).offset(100)
+            $0.leading.trailing.equalToSuperview().inset(Layouts.padding)
+        }
+        
+        signupButton.snp.makeConstraints {
+            $0.top.equalTo(loginButton.snp.bottom).offset(Layouts.itemSpacing)
             $0.leading.trailing.equalToSuperview().inset(Layouts.padding)
         }
     }

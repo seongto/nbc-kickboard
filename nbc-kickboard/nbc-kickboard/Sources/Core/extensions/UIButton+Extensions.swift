@@ -16,14 +16,18 @@ extension UIButton {
     /// ex. 로그인 버튼, 등록/반납 버튼 등
     /// - Parameter color: 버튼의 배경 색상. 글자 색상은 흰색(라이트) / 검은색(다크) 이므로 이를 고려하여 색상 선택 필요.
     /// - Parameter isRadius: cornerRadius의 값은 정해져있으며 이를 적용할지 안할지에 대한 파라미터 값.
-    func applyFullSizeButtonStyle(bgColor: UIColor, isRadius: Bool = true) {
+    func applyFullSizeButtonStyle(title: String = "버튼", bgColor: UIColor, isRadius: Bool = true) {
         var config = UIButton.Configuration.filled()
+        
+        var titleContainer = AttributeContainer()
+        titleContainer.font = Fonts.subtitle
         
         config.buttonSize = .medium
         config.titleAlignment = .center
         config.baseForegroundColor = Colors.white
         config.baseBackgroundColor = bgColor
         config.background.cornerRadius = isRadius ? Layouts.buttonHeight / 2 : 0
+        config.attributedTitle = AttributedString(title, attributes: titleContainer)
         
         self.configurationUpdateHandler = { btn in
             switch self.state {
@@ -38,18 +42,23 @@ extension UIButton {
         }
         
         self.configuration = config
-        
-        self.titleLabel?.font = Fonts.subtitleBold
-        print(self.titleLabel?.font)
-        
+                
         self.snp.makeConstraints {
             $0.height.equalTo(Layouts.buttonHeight)
         }
     }
     
-    func applyHalfSizeButtonStyle(isFilled: Bool) {
+    /// 하프사이즈의 버튼. TwoButtonsStyle이 지정된 UIView와 함께 사용합니다.
+    /// - Parameters:
+    ///   - title: 버튼의 타이틀
+    ///   - isFilled: 버튼 색상 채움 여부. 버튼 재사용성을 위해 도입.
+    func applyHalfSizeButtonStyle(title:String, isFilled: Bool) {
         var config = isFilled ? UIButton.Configuration.filled() : UIButton.Configuration.plain()
         
+        var titleContainer = AttributeContainer()
+        titleContainer.font = Fonts.body
+        
+        config.attributedTitle = AttributedString(title, attributes: titleContainer)
         config.buttonSize = .medium
         config.titleAlignment = .center
         config.baseBackgroundColor = isFilled ? Colors.mint : Colors.white
@@ -57,27 +66,20 @@ extension UIButton {
         config.background.cornerRadius = 8
         
         if isFilled == false {
-            config.background.strokeColor = Colors.gray4
             config.background.strokeWidth = 1
+            config.background.strokeColor = Colors.gray4
         }
         
         self.configurationUpdateHandler = { btn in
             switch self.state {
             case .highlighted:
-                config.baseForegroundColor = isFilled ? Colors.bg.withAlphaComponent(0.8) : Colors.label.withAlphaComponent(0.8)
-                if isFilled == false {
-                    config.background.strokeColor = Colors.gray1
-                }
+                config.baseForegroundColor = isFilled ? Colors.bg.withAlphaComponent(0.8) : Colors.white.withAlphaComponent(0.8)
             default:
                 config.baseBackgroundColor = isFilled ? Colors.mint : Colors.white
             }
         }
         
         self.configuration = config
-        
-//        print(self.titleLabel)
-//        self.titleLabel?.font = Fonts.h1
-//        self.titleLabel?.font = UIFont(name: "paybooc Light", size: 20)
         
     }
 }
