@@ -62,6 +62,8 @@ final class MyPageView: UIView {
     }
     
     private func configureUI() {
+        backgroundColor = .systemBackground
+        
         let subviews = [
             titleLabel,
             userIDView,
