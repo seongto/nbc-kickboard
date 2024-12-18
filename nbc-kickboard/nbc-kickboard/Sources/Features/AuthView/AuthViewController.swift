@@ -14,12 +14,14 @@ class AuthViewController: UIViewController, LoginViewDelegate {
     // MARK: - Properties
     
     private let loginView = LoginView()
-    private let userRepository: UserEntityRepositoryProtocol
+    private let userEntityRepository: UserEntityRepositoryProtocol
+    private let loginUseCase: LoginUseCase
     
-    // MARK: - init & Life cycles
+    // MARK: - init & Life cyclesas
     
-    init(userRepository: UserEntityRepositoryProtocol = UserEntityRepository()) {
-        self.userRepository = userRepository
+    init(userEntityRepository: UserEntityRepository = UserEntityRepository()) {
+        self.userEntityRepository = userEntityRepository
+        self.loginUseCase = LoginUseCase(userEntityRepository: self.userEntityRepository)
         super.init(nibName: nil, bundle: nil)
         
         loginView.delegate = self
@@ -50,7 +52,7 @@ class AuthViewController: UIViewController, LoginViewDelegate {
 
 extension AuthViewController {
     private func setupUI() {
-        view.backgroundColor = Colors.background
+        view.backgroundColor = Colors.white
     }
 }
 
@@ -69,9 +71,39 @@ extension AuthViewController {
         navigationController?.pushViewController(SignupViewController(), animated: true)
     }
     
-    func getAuthentication() {
-        let username = loginView.inputUsername.text
-        let password = loginView.inputPassword.text
+    func getAuthentication(username: String, password: String) {
+        let result = loginUseCase.execute((username: username, password: password))
+        
+        switch result {
+        case .success(let userEntity):
+            let alert = UIAlertController(
+                title: "로그인 성공",
+                message: "\(userEntity.username ?? "??")님 환영합니다. 이건 테스트용 경고",
+                preferredStyle: .alert
+            )
+            
+            let confirmAction = UIAlertAction(title: "확인", style: .default) { _ in
+                UserDefaults.standard.set(userEntity.username, forKey: "username")
+                UserDefaults.standard.set(userEntity.isAdmin, forKey: "isAdmin")
+                
+                print("UserDefaults에 저장 완료. 이동을 어디로 어떻게 처리할까요?")
+                
+            }
+            alert.addAction(confirmAction)
+            present(alert, animated: true)
+        case .failure(let error):
+            let errorMessage: String = error.messages.reduce("") { "\($0)\n- \($1)" }
+            let alert = UIAlertController(
+                title: "로그인 실패",
+                message: errorMessage,
+                preferredStyle: .alert
+            )
+            
+            let cancelAction = UIAlertAction(title: "확인", style: .default)
+            alert.addAction(cancelAction)
+            
+            present(alert, animated: true)
+        }
     }
 }
 

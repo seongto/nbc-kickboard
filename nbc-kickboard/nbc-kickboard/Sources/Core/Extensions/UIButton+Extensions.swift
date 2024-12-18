@@ -61,7 +61,7 @@ extension UIButton {
         config.buttonSize = .medium
         config.titleAlignment = .center
         config.baseBackgroundColor = isFilled ? Colors.mint : Colors.white
-        config.baseForegroundColor = isFilled ? Colors.background : Colors.black
+        config.baseForegroundColor = isFilled ? Colors.white : Colors.black
         config.background.cornerRadius = 8
         
         if isFilled == false {
@@ -72,7 +72,7 @@ extension UIButton {
         self.configurationUpdateHandler = { btn in
             switch self.state {
             case .highlighted:
-                config.baseForegroundColor = isFilled ? Colors.background.withAlphaComponent(0.8) : Colors.white.withAlphaComponent(0.8)
+                config.baseForegroundColor = isFilled ? Colors.white.withAlphaComponent(0.8) : Colors.white.withAlphaComponent(0.8)
             default:
                 config.baseBackgroundColor = isFilled ? Colors.mint : Colors.white
             }
@@ -80,6 +80,55 @@ extension UIButton {
         
         self.configuration = config
         
+    }
+    
+    func applyAgreeButtonStyle(
+        title: String,
+        subTitle: String,
+        highlightColor: UIColor = Colors.main)
+    {
+        var config = UIButton.Configuration.plain()
+        
+        config.image = UIImage(systemName: "checkmark")
+        config.baseForegroundColor = Colors.gray4
+        config.imagePadding = 8 // 이미지와 텍스트 사이의 간격
+        config.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8)
+        
+        // 버튼 내부 타이틀 및 섭타이틀 설정
+        var titleStyleContainer = AttributeContainer()
+        titleStyleContainer.font = Fonts.bodyBold
+        
+        var subTitleStyleContainer = AttributeContainer()
+        subTitleStyleContainer.font = Fonts.body
+        subTitleStyleContainer.foregroundColor = Colors.black
+        
+        self.configurationUpdateHandler = { btn in
+            self.backgroundColor = .clear
+            switch self.state {
+            case .selected, .highlighted:
+                titleStyleContainer.foregroundColor = Colors.main
+            default:
+                titleStyleContainer.foregroundColor = Colors.gray4
+            }
+        }
+        
+        let attributedTitle = AttributedString(title, attributes: titleStyleContainer)
+        let attributedSubTitle = AttributedString(subTitle, attributes: subTitleStyleContainer)
+        let space = AttributedString(" ", attributes: subTitleStyleContainer)
+        
+        // 실제로는 서브타이틀을 쓰지 않고 스타일만 따로 관리 적용하므로 타이틀을 합친다.
+        let combinedTitle = attributedTitle + space + attributedSubTitle
+        config.attributedTitle = combinedTitle
+        
+        // 버튼에 configuration 적용
+        self.configuration = config
+        
+        self.translatesAutoresizingMaskIntoConstraints = false
+        self.tintColor = .clear
+        self.contentHorizontalAlignment = .left
+        self.snp.makeConstraints {
+            $0.height.greaterThanOrEqualTo(Layouts.buttonHeight)
+        }
     }
 }
 

@@ -14,12 +14,12 @@ protocol UserEntityRepositoryProtocol {
     func updatePassword(user: UserEntity, hashedPw: String)
     func deleteUser(user: UserEntity)
     func softDeleteUser(user: UserEntity)
+    func getAuthenticatedUser(username: String, hashedPw: String) -> UserEntity?
 }
 
 
 final class UserEntityRepository: UserEntityRepositoryProtocol {
     private let context: NSManagedObjectContext
-    
     
     init(context: NSManagedObjectContext = CoreDataManager.shared.context) {
         self.context = context
@@ -51,9 +51,7 @@ final class UserEntityRepository: UserEntityRepositoryProtocol {
         newUser.password = hashedPw
         
         // 5. 저장하기
-        print("before: \(newUser)")
         saveContext()
-        print("after: \(newUser)")
         
         // 6. 이름으로 검색해서 정보 가져오기 : 제대로 저장되었는지 판단하고 암호 제외한 값을 반한.
         let fetchedUser = fetchUser(by: username)
@@ -61,15 +59,15 @@ final class UserEntityRepository: UserEntityRepositoryProtocol {
         return fetchedUser
     }
     
-    /// username이 일치하는 사용자 정보 가져오기(암호 제외)
+    /// username이 일치하는 사용자 정보 가져오기
     /// - Parameter username: 고유한 사용자의 이용아이디
-    /// - Returns: 입력한 아이디와 일치하는 UserEntity 객체를 반환.
+    /// - Returns: 입력한 아이디와 일치하는 UserEntity 객체를 반환. username, isAdmin 만 가져온다.
     func fetchUser(by username: String) -> UserEntity? {
         let fetchRequest: NSFetchRequest<UserEntity> = UserEntity.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "username == %0", username as CVarArg)
+        fetchRequest.predicate = NSPredicate(format: "username == %@", username as CVarArg)
         
         fetchRequest.resultType = .managedObjectResultType
-        fetchRequest.propertiesToFetch = ["username", "isAdmin", "histories"]
+        fetchRequest.propertiesToFetch = ["username", "isAdmin"]
         
         do {
             return try context.fetch(fetchRequest).first
@@ -101,14 +99,8 @@ final class UserEntityRepository: UserEntityRepositoryProtocol {
     ///   - oldPassword: 기존에 사용 중이던 암호
     ///   - newPassword: 새로운 암호
     func updatePassword(user: UserEntity, hashedPw: String) {
-        // 1. 기존 패스워드 일치하는지 검사 (기존 암호 해쉬화 후 coredata에 저장된 데이터와 비교)
-        
-        
-        // 2. 신규 패스워드 유효성 검사
-        
-        
-        // 3. 신규 패스워드 해쉬화
-        user.password = hashedPw
+//        user.password = hashedPw // 이 코드가 바로 아래 코드랑 완전히 똑같은 동작을 한다고 하는데 이런 것도 양식을 통일화해야하지 않을까 라는 고민.
+        user.setValue(hashedPw, forKey: "password")
         saveContext()
     }
     
@@ -123,6 +115,25 @@ final class UserEntityRepository: UserEntityRepositoryProtocol {
     /// - Parameter user: 삭제하고자 하는 사용자.
     func softDeleteUser(user: UserEntity) {
         
+    }
+    
+    
+    func getAuthenticatedUser(username: String, hashedPw: String) -> UserEntity? {
+        let fetchRequest: NSFetchRequest<UserEntity> = UserEntity.fetchRequest()
+        fetchRequest.predicate = NSPredicate(
+            format: "username == %@ AND password == %@",
+            username as CVarArg, hashedPw as CVarArg
+        )
+        
+        fetchRequest.resultType = .managedObjectResultType
+        fetchRequest.propertiesToFetch = ["username", "isAdmin"]
+        
+        do {
+            return try context.fetch(fetchRequest).first
+        } catch {
+            print("인증 중 오류 발생: \(error)")
+            return nil
+        }
     }
 }
 

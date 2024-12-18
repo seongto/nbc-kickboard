@@ -11,7 +11,7 @@ import SnapKit
 /// LoginView 와 AuthViewController를 연결하는 delegate
 protocol LoginViewDelegate: AnyObject {
     func navigateToSignup()
-    func getAuthentication()
+    func getAuthentication(username: String, password: String)
 }
 
 final class LoginView: UIView {
@@ -73,7 +73,8 @@ extension LoginView {
         inputLabelUsername.applyInputLabelStyle(text: "ID")
         inputUsername.applyInputBoxStyle(placeholder: "Please enter your ID")
         inputLabelPassword.applyInputLabelStyle(text: "PW")
-        inputPassword.applyInputBoxStyle(placeholder: "Please enter your PW")
+        inputPassword.applyInputBoxStyle(placeholder: "Please enter your PW", isSecret: true)
+        inputPassword.addShowHidePasswordButton()
         loginButton.applyFullSizeButtonStyle(title: "로그인", bgColor: Colors.main)
         signupButton.applyFullSizeButtonStyle(title: "회원가입", bgColor: Colors.blue)
         
@@ -151,6 +152,10 @@ extension LoginView {
     }
     
     func tapLoginButton() {
-        delegate?.getAuthentication()
+        if let username: String = inputUsername.text,
+           let password: String = inputPassword.text {
+            
+            delegate?.getAuthentication(username: username, password: password)
+        }
     }
 }
