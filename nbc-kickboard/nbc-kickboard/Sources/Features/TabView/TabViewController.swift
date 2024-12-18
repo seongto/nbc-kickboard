@@ -40,29 +40,27 @@ final class CustomTabBarController: UIViewController {
         customTabBar
             .tabBarItems
             .forEach { item in
-                let vc: UIViewController
+                let viewController: UIViewController
                 
                 switch item {
                 case .main:
-                    vc = UIViewController()
-                    vc.view.backgroundColor = .red
+                    viewController = MainViewController()
                 case .add:
-                    vc = UIViewController()
-                    vc.view.backgroundColor = .blue
+                    viewController = AddViewController()
                 case .my:
-                    vc = MyPageViewController()
+                    viewController = MyPageViewController()
                 }
                 
-                addChild(vc)
-                view.addSubview(vc.view)
-                vc.didMove(toParent: self)
+                addChild(viewController)
+                view.addSubview(viewController.view)
+                viewController.didMove(toParent: self)
                 
-                vc.view.snp.makeConstraints {
+                viewController.view.snp.makeConstraints {
                     $0.top.leading.trailing.equalToSuperview()
                     $0.bottom.equalTo(customTabBar.snp.top)
                 }
                 
-                viewControllers.append(vc)
+                viewControllers.append(viewController)
             }
         
         guard let shouldFrontView = viewControllers[0].view else { return }
