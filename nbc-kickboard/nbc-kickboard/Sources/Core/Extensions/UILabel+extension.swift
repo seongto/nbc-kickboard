@@ -13,7 +13,7 @@ extension UILabel {
     func applyHeadlineStyle(text: String) {
         self.text = text
         self.font = Fonts.headline
-        self.textColor = Colors.label
+        self.textColor = Colors.black
         self.textAlignment = .left
         
         self.snp.makeConstraints {

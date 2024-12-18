@@ -49,8 +49,6 @@ extension UIStackView {
             $0.height.equalTo(Layouts.buttonHeight)
         }
         
-        
-        
         if isAsync {
             buttonLeft.applyButtonAsyncAction(action: actionLeft)
             buttonRight.applyButtonAsyncAction(action: actionRight)
@@ -58,5 +56,19 @@ extension UIStackView {
             buttonLeft.applyButtonAction(action: actionLeft)
             buttonRight.applyButtonAction(action: actionRight)
         }
+    }
+    
+    func updateButtonsStyle(
+        titleLeft: String = "닫기",
+        titleRight: String = "대여하기",
+        colorSide: ColorButtonSide = .right
+    ) {
+        guard arrangedSubviews.count == 2,
+              let buttonLeft = arrangedSubviews[0] as? UIButton,
+              let buttonRight = arrangedSubviews[1] as? UIButton else {
+            return
+        }
+        buttonLeft.applyHalfSizeButtonStyle(title: titleLeft, isFilled: colorSide == .left)
+        buttonRight.applyHalfSizeButtonStyle(title: titleRight, isFilled: colorSide == .right)
     }
 }
