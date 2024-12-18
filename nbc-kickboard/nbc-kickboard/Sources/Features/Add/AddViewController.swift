@@ -9,12 +9,19 @@ import UIKit
 import MapKit
 import SnapKit
 
+protocol AddViewControllerDelegate: AnyObject {
+    func addViewController(_ viewController: AddViewController, createdKickboardLoaction: Location)
+}
+
 final class AddViewController: UIViewController {
     private var kickboardCode: String = "" {
         didSet { addButton.isEnabled = !kickboardCode.isEmpty }
     }
+    private var kickboardType: KickboardType = .basic
     private var currentLatitude: Double = 0.0
     private var currentLongitude: Double = 0.0
+    
+    weak var delegate: AddViewControllerDelegate?
     
     private let titleLabel: UILabel = {
         let label = UILabel()
@@ -41,13 +48,14 @@ final class AddViewController: UIViewController {
     
     private let locationSectionView = LocationSectionView()
     
-    private let addButton: UIButton = {
+    private lazy var addButton: UIButton = {
         let button = UIButton()
         button.applyFullSizeButtonStyle(
             title: "등록",
             bgColor: UIColor(named: "colorMain")!,
             isRadius: true)
         button.isEnabled = false
+        button.addTarget(self, action: #selector(addButtonDidTap), for: .touchUpInside)
         
         return button
     }()
@@ -60,6 +68,7 @@ final class AddViewController: UIViewController {
         
         codeSectionView.delegate = self
         sortSectionView.delegate = locationSectionView
+        sortSectionView.delegate = self
         locationSectionView.delegate = self
     }
     
@@ -88,6 +97,35 @@ final class AddViewController: UIViewController {
             $0.height.equalTo(60.0)
         }
     }
+    
+    private func resetData() {
+        codeSectionView.resetCodeLabel()
+        sortSectionView.resetSelectedIndex()
+        locationSectionView.resetCoordinate()
+        addButton.isEnabled = false
+    }
+    
+    @objc private func addButtonDidTap() {
+        do {
+            try CoreDataStack.shared.createKickboard(
+                kickboardCode: kickboardCode,
+                batteryStatus: 100,
+                isRented: false,
+                latitude: currentLatitude,
+                longitude: currentLongitude,
+                type: kickboardType)
+        } catch {
+            print("ERROR: \(error.localizedDescription)")
+        }
+        
+        delegate?.addViewController(
+            self,
+            createdKickboardLoaction: (
+                Location(latitude: currentLatitude,
+                         longitude: currentLongitude)))
+        
+        resetData()
+    }
 }
 
 extension AddViewController: CodeSectoinViewDelegate {
@@ -107,6 +145,12 @@ extension AddViewController: CodeSectoinViewDelegate {
         
         kickboardCode = newCode
         completion(newCode)
+    }
+}
+
+extension AddViewController: SortsectionViewDelegate {
+    func sortSectionView(_ sortSectionView: SortSectionView, didSelectedButtonType: KickboardType) {
+        kickboardType = didSelectedButtonType
     }
 }
 

@@ -92,6 +92,8 @@ final class SortSectionView: UIStackView {
         let index = sender.tag
         selectedIndex = index
     }
+    
+    func resetSelectedIndex() { selectedIndex = 0 }
 }
 
 #if DEBUG

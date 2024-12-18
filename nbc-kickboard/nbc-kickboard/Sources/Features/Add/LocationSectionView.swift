@@ -84,6 +84,18 @@ final class LocationSectionView: UIStackView {
             $0.bottom.equalTo(mapContentView.snp.centerY)
         }
     }
+    
+    func resetCoordinate() {
+        let coordinate = CLLocationCoordinate2D(
+            latitude: 37.5665,
+            longitude: 126.9780)
+        let region = MKCoordinateRegion(
+            center: coordinate,
+            latitudinalMeters: 5000,
+            longitudinalMeters: 5000)
+        
+        mapView.setRegion(region, animated: false)
+    }
 }
 
 extension LocationSectionView: MKMapViewDelegate {

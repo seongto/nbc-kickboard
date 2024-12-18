@@ -86,6 +86,8 @@ final class CodeSectionView: UIStackView {
             codeLabel.text = text
         }
     }
+    
+    func resetCodeLabel() { codeLabel.text = "-" }
 }
 
 #if DEBUG

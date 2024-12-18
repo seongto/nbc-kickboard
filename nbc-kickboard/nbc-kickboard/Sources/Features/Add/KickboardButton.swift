@@ -89,11 +89,6 @@ final class KickboardButton: UIButton {
             layer.borderColor = UIColor(named: "colorPlaceholder")?.cgColor
         }
     }
-    
-//    @objc private func kickboardButtonDidTap() {
-//        isSelected.toggle()
-//        updateConfig(isSelected: isSelected)
-//    }
 }
 #if DEBUG
 
