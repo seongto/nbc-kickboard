@@ -9,7 +9,15 @@ import UIKit
 import SnapKit
 
 final class CustomTabBarController: UIViewController {
-    private let customTabBar = CustomTabBar(tabBarItems: [.main, .add, .my])
+    private lazy var customTabBar: CustomTabBar = {
+        let isAdmin = UserDefaults.standard.bool(forKey: "isAdmin")
+            
+        if true {
+            return CustomTabBar(tabBarItems: [.main, .add, .my])
+        } else {
+            return CustomTabBar(tabBarItems: [.main, .my])
+        }
+    }()
     
     private var viewControllers = [UIViewController]()
     

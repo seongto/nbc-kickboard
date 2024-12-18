@@ -41,7 +41,7 @@ enum TabBarItem: Int {
 }
 
 final class CustomTabBar: UIView {
-    let tabBarItems: [TabBarItem]
+    var tabBarItems: [TabBarItem]
     var tabBarButtons = [UIButton]()
     var selectedIndex = 0 {
         didSet {
