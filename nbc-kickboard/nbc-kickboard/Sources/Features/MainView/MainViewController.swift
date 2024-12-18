@@ -38,6 +38,19 @@ class MainViewController: UIViewController {
         return button
     }()
     
+    private lazy var searchButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(systemName: "magnifyingglass"), for: .normal) // 검색 아이콘
+        button.backgroundColor = .white
+        button.layer.cornerRadius = 20
+        button.layer.shadowColor = UIColor.black.cgColor
+        button.layer.shadowOffset = CGSize(width: 0, height: 2)
+        button.layer.shadowOpacity = 0.2
+        button.layer.shadowRadius = 4
+        button.addTarget(self, action: #selector(searchButtonTapped), for: .touchUpInside)
+        return button
+    }()
+    
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -45,19 +58,45 @@ class MainViewController: UIViewController {
         setupUI()
         setupLocationManager()
     }
+
+    
+    @objc private func searchButtonTapped() {
+        let searchVC = SearchViewController()
+        searchVC.delegate = self
+        present(searchVC, animated: true, completion: nil)
+    }
     
     
     // MARK: - Setup
     private func setupUI() {
         view.addSubview(mapView)
-        view.addSubview(locationButton)
-        
         mapView.snp.makeConstraints { $0.edges.equalToSuperview() }
+
+        // UIView를 생성하여 버튼들을 넣을 공간을 마련합니다.
+        let buttonContainerView = UIView()
+        view.addSubview(buttonContainerView)
         
+        //버튼 두개 공간
+        buttonContainerView.snp.makeConstraints {
+            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-20)
+            $0.trailing.equalToSuperview().offset(-20)
+            $0.height.equalTo(80)
+            $0.width.equalTo(60)
+        }
+            
+        // locationButton 추가
+        buttonContainerView.addSubview(locationButton)
         locationButton.snp.makeConstraints {
-            $0.bottom.equalTo(view.safeAreaLayoutGuide).offset(-20)
-            $0.right.equalToSuperview().offset(-20)
-            $0.width.height.equalTo(40)
+            $0.top.leading.trailing.equalToSuperview()
+            $0.height.equalTo(40) // 버튼 크기
+        }
+        
+        // searchButton 추가
+        buttonContainerView.addSubview(searchButton)
+        searchButton.snp.makeConstraints {
+            $0.top.equalTo(locationButton.snp.bottom).offset(10) // locationButton 바로 아래에 배치
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(40) // 버튼 크기
         }
     }
     
@@ -361,6 +400,18 @@ extension MKPolyline {
         var coords = [CLLocationCoordinate2D](repeating: kCLLocationCoordinate2DInvalid, count: pointCount)
         getCoordinates(&coords, range: NSRange(location: 0, length: pointCount))
         return coords
+    }
+}
+
+// MARK: - SearchViewControllerDelegate 구현
+extension MainViewController: SearchViewControllerDelegate {
+    func didSelectLocation(latitude: Double, longitude: Double) {
+        // 지도 카메라 이동
+        let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        let camera = MKMapCamera(lookingAtCenter: coordinate, fromDistance: 1000, pitch: 0, heading: 0)
+        mapView.setCamera(camera, animated: true)
+        
+        print("위도: \(latitude), 경도: \(longitude)")
     }
 }
 
