@@ -61,7 +61,7 @@ extension UIButton {
         config.buttonSize = .medium
         config.titleAlignment = .center
         config.baseBackgroundColor = isFilled ? Colors.mint : Colors.white
-        config.baseForegroundColor = isFilled ? Colors.background : Colors.label
+        config.baseForegroundColor = isFilled ? Colors.background : Colors.black
         config.background.cornerRadius = 8
         
         if isFilled == false {

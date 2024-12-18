@@ -1,0 +1,23 @@
+{
+  "images" : [
+    {
+      "filename" : "transfer-motorcycle--motorcycle-shipping-delivery-courier-transfer-1.png",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "filename" : "transfer-motorcycle--motorcycle-shipping-delivery-courier-transfer@2x-1.png",
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "filename" : "transfer-motorcycle--motorcycle-shipping-delivery-courier-transfer@3x-1.png",
+      "idiom" : "universal",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

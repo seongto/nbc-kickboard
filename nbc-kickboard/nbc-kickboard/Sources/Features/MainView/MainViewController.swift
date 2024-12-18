@@ -2,19 +2,17 @@ import UIKit
 import MapKit
 import CoreLocation
 import SnapKit
+import Combine
 import CoreData
 
 class MainViewController: UIViewController {
     private let locationManager = CLLocationManager()
+    private let manager = KickboardManager.shared
     private var kickboards: [Kickboard] = []
-    private var currentRoute: MKRoute?
     
-    private var movingAnnotation: KickboardAnnotation?
-    private var routeCoordinates: [CLLocationCoordinate2D] = []
-    private var animationTimer: Timer?
-    private var currentPathIndex: Int = 0
     private let maxRange = 0.036
     
+    private var cancellables = Set<AnyCancellable>()
     
     // MARK: - UI Components
     private lazy var mapView: MKMapView = {
@@ -57,8 +55,21 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
         setupUI()
         setupLocationManager()
+        setupBindings()
     }
 
+    private func setupBindings() {
+        manager.$movingAnnotation
+            .sink { [weak self] annotation in
+                if let existingAnnotations = self?.mapView.annotations.filter { !($0 is MKUserLocation) }{
+                    self?.mapView.removeAnnotations(existingAnnotations)
+                }
+                if let newAnnotation = annotation {
+                    self?.mapView.addAnnotation(newAnnotation)
+                }
+            }
+            .store(in: &cancellables)
+    }
     
     @objc private func searchButtonTapped() {
         let searchVC = SearchViewController()
@@ -127,6 +138,31 @@ class MainViewController: UIViewController {
         }
     }
     
+    private func drawRoute(to coordinate: CLLocationCoordinate2D) {
+            guard let userLocation = locationManager.location?.coordinate else { return }
+            
+            if let existingRoute = manager.currentRoute {
+                mapView.removeOverlay(existingRoute.polyline)
+            }
+            
+            let request = MKDirections.Request()
+            request.source = MKMapItem(placemark: MKPlacemark(coordinate: coordinate))
+            request.destination = MKMapItem(placemark: MKPlacemark(coordinate: userLocation))
+            request.transportType = .walking
+            
+            let directions = MKDirections(request: request)
+            directions.calculate { [weak self] response, error in
+                guard let self = self,
+                      let route = response?.routes.first else { return }
+                
+                self.mapView.addOverlay(route.polyline)
+                self.manager.setCurrentRoute(route)
+                
+                let rect = route.polyline.boundingMapRect
+                self.mapView.setVisibleMapRect(rect, edgePadding: UIEdgeInsets(top: 80, left: 40, bottom: 300, right: 40), animated: true)
+            }
+        }
+    
     private func showLocationPermissionAlert() {
         let alert = UIAlertController(
             title: "위치 권한 필요",
@@ -155,8 +191,8 @@ class MainViewController: UIViewController {
         mapView.removeAnnotations(existingAnnotations)
         
         // 지도 위치 변경 시, 새로 보이는 영역에 있는 킥보드들 지도에 표시
-        let annotations = kickboards.map { kickboard -> KickboardAnnotation in
-            let annotation = KickboardAnnotation()
+        let annotations = kickboards.map { kickboard -> MKPointAnnotation in
+            let annotation = MKPointAnnotation()
             annotation.coordinate = CLLocationCoordinate2D(
                 latitude: kickboard.latitude,
                 longitude: kickboard.longitude
@@ -164,7 +200,6 @@ class MainViewController: UIViewController {
             
             annotation.title = "배터리: \(kickboard.batteryStatus)%"
             annotation.subtitle = kickboard.kickboardCode
-            annotation.isRented = kickboard.isRented
             return annotation
         }
         
@@ -179,84 +214,6 @@ class MainViewController: UIViewController {
             longitudinalMeters: 1000
         )
         mapView.setRegion(region, animated: true)
-    }
-    
-    
-    // MARK: - 자율주행 추가기능 구현을 위한 애니메이션 및 경로 저장 메서드
-    private func drawRoute(to coordinate: CLLocationCoordinate2D) {
-        if let existingRoute = currentRoute {
-            mapView.removeOverlay(existingRoute.polyline)
-        }
-        
-        guard let userLocation = locationManager.location?.coordinate else { return }
-        
-        let request = MKDirections.Request()
-        request.source = MKMapItem(placemark: MKPlacemark(coordinate: coordinate))
-        request.destination = MKMapItem(placemark: MKPlacemark(coordinate: userLocation))
-        request.transportType = .walking
-        
-        let directions = MKDirections(request: request)
-        directions.calculate { [weak self] response, error in
-            guard let self = self,
-                  let route = response?.routes.first else { return }
-            
-            self.currentRoute = route
-            self.mapView.addOverlay(route.polyline)
-            
-            // 경로의 좌표 추출
-            self.routeCoordinates = route.polyline.coordinates()
-            
-            // 선택된 킥보드의 가상 이동 시작
-            self.startKickboardAnimation(from: coordinate)
-            
-            // 경로가 모두 보이도록 지도 영역 조정
-            let rect = route.polyline.boundingMapRect
-            self.mapView.setVisibleMapRect(rect, edgePadding: UIEdgeInsets(top: 80, left: 40, bottom: 100, right: 40), animated: true)
-        }
-    }
-    
-    private func startKickboardAnimation(from startCoordinate: CLLocationCoordinate2D) {
-        let annotation = KickboardAnnotation() //TODO: 안뜨네요..? 해결필요
-        annotation.title = "달려가고 있어요"
-        annotation.subtitle = "도착 예상시간: 10분"
-        annotation.coordinate = startCoordinate
-        
-        movingAnnotation = annotation
-        if let movingAnnotation = movingAnnotation {
-            mapView.addAnnotation(movingAnnotation)
-        }
-        
-        currentPathIndex = 0
-        animationTimer = Timer.scheduledTimer(withTimeInterval: 1.2, repeats: true) { [weak self] _ in
-            self?.updateKickboardPosition()
-        }
-    }
-
-    private func updateKickboardPosition() {
-        guard let movingAnnotation = movingAnnotation, currentPathIndex < routeCoordinates.count else {
-            stopKickboardAnimation()
-            return
-        }
-        
-        let nextCoordinate = routeCoordinates[currentPathIndex]
-        UIView.animate(withDuration: 1.0) {
-            movingAnnotation.coordinate = nextCoordinate
-        }
-        
-        currentPathIndex += 1
-    }
-
-    private func stopKickboardAnimation() {
-        animationTimer?.invalidate()
-        animationTimer = nil
-        
-        if let movingAnnotation = movingAnnotation {
-            mapView.removeAnnotation(movingAnnotation)
-        }
-        
-        movingAnnotation = nil
-        currentPathIndex = 0
-        routeCoordinates.removeAll()
     }
     
     
@@ -293,43 +250,23 @@ extension MainViewController: MKMapViewDelegate {
         if annotation is MKUserLocation {
             return nil
         }
+        let identifier = "KickboardMarker"
+        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
         
-        if annotation === movingAnnotation {
-            let identifier = "MovingKickboard"
-            var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
+        if annotationView == nil {
+            annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+            annotationView?.canShowCallout = true
+            annotationView?.image = UIImage(named: "map_pin2")
             
-            if annotationView == nil {
-                annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: identifier)
-                annotationView?.canShowCallout = true
-                
-                let image = UIImage(systemName: "figure.walk")
-                annotationView?.image = image
-            } else {
-                annotationView?.annotation = annotation
-            }
-            
-            return annotationView
-        } else {
-            let identifier = "KickboardMarker"
-            var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? MKMarkerAnnotationView
-            
-            if annotationView == nil {
-                annotationView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: identifier)
-                annotationView?.canShowCallout = true
-                
-                let rentButton = UIButton(type: .system)
-                rentButton.setTitle("대여하기", for: .normal)
-                annotationView?.rightCalloutAccessoryView = rentButton
-            } else {
-                annotationView?.annotation = annotation
-            }
-            
-            if let kickboardAnnotation = annotation as? KickboardAnnotation {
-                annotationView?.markerTintColor = kickboardAnnotation.isRented ? .red : .systemTeal
-            }
-            
-            return annotationView
+            // 오른쪽 버튼 추가
+            let rightButton = UIButton(type: .detailDisclosure)
+            rightButton.setTitle("대여하기", for: .normal)
+            annotationView?.rightCalloutAccessoryView = rightButton
         }
+        
+        annotationView?.annotation = annotation
+        
+        return annotationView
     }
     
     /// 사용자가 바라보는 위치가 변경될 때
@@ -365,20 +302,35 @@ extension MainViewController: MKMapViewDelegate {
     /// 마커 선택 이벤트에 대한 콜백 메서드
     func mapView(_ mapView: MKMapView, didSelect annotation: MKAnnotation) {
         guard !(annotation is MKUserLocation) else { return }
-        drawRoute(to: annotation.coordinate)
     }
     
-    /// 마커 세부뷰가 나왔을 경우, 콜백 메서드 -> 추가 연구 필요
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-        guard let annotation = view.annotation as? KickboardAnnotation else { return }
-        print("대여하기 버튼 탭: \(annotation.subtitle ?? "")")
+        guard let annotation = view.annotation as? MKPointAnnotation,
+              let kickboard = kickboards.first(where: { $0.kickboardCode == annotation.subtitle }) else {
+            return
+        }
+        
+        if let coordinate = view.annotation?.coordinate {
+            drawRoute(to: coordinate)
+        }
+        
+        // DetailViewController 표시
+        let detailVC = KickboardDetailViewController()
+        if let sheet = detailVC.sheetPresentationController {
+            let customDetent = UISheetPresentationController.Detent.custom { _ in
+                return 256
+            }
+            sheet.detents = [customDetent]
+            sheet.prefersGrabberVisible = true
+            sheet.preferredCornerRadius = 20
+        }
+        
+        manager.currentKickboard=kickboard
+        
+        present(detailVC, animated: true)
     }
 }
 
-// MARK: - 마커 객체
-class KickboardAnnotation: MKPointAnnotation {
-    var isRented: Bool = false
-}
 
 extension MKPolyline {
     func coordinates() -> [CLLocationCoordinate2D] {
