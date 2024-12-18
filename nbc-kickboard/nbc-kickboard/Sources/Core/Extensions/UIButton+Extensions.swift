@@ -85,24 +85,32 @@ extension UIButton {
     func applyAgreeButtonStyle(
         title: String,
         subTitle: String,
-        isSelected: inout Bool,
         highlightColor: UIColor = Colors.main)
     {
         var config = UIButton.Configuration.plain()
         
-        config.image = UIImage(systemName: "person.fill")
+        config.image = UIImage(systemName: "checkmark")
+        config.baseForegroundColor = Colors.gray4
         config.imagePadding = 8 // 이미지와 텍스트 사이의 간격
         config.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8)
-        config.titleAlignment = .leading
         
         // 버튼 내부 타이틀 및 섭타이틀 설정
         var titleStyleContainer = AttributeContainer()
         titleStyleContainer.font = Fonts.bodyBold
-        titleStyleContainer.foregroundColor = isSelected ? Colors.gray4 : highlightColor
         
         var subTitleStyleContainer = AttributeContainer()
         subTitleStyleContainer.font = Fonts.body
         subTitleStyleContainer.foregroundColor = Colors.label
+        
+        self.configurationUpdateHandler = { btn in
+            self.backgroundColor = .clear
+            switch self.state {
+            case .selected, .highlighted:
+                titleStyleContainer.foregroundColor = Colors.main
+            default:
+                titleStyleContainer.foregroundColor = Colors.gray4
+            }
+        }
         
         let attributedTitle = AttributedString(title, attributes: titleStyleContainer)
         let attributedSubTitle = AttributedString(subTitle, attributes: subTitleStyleContainer)
@@ -114,11 +122,12 @@ extension UIButton {
         
         // 버튼에 configuration 적용
         self.configuration = config
-
-        self.translatesAutoresizingMaskIntoConstraints = false
         
+        self.translatesAutoresizingMaskIntoConstraints = false
+        self.tintColor = .clear
+        self.contentHorizontalAlignment = .left
         self.snp.makeConstraints {
-            $0.height.equalTo(Layouts.buttonHeight)
+            $0.height.greaterThanOrEqualTo(Layouts.buttonHeight)
         }
     }
 }

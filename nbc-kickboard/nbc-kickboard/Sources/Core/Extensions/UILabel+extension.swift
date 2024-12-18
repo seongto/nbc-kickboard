@@ -17,8 +17,7 @@ extension UILabel {
         self.textAlignment = .left
         
         self.snp.makeConstraints {
-            $0.height.equalTo(48)
-            $0.leading.trailing.equalToSuperview().offset(Layouts.paddingBig)
+            $0.height.greaterThanOrEqualTo(48)
         }
     }
     
