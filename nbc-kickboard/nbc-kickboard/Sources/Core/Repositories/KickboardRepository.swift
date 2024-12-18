@@ -9,6 +9,7 @@ import Foundation
 
 protocol KickboardRepositoryProtocol {
     func saveKickboard(_ kickboard: Kickboard) throws
+    func fetchKickboard(by kickboardCode: String) throws -> Kickboard
     func updateKickboard(by kickboardCode: String, to newKickboard: Kickboard) throws
     func deleteKickboard(by kickboardCode: String) throws
 }
@@ -25,6 +26,10 @@ struct KickboardRepository: KickboardRepositoryProtocol {
             longitude: kickboard.longitude,
             type: kickboard.type
         )
+    }
+    
+    func fetchKickboard(by kickboardCode: String) throws -> Kickboard {
+        return try CoreDataStack.shared.readKickboard(kickboardCode: kickboardCode)
     }
     
     /// kickboardCode에 해당하는 킥보드를 새로운 킥보드 정보로 업데이트 합니다.
