@@ -2,7 +2,6 @@
 //  UITextField+extensions.swift
 //  nbc-kickboard
 //
-//  Created by MaxBook on 12/17/24.
 //
 
 import UIKit

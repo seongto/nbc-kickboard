@@ -2,7 +2,6 @@
 //  UIFont+extensions.swift
 //  nbc-kickboard
 //
-//  Created by MaxBook on 12/16/24.
 //
 
 import UIKit
@@ -25,8 +24,6 @@ extension UIFont {
             weightString = "Medium"
         }
 
-        print("font information")
-        print("\(familyName) \(weightString)")
         return UIFont(name: "\(familyName) \(weightString)", size: fontSize) ?? .systemFont(ofSize: fontSize, weight: .bold)
     }
 }

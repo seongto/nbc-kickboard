@@ -2,7 +2,6 @@
 //  UILabel+extension.swift
 //  nbc-kickboard
 //
-//  Created by MaxBook on 12/17/24.
 //
 
 import UIKit
@@ -11,7 +10,8 @@ import SnapKit
 
 extension UILabel {
     /// 각 화면 상단 좌측에 들어가는 헤드라인 텍스트용 라벨
-    func applyHeadlineStyle() {
+    func applyHeadlineStyle(text: String) {
+        self.text = text
         self.font = Fonts.headline
         self.textColor = Colors.label
         self.textAlignment = .left

@@ -1,6 +1,6 @@
 import UIKit
 import SnapKit
-
+import SwiftUI
 
 class SearchViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
     
@@ -15,7 +15,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
         view.backgroundColor = .white
         
         // .env 파일에서 API 키 로드
-        
+        kakaoApiKey = "7823c3c3a09136e2ad5f13d733813ae8"
         
         // Search Bar 설정
         searchBar.delegate = self

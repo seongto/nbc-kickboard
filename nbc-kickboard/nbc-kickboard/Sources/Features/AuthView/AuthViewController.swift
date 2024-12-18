@@ -2,31 +2,27 @@
 //  AuthViewController.swift
 //  nbc-kickboard
 //
-//  Created by MaxBook on 12/13/24.
 //
 
 import UIKit
 import SnapKit
 
 
-enum AuthViewSelector {
-    case login
-    case signup
-}
 
-class AuthViewController: UIViewController {
+
+class AuthViewController: UIViewController, LoginViewDelegate {
     // MARK: - Properties
     
-    let loginView = LoginView()
-    let signupView = SignupView()
-    
-    let currentView: AuthViewSelector
+    private let loginView = LoginView()
+    private let userRepository: UserEntityRepositoryProtocol
     
     // MARK: - init & Life cycles
     
-    init() {
-        self.currentView = .login
+    init(userRepository: UserEntityRepositoryProtocol = UserEntityRepository()) {
+        self.userRepository = userRepository
         super.init(nibName: nil, bundle: nil)
+        
+        loginView.delegate = self
     }
     
     required init?(coder: NSCoder) {
@@ -43,6 +39,11 @@ class AuthViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.setNavigationBarHidden(true, animated: true)
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        navigationController?.isNavigationBarHidden = false
+    }
+    
 }
 
 
@@ -50,7 +51,7 @@ class AuthViewController: UIViewController {
 
 extension AuthViewController {
     private func setupUI() {
-        view.backgroundColor = Colors.white
+        view.backgroundColor = Colors.bg
     }
 }
 
@@ -61,6 +62,24 @@ extension AuthViewController {
     
 }
 
+
+// MARK: - Action Management & Mapping
+
+extension AuthViewController {
+    func navigateToSignup() {
+        navigationController?.pushViewController(SignupViewController(), animated: true)
+    }
+    
+    func getAuthentication() {
+        let username = loginView.inputUsername.text
+        let password = loginView.inputPassword.text
+        
+        
+    }
+}
+
+
+// MARK: - Preview
 
 @available(iOS 17.0, *)
 #Preview {

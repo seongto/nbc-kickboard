@@ -2,15 +2,16 @@
 //  LoginView.swift
 //  nbc-kickboard
 //
-//  Created by MaxBook on 12/16/24.
 //
 
 import UIKit
 import SnapKit
 
 
+/// LoginView 와 AuthViewController를 연결하는 delegate
 protocol LoginViewDelegate: AnyObject {
-    
+    func navigateToSignup()
+    func getAuthentication()
 }
 
 final class LoginView: UIView {
@@ -29,7 +30,7 @@ final class LoginView: UIView {
     let lastView = UIView() // 스크롤뷰를 작동하게 만들어주는 마지막 빈 레이아웃
     
     weak var delegate: LoginViewDelegate?
-        
+   
     
     // MARK: - init & Life cycles
     
@@ -37,11 +38,13 @@ final class LoginView: UIView {
         super.init(frame: .zero)
         
         setupUI()
+        mapActionToButtons()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
 }
 
 
@@ -67,16 +70,12 @@ extension LoginView {
         // MARK: - Components Styling & Configuration
         
         scrollView.applyVerticalStyle()
-        
-        inputUsername.applyInputBoxStyle(placeholder: "Please enter your ID")
-        inputPassword.applyInputBoxStyle(placeholder: "Please enter your PW")
-        
         inputLabelUsername.applyInputLabelStyle(text: "ID")
+        inputUsername.applyInputBoxStyle(placeholder: "Please enter your ID")
         inputLabelPassword.applyInputLabelStyle(text: "PW")
-        
+        inputPassword.applyInputBoxStyle(placeholder: "Please enter your PW")
         loginButton.applyFullSizeButtonStyle(title: "로그인", bgColor: Colors.main)
         signupButton.applyFullSizeButtonStyle(title: "회원가입", bgColor: Colors.blue)
-        
         
         contentView.backgroundColor = Colors.white
         coverImageView.image = UIImage(named: "coverImage")
@@ -95,7 +94,7 @@ extension LoginView {
         }
         
         inputLabelUsername.snp.makeConstraints {
-            $0.top.equalTo(coverImageView.snp.bottom).offset(56)
+            $0.top.equalTo(coverImageView.snp.bottom).offset(54)
             $0.leading.trailing.equalToSuperview().inset(Layouts.padding)
         }
         
@@ -128,7 +127,7 @@ extension LoginView {
             $0.top.equalTo(signupButton.snp.bottom).offset(10)
             $0.leading.trailing.equalToSuperview().inset(Layouts.padding)
             $0.height.equalTo(10)
-            $0.bottom.equalToSuperview().inset(20)
+            $0.bottom.equalToSuperview().inset(10)
         }
         
         contentView.snp.makeConstraints {
@@ -139,6 +138,19 @@ extension LoginView {
 }
 
 
+// MARK: - Action Management & Mapping
+
 extension LoginView {
+    func mapActionToButtons() {
+        signupButton.applyButtonAction(action: tapSignupButton)
+        loginButton.applyButtonAction(action: tapLoginButton)
+    }
     
+    func tapSignupButton() {
+        delegate?.navigateToSignup()
+    }
+    
+    func tapLoginButton() {
+        delegate?.getAuthentication()
+    }
 }
