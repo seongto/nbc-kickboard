@@ -10,6 +10,7 @@ import Foundation
 protocol UserRepositoryProtocol {
     func saveUser(username: String, password: String, isAdmin: Bool)
     func fetchUser(by username: String) throws -> User
+    func authenticateUser(by username: String, hashedPassword: String) throws -> User?
     func updateUserPassword(of user: User, newPassword: String) throws
     func deleteUser(by username: String) throws
 }
@@ -33,8 +34,17 @@ struct UserRepository {
     /// - Returns: 조회된 사용자 객체
     /// - Throws: 사용자를 찾을 수 없는 경우 에러 발생
     func fetchUser(by username: String) throws -> User {
-        let user = try CoreDataStack.shared.readUser(name: username)
-        return user
+        return try CoreDataStack.shared.readUser(name: username)
+    }
+    
+    /// 사용자의 인증을 처리하는 함수
+    /// - Parameters:
+    ///   - username: 인증할 사용자 이름
+    ///   - hashedPassword: 해시된 비밀번호
+    /// - Returns: 인증에 성공한 경우 User 객체, 실패한 경우 nil
+    /// - Throws: 사용자 찾을 수 없는 경우 에러 발생
+    func authenticateUser(by username: String, hashedPassword: String) throws -> User? {
+        return try CoreDataStack.shared.authenticateUser(name: username, hashedPassword: hashedPassword)
     }
     
     /// 사용자의 비밀번호를 업데이트하는 함수
