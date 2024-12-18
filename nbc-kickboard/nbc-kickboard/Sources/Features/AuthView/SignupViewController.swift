@@ -43,7 +43,7 @@ class SignupViewController: UIViewController, SignupViewDelegate {
 
 extension SignupViewController {
     private func setupUI() {
-        view.backgroundColor = Colors.bg
+        view.backgroundColor = Colors.background
     }
 }
 
@@ -60,7 +60,7 @@ extension SignupViewController {
 extension SignupViewController {
     
     func requestSignup(username: String, password: String) {
-        
+//        signupUseCase.execute()
     }
 
 }

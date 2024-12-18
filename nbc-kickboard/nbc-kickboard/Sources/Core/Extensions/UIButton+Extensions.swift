@@ -61,7 +61,7 @@ extension UIButton {
         config.buttonSize = .medium
         config.titleAlignment = .center
         config.baseBackgroundColor = isFilled ? Colors.mint : Colors.white
-        config.baseForegroundColor = isFilled ? Colors.bg : Colors.label
+        config.baseForegroundColor = isFilled ? Colors.background : Colors.label
         config.background.cornerRadius = 8
         
         if isFilled == false {
@@ -72,7 +72,7 @@ extension UIButton {
         self.configurationUpdateHandler = { btn in
             switch self.state {
             case .highlighted:
-                config.baseForegroundColor = isFilled ? Colors.bg.withAlphaComponent(0.8) : Colors.white.withAlphaComponent(0.8)
+                config.baseForegroundColor = isFilled ? Colors.background.withAlphaComponent(0.8) : Colors.white.withAlphaComponent(0.8)
             default:
                 config.baseBackgroundColor = isFilled ? Colors.mint : Colors.white
             }

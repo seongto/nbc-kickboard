@@ -43,7 +43,6 @@ class AuthViewController: UIViewController, LoginViewDelegate {
     override func viewWillDisappear(_ animated: Bool) {
         navigationController?.isNavigationBarHidden = false
     }
-    
 }
 
 
@@ -51,7 +50,7 @@ class AuthViewController: UIViewController, LoginViewDelegate {
 
 extension AuthViewController {
     private func setupUI() {
-        view.backgroundColor = Colors.bg
+        view.backgroundColor = Colors.background
     }
 }
 
@@ -73,8 +72,6 @@ extension AuthViewController {
     func getAuthentication() {
         let username = loginView.inputUsername.text
         let password = loginView.inputPassword.text
-        
-        
     }
 }
 
