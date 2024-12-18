@@ -10,7 +10,9 @@ import MapKit
 import SnapKit
 
 final class AddViewController: UIViewController {
-    private var kickboardCode: String = ""
+    private var kickboardCode: String = "" {
+        didSet { addButton.isEnabled = !kickboardCode.isEmpty }
+    }
     
     private let titleLabel: UILabel = {
         let label = UILabel()
@@ -39,11 +41,11 @@ final class AddViewController: UIViewController {
     
     private let addButton: UIButton = {
         let button = UIButton()
-        button.setTitle("등록", for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        button.titleLabel?.font = UIFont.paybooc(ofSize: 20.0, weight: .bold)
-        button.backgroundColor = UIColor(named: "colorMain")
-        button.layer.cornerRadius = 60.0 / 2
+        button.applyFullSizeButtonStyle(
+            title: "등록",
+            bgColor: UIColor(named: "colorMain")!,
+            isRadius: true)
+        button.isEnabled = false
         
         return button
     }()
