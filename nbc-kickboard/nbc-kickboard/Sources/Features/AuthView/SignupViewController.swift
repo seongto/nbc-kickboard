@@ -60,7 +60,11 @@ extension SignupViewController {
 extension SignupViewController {
     
     func requestSignup(username: String, password: String) {
-//        signupUseCase.execute()
+        //        signupUseCase.execute()
+    }
+    
+    func toggleAdminStatus(isAdmin: Bool) {
+        print("aaaa")
     }
 
 }

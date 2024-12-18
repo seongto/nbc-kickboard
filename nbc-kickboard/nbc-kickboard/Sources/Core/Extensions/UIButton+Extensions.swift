@@ -81,6 +81,46 @@ extension UIButton {
         self.configuration = config
         
     }
+    
+    func applyAgreeButtonStyle(
+        title: String,
+        subTitle: String,
+        isSelected: inout Bool,
+        highlightColor: UIColor = Colors.main)
+    {
+        var config = UIButton.Configuration.plain()
+        
+        config.image = UIImage(systemName: "person.fill")
+        config.imagePadding = 8 // 이미지와 텍스트 사이의 간격
+        config.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8)
+        config.titleAlignment = .leading
+        
+        // 버튼 내부 타이틀 및 섭타이틀 설정
+        var titleStyleContainer = AttributeContainer()
+        titleStyleContainer.font = Fonts.bodyBold
+        titleStyleContainer.foregroundColor = isSelected ? Colors.gray4 : highlightColor
+        
+        var subTitleStyleContainer = AttributeContainer()
+        subTitleStyleContainer.font = Fonts.body
+        subTitleStyleContainer.foregroundColor = Colors.label
+        
+        let attributedTitle = AttributedString(title, attributes: titleStyleContainer)
+        let attributedSubTitle = AttributedString(subTitle, attributes: subTitleStyleContainer)
+        let space = AttributedString(" ", attributes: subTitleStyleContainer)
+        
+        // 실제로는 서브타이틀을 쓰지 않고 스타일만 따로 관리 적용하므로 타이틀을 합친다.
+        let combinedTitle = attributedTitle + space + attributedSubTitle
+        config.attributedTitle = combinedTitle
+        
+        // 버튼에 configuration 적용
+        self.configuration = config
+
+        self.translatesAutoresizingMaskIntoConstraints = false
+        
+        self.snp.makeConstraints {
+            $0.height.equalTo(Layouts.buttonHeight)
+        }
+    }
 }
 
 

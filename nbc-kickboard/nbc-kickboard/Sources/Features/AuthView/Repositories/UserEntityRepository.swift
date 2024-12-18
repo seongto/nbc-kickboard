@@ -108,7 +108,8 @@ final class UserEntityRepository: UserEntityRepositoryProtocol {
         
         
         // 3. 신규 패스워드 해쉬화
-        user.password = hashedPw
+//        user.password = hashedPw // 이 코드가 바로 아래 코드랑 완전히 똑같은 동작을 한다고 하는데 이런 것도 양식을 통일화해야하지 않을까 라는 고민.
+        user.setValue(hashedPw, forKey: "password")
         saveContext()
     }
     

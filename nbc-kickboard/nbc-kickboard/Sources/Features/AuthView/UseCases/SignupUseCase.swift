@@ -36,7 +36,7 @@ struct SignupUseCase: UseCaseProtocol {
         let (username, password, isAdmin) = input
         
         // 1. name 유효성 검사
-        var usernameValidation = UsernameValidator.validate(username)
+        let usernameValidation = UsernameValidator.validate(username)
         switch usernameValidation {
         case .success:
             print("사용자 이름 유효성 검사 성공")
@@ -56,7 +56,7 @@ struct SignupUseCase: UseCaseProtocol {
         }
         
         // 3. 패스워드 유효성 검사
-        var passwordValidation = UserPasswordValidator.validate(password)
+        let passwordValidation = UserPasswordValidator.validate(password)
         switch passwordValidation {
         case .success:
             print("사용자 암호 유효성 검사 성공")
@@ -64,19 +64,25 @@ struct SignupUseCase: UseCaseProtocol {
             print("사용자 암호 유효성 검사 실패: \(error)")
             
             errors.append(contentsOf: error.messages)
-            return .failure(error)
+            return .failure(ValidationError(messages: errors))
         }
         
         // 4. 암호 해쉬화
         do {
             let hashedPw: String = try PasswordManager.encryptPassword(password)
+            
+            // 5. 사용자 생성
+            guard let newUser: UserEntity = userEntityRepository.createUser(username: username, hashedPw: hashedPw, isAdmin: isAdmin) else {
+                print("왜인지 모르겠지만 아무튼 사용자 생성에 실패")
+                
+                errors.append("사용자 생성에 실패하였습니다.")
+                return .failure(ValidationError(messages: errors))
+            }
+            
         } catch {
             print("패스워드 암호화 및 저장에 실패하였습니다. \(error)")
-        }
-        
-        // 5. 사용자 생성
-        guard let newUser: UserEntity = userEntityRepository.createUser(username: username, hashedPw: password, isAdmin: isAdmin) else {
-            errors.append("사용자 생성에 실패하였습니다.")
+            
+            errors.append("패스워드 암호화 및 저장에 실패하였습니다.")
             return .failure(ValidationError(messages: errors))
         }
         
