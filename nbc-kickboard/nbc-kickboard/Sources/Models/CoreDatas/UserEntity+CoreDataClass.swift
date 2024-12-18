@@ -11,5 +11,10 @@ import CoreData
 
 @objc(UserEntity)
 public class UserEntity: NSManagedObject {
-
+    enum Key {
+        static let isAdmin = "isAdmin"
+        static let password = "password"
+        static let username = "username"
+        static let histories = "histories"
+    }
 }

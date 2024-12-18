@@ -107,9 +107,6 @@ class MainViewController: UIViewController {
     }
     
     private func loadNearbyKickboards(at location: CLLocation) {
-        let context = CoreDataManager.shared.context
-        let request: NSFetchRequest<KickboardEntity> = KickboardEntity.fetchRequest()
-        
         let spanRange = min(mapView.region.span.latitudeDelta / 2, maxRange/2)
 
         let minLat = location.coordinate.latitude - spanRange
@@ -117,25 +114,13 @@ class MainViewController: UIViewController {
         let minLng = location.coordinate.longitude - spanRange
         let maxLng = location.coordinate.longitude + spanRange
         
-        let predicate = NSPredicate(
-            format: "latitude >= %f AND latitude <= %f AND longitude >= %f AND longitude <= %f",
-            minLat, maxLat, minLng, maxLng
-        )
-        
-        request.predicate = predicate
-        
         do {
-            let datas = try context.fetch(request)
-            kickboards = datas.map {
-                Kickboard(
-                    longitude: $0.longitude,
-                    latitude: $0.latitude,
-                    kickboardCode: $0.kickboardCode ?? "",
-                    isRented: $0.isRented,
-                    batteryStatus: $0.batteryStatus
-                )
-            }
-            
+            kickboards = try CoreDataStack.shared.requestKickboards(
+                minLat: minLat,
+                maxLat: maxLat,
+                minLng: minLng,
+                maxLng: maxLng
+            )
             updateAnnotations()
         } catch {
             print("Failed to fetch kickboards: \(error)")

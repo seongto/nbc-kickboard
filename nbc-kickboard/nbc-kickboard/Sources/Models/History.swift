@@ -8,5 +8,9 @@
 import Foundation
 
 struct History {
-    
+    let cost: Int16
+    let rentDate: Date
+    let totalRentTime: Int16
+    let kickboard: Kickboard
+    let user: User
 }

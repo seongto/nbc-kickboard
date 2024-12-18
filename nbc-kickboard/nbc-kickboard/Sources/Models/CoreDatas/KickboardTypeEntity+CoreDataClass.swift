@@ -11,5 +11,8 @@ import CoreData
 
 @objc(KickboardTypeEntity)
 public class KickboardTypeEntity: NSManagedObject {
-
+    enum Key {
+        static let typeName = "typeName"
+        static let kickboards = "kickboards"
+    }
 }
