@@ -171,23 +171,10 @@ struct Place: Codable {
         case x
         case y
         case addressName = "address_name"
-        case placeURL = "place_url"
     }
 }
 
-
-// MARK: - SwiftUI Preview
-struct SearchViewControllerPreview: UIViewControllerRepresentable {
-    func makeUIViewController(context: Context) -> SearchViewController {
-        return SearchViewController()
-    }
-    
-    func updateUIViewController(_ uiViewController: SearchViewController, context: Context) {}
-}
-
-struct SearchViewController_Previews: PreviewProvider {
-    static var previews: some View {
-        SearchViewControllerPreview()
-            .ignoresSafeArea()
-    }
+@available(iOS 17.0, *)
+#Preview {
+    SearchViewController()
 }

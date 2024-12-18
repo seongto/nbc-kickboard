@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E93972652D118A0800A9E522 /* KakaoMapsSDK-SPM in Frameworks */ = {isa = PBXBuildFile; productRef = E93972642D118A0800A9E522 /* KakaoMapsSDK-SPM */; };
 		E9CAE93B2D0FCBEA00529743 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = E9CAE93A2D0FCBEA00529743 /* SnapKit */; };
 		E9CAE93E2D0FCBFA00529743 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = E9CAE93D2D0FCBFA00529743 /* Alamofire */; };
 /* End PBXBuildFile section */
@@ -66,6 +67,7 @@
 			files = (
 				E9CAE93B2D0FCBEA00529743 /* SnapKit in Frameworks */,
 				E9CAE93E2D0FCBFA00529743 /* Alamofire in Frameworks */,
+				E93972652D118A0800A9E522 /* KakaoMapsSDK-SPM in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -135,6 +137,7 @@
 			packageProductDependencies = (
 				E9CAE93A2D0FCBEA00529743 /* SnapKit */,
 				E9CAE93D2D0FCBFA00529743 /* Alamofire */,
+				E93972642D118A0800A9E522 /* KakaoMapsSDK-SPM */,
 			);
 			productName = "nbc-kickboard";
 			productReference = E9D667812D0C1665001054D5 /* nbc-kickboard.app */;
@@ -171,6 +174,7 @@
 			packageReferences = (
 				E9CAE9392D0FCBEA00529743 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				E9CAE93C2D0FCBFA00529743 /* XCRemoteSwiftPackageReference "Alamofire" */,
+				E93972632D118A0800A9E522 /* XCRemoteSwiftPackageReference "KakaoMapsSDK-SPM" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = E9D667822D0C1665001054D5 /* Products */;
@@ -486,6 +490,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		E93972632D118A0800A9E522 /* XCRemoteSwiftPackageReference "KakaoMapsSDK-SPM" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kakao-mapsSDK/KakaoMapsSDK-SPM.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.12.2;
+			};
+		};
 		E9CAE9392D0FCBEA00529743 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit";
@@ -505,6 +517,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		E93972642D118A0800A9E522 /* KakaoMapsSDK-SPM */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E93972632D118A0800A9E522 /* XCRemoteSwiftPackageReference "KakaoMapsSDK-SPM" */;
+			productName = "KakaoMapsSDK-SPM";
+		};
 		E9CAE93A2D0FCBEA00529743 /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = E9CAE9392D0FCBEA00529743 /* XCRemoteSwiftPackageReference "SnapKit" */;

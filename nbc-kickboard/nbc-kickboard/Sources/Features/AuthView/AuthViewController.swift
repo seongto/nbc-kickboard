@@ -9,16 +9,23 @@ import UIKit
 import SnapKit
 
 
+enum AuthViewSelector {
+    case login
+    case signup
+}
+
 class AuthViewController: UIViewController {
     // MARK: - Properties
     
     let loginView = LoginView()
     let signupView = SignupView()
     
+    let currentView: AuthViewSelector
     
     // MARK: - init & Life cycles
     
     init() {
+        self.currentView = .login
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -32,6 +39,10 @@ class AuthViewController: UIViewController {
         view = loginView
         setupUI()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.setNavigationBarHidden(true, animated: true)
+    }
 }
 
 
@@ -43,7 +54,16 @@ extension AuthViewController {
     }
 }
 
+
+// MARK: - Navigation Controll
+
+extension AuthViewController {
+    
+}
+
+
 @available(iOS 17.0, *)
 #Preview {
     AuthViewController()
 }
+
