@@ -21,6 +21,12 @@ extension UserEntity {
     @NSManaged public var username: String?
     @NSManaged public var histories: NSSet?
 
+    enum Key {
+        static let isAdmin = "isAdmin"
+        static let password = "password"
+        static let username = "username"
+        static let histories = "histories"
+    }
 }
 
 // MARK: Generated accessors for histories

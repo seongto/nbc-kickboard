@@ -22,6 +22,13 @@ extension HistoryEntity {
     @NSManaged public var kickboard: KickboardEntity?
     @NSManaged public var user: UserEntity?
 
+    enum Key {
+        static let cost = "cost"
+        static let rentDate = "rentDate"
+        static let totalRentTime = "totalRentTime"
+        static let kickboard = "kickboard"
+        static let user = "user"
+    }
 }
 
 extension HistoryEntity : Identifiable {

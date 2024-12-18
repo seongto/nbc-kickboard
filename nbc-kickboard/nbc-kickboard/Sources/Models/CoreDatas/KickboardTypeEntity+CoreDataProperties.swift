@@ -19,6 +19,10 @@ extension KickboardTypeEntity {
     @NSManaged public var typeName: String?
     @NSManaged public var kickboards: NSSet?
 
+    enum Key {
+        static let typeName = "typeName"
+        static let kickboards = "kickboards"
+    }
 }
 
 // MARK: Generated accessors for kickboards
