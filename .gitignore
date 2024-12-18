@@ -12,7 +12,7 @@ xcuserdata/**/*
 project.xcworkspace/
 Config.xcconfig
 
-
+.env
 .DS_Store
 .Trashes
 

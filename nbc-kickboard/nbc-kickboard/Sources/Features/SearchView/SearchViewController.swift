@@ -1,6 +1,10 @@
 import UIKit
 import SnapKit
+import SwiftUI
 
+protocol SearchViewControllerDelegate: AnyObject {
+    func didSelectLocation(latitude: Double, longitude: Double)
+}
 
 class SearchViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
     
@@ -15,7 +19,9 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
         view.backgroundColor = .white
         
         // .env 파일에서 API 키 로드
-        
+        if let env = loadEnv(), let apiKey = env["KAKAO_API_KEY"] {
+            kakaoApiKey = apiKey
+        }
         
         // Search Bar 설정
         searchBar.delegate = self
@@ -139,16 +145,21 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
         return cell
     }
     
-    // MARK: - TableView Delegate
+    weak var delegate: SearchViewControllerDelegate? // Delegate 선언
+
+    // TableView의 didSelectRowAt에서 delegate 호출
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let place = searchResults[indexPath.row]
         
-        // 위도, 경도 출력
-        if let latitude = Double(place.x), let longitude = Double(place.y) {
+        if let latitude = Double(place.y), let longitude = Double(place.x) {
             print("선택한 장소의 위도: \(latitude), 경도: \(longitude)")
+                
+            // Delegate를 통해 MainViewController에 전달
+            delegate?.didSelectLocation(latitude: latitude, longitude: longitude)
         }
-        
-        tableView.deselectRow(at: indexPath, animated: true)  // 선택된 셀을 해제
+
+        tableView.deselectRow(at: indexPath, animated: true) // 선택된 셀 해제
+        dismiss(animated: true, completion: nil) // 화면 닫기
     }
 }
 
@@ -159,8 +170,8 @@ struct KakaoPlaceSearchResult: Codable {
 
 struct Place: Codable {
     let placeName: String
-    let x: String  // 위도
-    let y: String  // 경도
+    let x: String  // 경도
+    let y: String  // 위도
     let addressName: String
     let placeURL: String?
     
@@ -169,7 +180,7 @@ struct Place: Codable {
         case x
         case y
         case addressName = "address_name"
-        case placeURL = "place_url"
+        case placeURL = "place_url" // Kakao API의 JSON 키에 맞게 매핑
     }
 }
 
