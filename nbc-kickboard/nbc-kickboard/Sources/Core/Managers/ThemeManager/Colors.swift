@@ -12,7 +12,7 @@ struct Colors {
     // 라이트에서 화이트, 다크에서 블랙
     static let label: UIColor = UIColor.label
     // 라이트에서 블랙, 다크에서 화이트
-    static let bg: UIColor = UIColor.systemBackground
+    static let background: UIColor = UIColor.systemBackground
     // 라이트에서 밝은 회색, 다크에서 어두운 회색
     static let fill: UIColor = UIColor.systemFill
     
