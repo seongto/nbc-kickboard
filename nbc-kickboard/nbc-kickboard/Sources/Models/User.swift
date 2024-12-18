@@ -8,5 +8,6 @@
 import Foundation
 
 struct User {
-    
+    let username: String
+    var isAdmin: Bool
 }
