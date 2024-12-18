@@ -27,7 +27,7 @@ final class KickboardButton: UIButton {
         return stackView
     }()
     
-    private lazy var iconView: UIImageView = {
+    private let iconView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "kickboard_button_unselected")
     
