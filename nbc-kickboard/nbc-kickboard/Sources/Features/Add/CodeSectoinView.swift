@@ -9,6 +9,31 @@ import UIKit
 import SnapKit
 
 final class CodeSectionView: UIStackView {
+    weak var delegate: CodeSectoinViewDelegate?
+    
+    private lazy var codeGenerateButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("코드 생성", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.backgroundColor = UIColor(named: "colorMain")
+        button.titleLabel?.font = UIFont.paybooc(ofSize: 14.0, weight: .bold)
+        button.layer.cornerRadius = 12.0
+        
+        button.addTarget(self, action: #selector(codeGenerateButtonButtonDidTap), for: .touchUpInside)
+        
+        return button
+    }()
+    
+    private let labelContentVStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.alignment = .leading
+        stackView.distribution = .equalSpacing
+        stackView.spacing = 10.0
+        
+        return stackView
+    }()
+    
     private let viewTitleLabel: UILabel = {
         let label = UILabel()
         label.text = "킥보드 코드"
@@ -31,6 +56,7 @@ final class CodeSectionView: UIStackView {
         super.init(frame: .zero)
         
         self.configureUI()
+        self.setupConstraints()
     }
     
     required init(coder: NSCoder) {
@@ -38,12 +64,23 @@ final class CodeSectionView: UIStackView {
     }
     
     private func configureUI() {
-        axis = .vertical
-        alignment = .leading
-        distribution = .equalSpacing
-        spacing = 10.0
+        axis = .horizontal
         
-        [viewTitleLabel, codeLabel].forEach { addArrangedSubview($0) }
+        [labelContentVStackView, codeGenerateButton].forEach { addArrangedSubview($0) }
+        
+        [viewTitleLabel, codeLabel].forEach { labelContentVStackView.addArrangedSubview($0) }
+    }
+    
+    private func setupConstraints() {
+        codeGenerateButton.snp.makeConstraints { $0.width.equalTo(70.0) }
+    }
+    
+    @objc private func codeGenerateButtonButtonDidTap() {
+        delegate?.createRandomKickboardCode { [weak self] text in
+            guard let self = self else { return }
+            
+            codeLabel.text = text
+        }
     }
 }
 
