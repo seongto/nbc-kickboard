@@ -13,6 +13,7 @@ struct Kickboard {
     let kickboardCode: String
     let isRented: Bool
     let batteryStatus: Int16
+    let type: KickboardType
 }
 
 struct Location: Codable {
