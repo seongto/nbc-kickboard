@@ -9,11 +9,11 @@ import UIKit
 import SnapKit
 
 protocol SortsectionViewDelegate: AnyObject {
-    func sortSectionView(_ sortSectionView: SortSectionView, didSelectedButtonType: KickboardButtonType)
+    func sortSectionView(_ sortSectionView: SortSectionView, didSelectedButtonType: KickboardType)
 }
 
 final class SortSectionView: UIStackView {
-    let buttonTypes: [KickboardButtonType]
+    let buttonTypes: [KickboardType]
     var kickboardButtons = [KickboardButton]()
     var selectedIndex = 0 {
         didSet {
@@ -49,7 +49,7 @@ final class SortSectionView: UIStackView {
         return stackView
     }()
     
-    init(buttonTypes: [KickboardButtonType]) {
+    init(buttonTypes: [KickboardType]) {
         self.buttonTypes = buttonTypes
         super.init(frame: .zero)
         
