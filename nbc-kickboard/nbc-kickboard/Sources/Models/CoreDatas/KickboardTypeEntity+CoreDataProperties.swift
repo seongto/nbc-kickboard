@@ -2,7 +2,7 @@
 //  KickboardTypeEntity+CoreDataProperties.swift
 //  nbc-kickboard
 //
-//  Created by 권승용 on 12/16/24.
+//  Created by 권승용 on 12/18/24.
 //
 //
 
@@ -19,10 +19,6 @@ extension KickboardTypeEntity {
     @NSManaged public var typeName: String?
     @NSManaged public var kickboards: NSSet?
 
-    enum Key {
-        static let typeName = "typeName"
-        static let kickboards = "kickboards"
-    }
 }
 
 // MARK: Generated accessors for kickboards

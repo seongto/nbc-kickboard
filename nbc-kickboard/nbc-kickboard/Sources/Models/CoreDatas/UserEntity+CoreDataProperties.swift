@@ -2,7 +2,7 @@
 //  UserEntity+CoreDataProperties.swift
 //  nbc-kickboard
 //
-//  Created by 권승용 on 12/16/24.
+//  Created by 권승용 on 12/18/24.
 //
 //
 
@@ -21,12 +21,6 @@ extension UserEntity {
     @NSManaged public var username: String?
     @NSManaged public var histories: NSSet?
 
-    enum Key {
-        static let isAdmin = "isAdmin"
-        static let password = "password"
-        static let username = "username"
-        static let histories = "histories"
-    }
 }
 
 // MARK: Generated accessors for histories

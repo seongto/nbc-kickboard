@@ -2,7 +2,7 @@
 //  HistoryEntity+CoreDataProperties.swift
 //  nbc-kickboard
 //
-//  Created by 권승용 on 12/16/24.
+//  Created by 권승용 on 12/18/24.
 //
 //
 
@@ -22,13 +22,6 @@ extension HistoryEntity {
     @NSManaged public var kickboard: KickboardEntity?
     @NSManaged public var user: UserEntity?
 
-    enum Key {
-        static let cost = "cost"
-        static let rentDate = "rentDate"
-        static let totalRentTime = "totalRentTime"
-        static let kickboard = "kickboard"
-        static let user = "user"
-    }
 }
 
 extension HistoryEntity : Identifiable {
