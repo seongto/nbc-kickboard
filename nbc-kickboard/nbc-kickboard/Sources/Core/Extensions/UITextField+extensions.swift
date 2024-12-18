@@ -14,7 +14,7 @@ extension UITextField {
         self.borderStyle = .roundedRect
         self.placeholder = placeholder
         
-        self.textColor = Colors.label
+        self.textColor = Colors.black
         self.font = Fonts.body
         
         if isSecret {

@@ -52,7 +52,7 @@ class AuthViewController: UIViewController, LoginViewDelegate {
 
 extension AuthViewController {
     private func setupUI() {
-        view.backgroundColor = Colors.background
+        view.backgroundColor = Colors.white
     }
 }
 

@@ -45,7 +45,7 @@ class SignupViewController: UIViewController, SignupViewDelegate {
 
 extension SignupViewController {
     private func setupUI() {
-        view.backgroundColor = Colors.background
+        view.backgroundColor = Colors.white
     }
 }
 
