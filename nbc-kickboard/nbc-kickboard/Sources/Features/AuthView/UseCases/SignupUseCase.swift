@@ -73,7 +73,7 @@ struct SignupUseCase: UseCaseProtocol {
             let hashedPw: String = try PasswordManager.encryptPassword(password)
             
             // 5. 사용자 생성
-            guard let newUser: UserEntity = userEntityRepository.createUser(username: username, hashedPw: hashedPw, isAdmin: isAdmin) else {
+            guard let _ = userEntityRepository.createUser(username: username, hashedPw: hashedPw, isAdmin: isAdmin) else {
                 print("왜인지 모르겠지만 아무튼 사용자 생성에 실패")
                 
                 errors.append("사용자 생성에 실패하였습니다.")

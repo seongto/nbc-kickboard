@@ -61,7 +61,7 @@ class MainViewController: UIViewController {
     private func setupBindings() {
         manager.$movingAnnotation
             .sink { [weak self] annotation in
-                if let existingAnnotations = self?.mapView.annotations.filter { !($0 is MKUserLocation) }{
+                if let existingAnnotations = self?.mapView.annotations.filter({ !($0 is MKUserLocation) }){
                     self?.mapView.removeAnnotations(existingAnnotations)
                 }
                 if let newAnnotation = annotation {
