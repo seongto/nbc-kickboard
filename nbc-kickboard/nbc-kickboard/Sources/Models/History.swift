@@ -12,4 +12,5 @@ struct History {
     let rentDate: Date
     let totalRentTime: Int16
     let kickboard: Kickboard
+    let user: User
 }
