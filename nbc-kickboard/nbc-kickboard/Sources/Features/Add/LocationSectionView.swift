@@ -9,7 +9,13 @@ import UIKit
 import MapKit
 import SnapKit
 
+protocol LocationSectionViewDelegate: AnyObject {
+    func mapViewReginDidChange(centerCoordinate: CLLocationCoordinate2D)
+}
+
 final class LocationSectionView: UIStackView {
+    weak var delegate: LocationSectionViewDelegate?
+    
     private let viewTitleLabel: UILabel = {
         let label = UILabel()
         label.text = "등록위치"
@@ -46,6 +52,8 @@ final class LocationSectionView: UIStackView {
         
         self.configureUI()
         self.setupConstratins()
+        
+        mapView.delegate = self
     }
     
     required init(coder: NSCoder) {

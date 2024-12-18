@@ -13,6 +13,8 @@ final class AddViewController: UIViewController {
     private var kickboardCode: String = "" {
         didSet { addButton.isEnabled = !kickboardCode.isEmpty }
     }
+    private var currentLatitude: Double = 0.0
+    private var currentLongitude: Double = 0.0
     
     private let titleLabel: UILabel = {
         let label = UILabel()
@@ -58,6 +60,7 @@ final class AddViewController: UIViewController {
         
         codeSectionView.delegate = self
         sortSectionView.delegate = locationSectionView
+        locationSectionView.delegate = self
     }
     
     private func configureUI() {
@@ -104,6 +107,13 @@ extension AddViewController: CodeSectoinViewDelegate {
         
         kickboardCode = newCode
         completion(newCode)
+    }
+}
+
+extension AddViewController: LocationSectionViewDelegate {
+    func mapViewReginDidChange(centerCoordinate: CLLocationCoordinate2D) {
+        currentLatitude = centerCoordinate.latitude
+        currentLongitude = centerCoordinate.longitude
     }
 }
 
