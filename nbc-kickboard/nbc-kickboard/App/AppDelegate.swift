@@ -11,6 +11,7 @@ import CoreData
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        saveInitialKickboardType()
         setupInitialKickboardData()
         return true
     }
@@ -24,23 +25,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didDiscardSceneSessions sceneSessions: Set<UISceneSession>) {
     }
     
+    func saveInitialKickboardType() {
+        CoreDataStack.shared.createKickboardType(name: "basic")
+        CoreDataStack.shared.createKickboardType(name: "power")
+    }
     
     // MARK: - 킥보드 초기 데이터 동기화 구문
     func setupInitialKickboardData() {
-        let context = CoreDataManager.shared.context
-        let fetchRequest: NSFetchRequest<KickboardEntity> = KickboardEntity.fetchRequest()
         
         do {
-            let count = try context.count(for: fetchRequest)
-            if count == 0 {
-                loadInitialData(context: context)
+            if try !CoreDataStack.shared.isKickboardInfoSaved() {
+                loadInitialData()
             }
         } catch {
             print("Failed to fetch kickboard count: \(error)")
         }
     }
     
-    private func loadInitialData(context: NSManagedObjectContext) {
+    private func loadInitialData() {
         guard let path = Bundle.main.path(forResource: "latitude_longitude", ofType: "json") else {
             print("Failed to load latitude_longitude.json")
             return
@@ -54,17 +56,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let locations = try JSONDecoder().decode([Location].self, from: jsonData)
             
             for location in locations {
-                let entity = KickboardEntity(context: context)
-                entity.latitude = location.latitude
-                entity.longitude = location.longitude
-                entity.batteryStatus = Int16.random(in: 20...100)
-                entity.isRented = false
-                entity.kickboardCode = String((0..<8).map { _ in
-                    characters.randomElement()!
-                })
+                try CoreDataStack.shared.createKickboard(
+                    kickboardCode: String((0..<8).map { _ in
+                        characters.randomElement()!
+                    }),
+                    batteryStatus: Int16.random(in: 20...100),
+                    isRented: false,
+                    latitude: location.latitude,
+                    longitude: location.longitude,
+                    type: KickboardType.allCases.randomElement()!
+                )
             }
-            
-            try context.save()
         } catch {
             print("Failed to seed initial data: \(error)")
         }

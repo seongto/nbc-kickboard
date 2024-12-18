@@ -2,7 +2,7 @@
 //  KickboardEntity+CoreDataProperties.swift
 //  nbc-kickboard
 //
-//  Created by 권승용 on 12/16/24.
+//  Created by 권승용 on 12/18/24.
 //
 //
 

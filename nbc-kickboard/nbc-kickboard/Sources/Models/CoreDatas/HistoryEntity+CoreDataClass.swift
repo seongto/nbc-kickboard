@@ -11,5 +11,11 @@ import CoreData
 
 @objc(HistoryEntity)
 public class HistoryEntity: NSManagedObject {
-
+    enum Key {
+        static let cost = "cost"
+        static let rentDate = "rentDate"
+        static let totalRentTime = "totalRentTime"
+        static let kickboard = "kickboard"
+        static let user = "user"
+    }
 }
