@@ -8,6 +8,10 @@
 import UIKit
 import SnapKit
 
+protocol CodeSectoinViewDelegate: AnyObject {
+    func createRandomKickboardCode(completion: @escaping (String) -> Void)
+}
+
 final class CodeSectionView: UIStackView {
     weak var delegate: CodeSectoinViewDelegate?
     

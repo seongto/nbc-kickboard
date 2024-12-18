@@ -6,9 +6,12 @@
 //
 
 import UIKit
+import MapKit
 import SnapKit
 
 final class AddViewController: UIViewController {
+    private var kickboardCode: String = ""
+    
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "등록"
@@ -51,6 +54,7 @@ final class AddViewController: UIViewController {
         self.configureUI()
         self.setupConstraints()
         
+        codeSectionView.delegate = self
         sortSectionView.delegate = locationSectionView
     }
     
@@ -78,6 +82,26 @@ final class AddViewController: UIViewController {
             $0.bottom.equalToSuperview().inset(10.0)
             $0.height.equalTo(60.0)
         }
+    }
+}
+
+extension AddViewController: CodeSectoinViewDelegate {
+    func createRandomKickboardCode(completion: @escaping (String) -> Void) {
+        let characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+        
+        func generateCode() -> String { String((0..<8).compactMap { _ in characters.randomElement() }) }
+        
+        var newCode: String
+        var kickboard: Kickboard? = nil
+        
+        // KickboardCode 중복 방지
+        repeat {
+            newCode = generateCode()
+            kickboard = try? CoreDataStack.shared.readKickboard(kickboardCode: newCode)
+        } while kickboard != nil
+        
+        kickboardCode = newCode
+        completion(newCode)
     }
 }
 
