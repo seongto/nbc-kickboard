@@ -11,7 +11,7 @@ import SnapKit
 class SignupViewController: UIViewController, SignupViewDelegate {
     // MARK: - Properties
     
-    private let userEntityRepository: UserEntityRepository
+    private let userEntityRepository: UserEntityRepositoryProtocol
     private let signupUseCase: SignupUseCase
     private let signupView = SignupView()
     
@@ -20,7 +20,7 @@ class SignupViewController: UIViewController, SignupViewDelegate {
     
     // MARK: - init & Life cycles
     
-    init(userEntityRepository: UserEntityRepository = UserEntityRepository()) {
+    init(userEntityRepository: UserEntityRepositoryProtocol = UserEntityRepository()) {
         self.userEntityRepository = userEntityRepository
         self.signupUseCase = SignupUseCase(userEntityRepository: self.userEntityRepository)
         super.init(nibName: nil, bundle: nil)
