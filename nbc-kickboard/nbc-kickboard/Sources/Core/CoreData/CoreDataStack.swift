@@ -27,7 +27,7 @@ final class CoreDataStack {
         context = container.viewContext
     }
     
-    private func save() {
+    func save() {
         guard persistentContainer.viewContext.hasChanges else { return }
         
         do {

@@ -54,19 +54,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         do {
             let jsonData = try Data(contentsOf: url)
             let locations = try JSONDecoder().decode([Location].self, from: jsonData)
+            // First fetch all KickboardTypes
+            let fetchRequest: NSFetchRequest<KickboardTypeEntity> = KickboardTypeEntity.fetchRequest()
+            let kickboardTypes = try CoreDataStack.shared.context.fetch(fetchRequest)
             
-            for location in locations {
-                try CoreDataStack.shared.createKickboard(
-                    kickboardCode: String((0..<8).map { _ in
-                        characters.randomElement()!
-                    }),
-                    batteryStatus: Int16.random(in: 20...100),
-                    isRented: false,
-                    latitude: location.latitude,
-                    longitude: location.longitude,
-                    type: KickboardType.allCases.randomElement()!
-                )
-            }
+            // Create batch insert dictionary array
+            let batchInsertRequest = NSBatchInsertRequest(entity: KickboardEntity.entity(), objects: locations.map { location in
+                let randomType = kickboardTypes.randomElement()!
+                return [
+                    "kickboardCode": String((0..<8).map { _ in characters.randomElement()! }),
+                    "batteryStatus": Int16.random(in: 20...100),
+                    "isRented": false,
+                    "latitude": location.latitude,
+                    "longitude": location.longitude,
+                    "kickboardType": randomType // Pass the actual KickboardType object
+                ] as [String : Any]
+            })
+            
+            try CoreDataStack.shared.context.execute(batchInsertRequest)
         } catch {
             print("Failed to seed initial data: \(error)")
         }
