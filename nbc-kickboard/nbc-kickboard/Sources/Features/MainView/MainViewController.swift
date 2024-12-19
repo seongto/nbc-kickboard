@@ -8,13 +8,23 @@ class CustomAnnotation: NSObject, MKAnnotation {
     var coordinate: CLLocationCoordinate2D
     var title: String?
     var subtitle: String?
-    var kickboardType: KickboardType?
+    var kickboardType: KickboardType
     
-    init(coordinate: CLLocationCoordinate2D, title: String? = nil, subtitle: String? = nil, kickboardType: KickboardType? = nil) {
+    init(coordinate: CLLocationCoordinate2D, title: String, subtitle: String, kickboardType: KickboardType) {
         self.coordinate = coordinate
         self.title = title
         self.subtitle = subtitle
         self.kickboardType = kickboardType
+    }
+}
+
+class MovingAnnotation: NSObject, MKAnnotation {
+    var coordinate: CLLocationCoordinate2D
+    var title: String?
+    
+    init(coordinate: CLLocationCoordinate2D, title: String) {
+        self.coordinate = coordinate
+        self.title = title
     }
 }
 
@@ -58,6 +68,17 @@ class MainViewController: UIViewController {
                 }
             }
             .store(in: &cancellables)
+        
+        
+        manager.$currentRoute
+            .sink { [weak self] route in
+                guard let self = self else { return }
+                
+                if let existingRoute = manager.currentRoute {
+                    mainView.mapView.removeOverlay(existingRoute.polyline)
+                }
+            }
+            .store(in: &cancellables)
     }
     
     @objc private func searchButtonTapped() {
@@ -87,6 +108,7 @@ class MainViewController: UIViewController {
                 minLng: minLng,
                 maxLng: maxLng
             )
+            
             updateAnnotations()
         } catch {
             print("Failed to fetch kickboards: \(error)")
@@ -146,30 +168,13 @@ class MainViewController: UIViewController {
         let existingAnnotations = mainView.mapView.annotations.filter { !($0 is MKUserLocation) }
         mainView.mapView.removeAnnotations(existingAnnotations)
         
-        // 지도 위치 변경 시, 새로 보이는 영역에 있는 킥보드들 지도에 표시
-//        let annotations = kickboards.map { kickboard -> MKPointAnnotation in
-//            let annotation = MKPointAnnotation()
-//            annotation.coordinate = CLLocationCoordinate2D(
-//                latitude: kickboard.latitude,
-//                longitude: kickboard.longitude
-//            )
-//            
-//            annotation.title = "배터리: \(kickboard.batteryStatus)%"
-//            annotation.subtitle = kickboard.kickboardCode
-//            return annotation
-//        }
-        
         let annotations = kickboards.map { kickboard -> CustomAnnotation in
-            let annotation = CustomAnnotation(
-                coordinate: CLLocationCoordinate2D(
-                    latitude: kickboard.latitude,
-                    longitude: kickboard.longitude)
+            CustomAnnotation(
+                coordinate:CLLocationCoordinate2D(latitude: kickboard.latitude, longitude: kickboard.longitude),
+                title: "배터리: \(kickboard.batteryStatus)%",
+                subtitle: kickboard.kickboardCode,
+                kickboardType: kickboard.type
             )
-            
-            annotation.title = "배터리: \(kickboard.batteryStatus)%"
-            annotation.subtitle = kickboard.kickboardCode
-            annotation.kickboardType = kickboard.type
-            return annotation
         }
         
         mainView.mapView.addAnnotations(annotations)
@@ -219,34 +224,47 @@ extension MainViewController: MKMapViewDelegate {
         if annotation is MKUserLocation {
             return nil
         }
-        let identifier = "KickboardMarker"
-        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
         
-        if annotationView == nil {
-            annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: identifier)
-            annotationView?.canShowCallout = true
-//            annotationView?.image = UIImage(named: "map_pin2")
+        if annotation is MovingAnnotation {
+            let identifier = "MovingKickboard"
+            var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
             
-            // 오른쪽 버튼 추가
-            let rightButton = UIButton(type: .detailDisclosure)
-            rightButton.setTitle("대여하기", for: .normal)
-            annotationView?.rightCalloutAccessoryView = rightButton
-        }
-        
-        annotationView?.annotation = annotation
-        
-        if let customAnnotation = annotation as? CustomAnnotation {
-            switch customAnnotation.kickboardType {
-            case .basic:
-                annotationView?.image = UIImage(named: "map_pin1")
-            case .power:
-                annotationView?.image = UIImage(named: "map_pin2")
-            case .none:
-                break
+            if annotationView == nil {
+                annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+                annotationView?.image = UIImage(named: "map_pin_moving") // 움직이는 킥보드용 이미지
             }
+            
+            return annotationView
+        } else {
+            let identifier = "KickboardMarker"
+            var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
+            
+            if annotationView == nil {
+                annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+            }
+            
+            annotationView?.canShowCallout = true
+            
+            let rightButton = UIButton(type: .system)
+            rightButton.setTitle("대여", for: .normal)
+            rightButton.titleLabel?.font = Fonts.subtitleBold
+            rightButton.setTitleColor(Colors.white, for: .normal)
+            rightButton.sizeToFit()
+            
+            annotationView?.rightCalloutAccessoryView = rightButton
+            annotationView?.annotation = annotation
+            
+            if let customAnnotation = annotation as? CustomAnnotation {
+                switch customAnnotation.kickboardType {
+                case .basic:
+                    annotationView?.image = UIImage(named: "map_pin1")
+                case .power:
+                    annotationView?.image = UIImage(named: "map_pin2")
+                }
+            }
+            
+            return annotationView
         }
-        
-        return annotationView
     }
     
     /// 사용자가 바라보는 위치가 변경될 때
@@ -279,13 +297,8 @@ extension MainViewController: MKMapViewDelegate {
         return MKOverlayRenderer(overlay: overlay)
     }
     
-    /// 마커 선택 이벤트에 대한 콜백 메서드
-    func mapView(_ mapView: MKMapView, didSelect annotation: MKAnnotation) {
-        guard !(annotation is MKUserLocation) else { return }
-    }
-    
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-        guard let annotation = view.annotation as? MKPointAnnotation,
+        guard let annotation = view.annotation as? CustomAnnotation,
               let kickboard = kickboards.first(where: { $0.kickboardCode == annotation.subtitle }) else {
             return
         }
