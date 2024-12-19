@@ -14,7 +14,16 @@ protocol ModalLifecycleNotifiable: AnyObject {
     func onModalWillDisappear()
 }
 
-final class GlobalModalViewController: UIViewController {
+protocol ModalCloseDelegate: AnyObject {
+    func closeModal()
+}
+
+protocol ModalCloseable: AnyObject {
+    var delegate: ModalCloseDelegate? { get set }
+    func closeModal()
+}
+
+final class GlobalModalViewController: UIViewController, ModalCloseDelegate {
     // MARK: - Properties
 
     private let modalContentsView: UIView
@@ -22,9 +31,11 @@ final class GlobalModalViewController: UIViewController {
     
     // MARK: - init & Life cyclesas
 
-    init(_ modalContentsView: UIView ) {
-        self.modalContentsView = modalContentsView
+    init(modalContentsView: ModalCloseable ) {
+        self.modalContentsView = modalContentsView as! UIView
         super.init(nibName: nil, bundle: nil)
+        
+        modalContentsView.delegate = self
     }
 
     required init?(coder: NSCoder) {
@@ -81,5 +92,7 @@ extension GlobalModalViewController {
 // MARK: - Action Management & Mapping
 
 extension GlobalModalViewController {
-    
+    func closeModal() {
+        self.dismiss(animated: true, completion: nil)
+    }
 }

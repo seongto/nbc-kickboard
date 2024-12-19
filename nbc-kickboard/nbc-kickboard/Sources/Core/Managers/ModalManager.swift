@@ -17,16 +17,16 @@ struct ModalManager {
     ///   - preventGesture : 모달 제스쳐 비활성화 여부
     /// - Returns: UIView가 삽입된 전역 모달뷰컨트롤러를 반환.
     static func createGlobalModal(
-        content: UIView,
+        content: ModalCloseable,
         preventGesture: Bool = true,
-        initAction: (() -> Void)?,
-        dismissAction: (() -> Void)?
+        initAction: (() -> Void) = {},
+        dismissAction: (() -> Void) = {}
     ) -> GlobalModalViewController? {
         guard let topVC = AppHelpers.getTopViewController() else {
             return nil
         }
         
-        let modalVC = GlobalModalViewController(content)
+        let modalVC = GlobalModalViewController(modalContentsView: content)
         modalVC.modalPresentationStyle = .overFullScreen
         modalVC.modalTransitionStyle = .crossDissolve
         
@@ -36,7 +36,7 @@ struct ModalManager {
             modalVC.isModalInPresentation = preventGesture
         }
         
-        topVC.present(modalVC, animated: true, completion: initAction)
+        topVC.present(modalVC, animated: true)
         
         return modalVC
     }

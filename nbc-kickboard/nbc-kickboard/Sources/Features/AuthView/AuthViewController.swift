@@ -88,8 +88,9 @@ extension AuthViewController {
             
         case .failure(let error):
             let errorMessage: String = error.messages.reduce("") { "\($0)\n- \($1)" }
-            
-            AppHelpers.showBasicAlert(title: "로그인 실패", message: errorMessage, action: { print("Alert 종료")})
+            print(errorMessage)
+            let alertView = AlertView(title: "로그인 실패", message: errorMessage)
+            let _ = ModalManager.createGlobalModal(content: alertView)
         }
     }
     

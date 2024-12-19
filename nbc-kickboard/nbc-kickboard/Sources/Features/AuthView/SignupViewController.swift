@@ -50,50 +50,34 @@ extension SignupViewController {
 }
 
 
-// MARK: - Navigation Controll
-
-extension SignupViewController {
-    
-}
-
-
 // MARK: - Action Management & Mapping
 
 extension SignupViewController {
     
+    /// 회원가입을 요청하는 메소드.
+    /// - Parameters:
+    ///   - username: 사용자가 입력한 사용자 아이디
+    ///   - password: 사용자가 입력한 사용자 암호
     func requestSignup(username: String, password: String) {
         let result = signupUseCase.execute(( username: username, password: password, isAdmin: isAdmin ))
         switch result {
         case .success:
-            print("sucess")
-            let alert = UIAlertController(
-                title: "가입 완료",
-                message: "회원 가입이 완료되었습니다. 로그인 해주세요.",
-                preferredStyle: .alert
-            )
-            
-            let confirmAction = UIAlertAction(title: "확인", style: .default) { _ in
+            let alertView = AlertView(title: "회원 가입 성공", message: "로그인 화면으로 돌아갑니다.") {
                 self.navigationController?.popViewController(animated: true)
             }
-            alert.addAction(confirmAction)
-            present(alert, animated: true)
             
+            let _ = ModalManager.createGlobalModal(content: alertView)
         case .failure(let error):
-            print(error.messages)
             let errorMessage: String = error.messages.reduce("") { "\($0)\n- \($1)" }
-            let alert = UIAlertController(
-                title: "회원 가입 실패",
-                message: errorMessage,
-                preferredStyle: .alert
-            )
+            print(errorMessage)
+            let alertView = AlertView(title: "회원 가입 실패", message: errorMessage)
             
-            let cancelAction = UIAlertAction(title: "확인", style: .default)
-            alert.addAction(cancelAction)
-            
-            present(alert, animated: true)
+            let _ = ModalManager.createGlobalModal(content: alertView)
         }
     }
     
+    /// 가입 단계의 관리자 여부를 선택하는 토글 버튼의 상태 데이터와 뷰를 연결.
+    /// 이런 식으로 데이터와 뷰 화면 반영을 구성하는 게 맞는건지 잘 모르겠습니다.
     func toggleAgreementStatus() {
         isAdmin.toggle()
         signupView.agreementButton.isSelected = isAdmin
