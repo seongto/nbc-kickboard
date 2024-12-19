@@ -19,8 +19,8 @@ final class CodeSectionView: UIStackView {
         let button = UIButton()
         button.setTitle("코드 생성", for: .normal)
         button.setTitleColor(.white, for: .normal)
-        button.backgroundColor = UIColor(named: "colorMain")
-        button.titleLabel?.font = UIFont.paybooc(ofSize: 14.0, weight: .bold)
+        button.backgroundColor = Colors.main
+        button.titleLabel?.font = Fonts.bodyBold
         button.layer.cornerRadius = 12.0
         
         button.addTarget(self, action: #selector(codeGenerateButtonButtonDidTap), for: .touchUpInside)
@@ -42,7 +42,7 @@ final class CodeSectionView: UIStackView {
         let label = UILabel()
         label.text = "킥보드 코드"
         label.textColor = .black
-        label.font = UIFont.paybooc(ofSize: 20.0, weight: .bold)
+        label.font = Fonts.subtitleBold
         
         return label
     }()
@@ -50,8 +50,8 @@ final class CodeSectionView: UIStackView {
     private let codeLabel: UILabel = {
         let label = UILabel()
         label.text = "-"
-        label.textColor = UIColor(named: "colorPlaceholder")
-        label.font = UIFont.paybooc(ofSize: 16.0, weight: .bold)
+        label.textColor = Colors.placeHolder
+        label.font = Fonts.bodyBold
         
         return label
     }()
