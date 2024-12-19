@@ -34,7 +34,9 @@ extension MyPageViewController: MyPageViewDelegate {
     }
     
     func logoutButtonDidTapped() {
-        print("logout tapped")
+        UserDefaults.standard.removeObject(forKey: "username")
+        UserDefaults.standard.removeObject(forKey: "isAdmin")
+        navigationController?.popViewController(animated: false)
     }
 }
 

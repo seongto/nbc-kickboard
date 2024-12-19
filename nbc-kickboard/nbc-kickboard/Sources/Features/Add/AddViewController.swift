@@ -94,7 +94,6 @@ final class AddViewController: UIViewController {
         self.setupConstraints()
         
         codeSectionView.delegate = self
-        sortSectionView.delegate = locationSectionView
         sortSectionView.delegate = self
         locationSectionView.delegate = self
     }
@@ -156,6 +155,7 @@ extension AddViewController: CodeSectoinViewDelegate {
 extension AddViewController: SortsectionViewDelegate {
     func sortSectionView(_ sortSectionView: SortSectionView, didSelectedButtonType: KickboardType) {
         kickboardType = didSelectedButtonType
+        locationSectionView.updateCenterMaker(with: kickboardType)
     }
 }
 
