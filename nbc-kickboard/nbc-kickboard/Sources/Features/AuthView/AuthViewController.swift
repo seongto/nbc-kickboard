@@ -84,9 +84,16 @@ extension AuthViewController {
                 preferredStyle: .alert
             )
             
-            let confirmAction = UIAlertAction(title: "확인", style: .default) { _ in
+
+            let confirmAction = UIAlertAction(title: "확인", style: .default) { [weak self] _ in
+                guard let self = self else { return }
                 
+                UserDefaults.standard.set(userEntity.username, forKey: "username")
+                UserDefaults.standard.set(userEntity.isAdmin, forKey: "isAdmin")
+                
+                navigationController?.pushViewController(CustomTabBarController(), animated: false)
             }
+            
             alert.addAction(confirmAction)
             present(alert, animated: true)
         case .failure(let error):
