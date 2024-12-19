@@ -29,7 +29,7 @@ final class AddViewController: UIViewController {
         label.text = "등록"
         label.textColor = .black
         label.textAlignment = .left
-        label.font = UIFont.paybooc(ofSize: 26.0, weight: .bold)
+        label.font = Fonts.headlineBold
         
         return label
     }()

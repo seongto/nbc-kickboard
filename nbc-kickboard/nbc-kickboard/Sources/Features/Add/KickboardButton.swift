@@ -38,7 +38,7 @@ final class KickboardButton: UIButton {
             label.text = "파워"
         }
         label.textColor = UIColor(named: "colorPlaceholder")
-        label.font = UIFont.paybooc(ofSize: 12.0, weight: .medium)
+        label.font = Fonts.cap
         
         return label
     }()
