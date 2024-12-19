@@ -249,6 +249,8 @@ extension MainViewController: MKMapViewDelegate {
             rightButton.setTitle("대여", for: .normal)
             rightButton.titleLabel?.font = Fonts.subtitleBold
             rightButton.setTitleColor(Colors.white, for: .normal)
+            rightButton.backgroundColor = Colors.mint
+            rightButton.layer.cornerRadius = 8
             rightButton.sizeToFit()
             
             annotationView?.rightCalloutAccessoryView = rightButton
