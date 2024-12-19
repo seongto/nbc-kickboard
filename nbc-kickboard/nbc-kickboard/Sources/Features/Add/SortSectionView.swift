@@ -35,7 +35,7 @@ final class SortSectionView: UIStackView {
         let label = UILabel()
         label.text = "종류"
         label.textColor = .black
-        label.font = UIFont.paybooc(ofSize: 20.0, weight: .bold)
+        label.font = Fonts.subtitleBold
         
         return label
     }()
@@ -43,7 +43,7 @@ final class SortSectionView: UIStackView {
     private let buttonHStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .horizontal
-        stackView.spacing = 20.0
+        stackView.spacing = Layouts.padding
         stackView.distribution = .fillProportionally
         
         return stackView

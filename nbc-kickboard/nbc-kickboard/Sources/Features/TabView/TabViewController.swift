@@ -37,6 +37,11 @@ final class CustomTabBarController: UIViewController {
         customTabBar.delegate = self
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(true, animated: true)
+    }
+    
     private func configureUI() {
         view.backgroundColor = .white
         view.addSubview(customTabBar)

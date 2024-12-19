@@ -29,7 +29,7 @@ final class AddViewController: UIViewController {
         label.text = "등록"
         label.textColor = .black
         label.textAlignment = .left
-        label.font = UIFont.paybooc(ofSize: 26.0, weight: .bold)
+        label.font = Fonts.headlineBold
         
         return label
     }()
@@ -38,7 +38,7 @@ final class AddViewController: UIViewController {
         let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.distribution = .equalSpacing
-        stackView.spacing = 30.0
+        stackView.spacing = Layouts.paddingBig
         
         return stackView
     }()
@@ -53,10 +53,36 @@ final class AddViewController: UIViewController {
         let button = UIButton()
         button.applyFullSizeButtonStyle(
             title: "등록",
-            bgColor: UIColor(named: "colorMain")!,
+            bgColor: Colors.main,
             isRadius: true)
         button.isEnabled = false
-        button.addTarget(self, action: #selector(addButtonDidTap), for: .touchUpInside)
+        
+        button.applyButtonAction { [weak self] in
+            guard let self = self else { return }
+            
+            do {
+                let newKickboard = Kickboard(
+                    longitude: currentLongitude,
+                    latitude: currentLatitude,
+                    kickboardCode: kickboardCode,
+                    isRented: false,
+                    batteryStatus: 100,
+                    type: kickboardType
+                )
+                
+                try kickboardRepository.saveKickboard(newKickboard)
+            } catch {
+                print("ERROR: \(error.localizedDescription)")
+            }
+            
+            delegate?.addViewController(
+                self,
+                createdKickboardLoaction: (
+                    Location(latitude: currentLatitude,
+                             longitude: currentLongitude)))
+            
+            resetData()
+        }
         
         return button
     }()
@@ -88,12 +114,12 @@ final class AddViewController: UIViewController {
         }
         
         contentVStackView.snp.makeConstraints {
-            $0.top.equalTo(titleLabel.snp.bottom).offset(30.0)
+            $0.top.equalTo(titleLabel.snp.bottom).offset(Layouts.paddingBig)
             $0.leading.trailing.equalToSuperview().inset(Layouts.padding)
         }
         
         addButton.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview().inset(20.0)
+            $0.leading.trailing.equalToSuperview().inset(Layouts.padding)
             $0.bottom.equalToSuperview().inset(10.0)
             $0.height.equalTo(60.0)
         }
@@ -104,31 +130,6 @@ final class AddViewController: UIViewController {
         sortSectionView.resetSelectedIndex()
         locationSectionView.resetCoordinate()
         addButton.isEnabled = false
-    }
-    
-    @objc private func addButtonDidTap() {
-        do {
-            let newKickboard = Kickboard(
-                longitude: currentLongitude,
-                latitude: currentLatitude,
-                kickboardCode: kickboardCode,
-                isRented: false,
-                batteryStatus: 100,
-                type: kickboardType
-            )
-            
-            try kickboardRepository.saveKickboard(newKickboard)
-        } catch {
-            print("ERROR: \(error.localizedDescription)")
-        }
-        
-        delegate?.addViewController(
-            self,
-            createdKickboardLoaction: (
-                Location(latitude: currentLatitude,
-                         longitude: currentLongitude)))
-        
-        resetData()
     }
 }
 

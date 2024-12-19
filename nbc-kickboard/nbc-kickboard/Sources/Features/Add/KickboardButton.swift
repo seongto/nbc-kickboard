@@ -37,8 +37,8 @@ final class KickboardButton: UIButton {
         case .power:
             label.text = "파워"
         }
-        label.textColor = UIColor(named: "colorPlaceholder")
-        label.font = UIFont.paybooc(ofSize: 12.0, weight: .medium)
+        label.textColor = Colors.placeHolder
+        label.font = Fonts.cap
         
         return label
     }()
@@ -58,7 +58,7 @@ final class KickboardButton: UIButton {
     private func configureUI() {
         layer.cornerRadius = 12.0
         layer.borderWidth = 1.0
-        layer.borderColor = UIColor(named: "colorPlaceholder")?.cgColor
+        layer.borderColor = Colors.placeHolder.cgColor
         
         self.addSubview(contentVStackView)
         
@@ -76,17 +76,17 @@ final class KickboardButton: UIButton {
             switch type {
             case .basic:
                 iconView.image = UIImage(named: "kickboard_button_basic")
-                typeLabel.textColor = UIColor(named: "colorMain")
-                layer.borderColor = UIColor(named: "colorMain")?.cgColor
+                typeLabel.textColor = Colors.main
+                layer.borderColor = Colors.main.cgColor
             case .power:
                 iconView.image = UIImage(named: "kickboard_button_power")
-                typeLabel.textColor = UIColor(named: "colorSub2")
-                layer.borderColor = UIColor(named: "colorSub2")?.cgColor
+                typeLabel.textColor = Colors.sub2
+                layer.borderColor = Colors.sub2.cgColor
             }
         } else {
             iconView.image = UIImage(named: "kickboard_button_unselected")
-            typeLabel.textColor = UIColor(named: "colorPlaceholder")
-            layer.borderColor = UIColor(named: "colorPlaceholder")?.cgColor
+            typeLabel.textColor = Colors.placeHolder
+            layer.borderColor = Colors.placeHolder.cgColor
         }
     }
 }
