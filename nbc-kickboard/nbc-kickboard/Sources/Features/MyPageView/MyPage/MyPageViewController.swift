@@ -24,6 +24,7 @@ final class MyPageViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        navigationController?.isNavigationBarHidden = true
         
         if let currentUserName = UserDefaults.standard.object(forKey: "username") as? String,
            let currentUserIsAdmin = UserDefaults.standard.object(forKey: "isAdmin") as? Bool {
@@ -33,6 +34,11 @@ final class MyPageViewController: UIViewController {
             )
             myPageView.configureUserName(currentUserName)
         }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.isNavigationBarHidden = false
     }
     
     func configureDelegate() {
