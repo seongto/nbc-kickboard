@@ -96,22 +96,20 @@ final class LocationSectionView: UIStackView {
         
         mapView.setRegion(region, animated: false)
     }
-}
-
-extension LocationSectionView: MKMapViewDelegate {
-    func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
-        delegate?.mapViewReginDidChange(centerCoordinate: mapView.centerCoordinate)
-    }
-}
-
-extension LocationSectionView: SortsectionViewDelegate {
-    func sortSectionView(_ sortSectionView: SortSectionView, didSelectedButtonType: KickboardType) {
-        switch didSelectedButtonType {
+    
+    func updateCenterMaker(with type: KickboardType) {
+        switch type {
         case .basic:
             centerMarker.image = UIImage(named: "basic_maker")
         case .power:
             centerMarker.image = UIImage(named: "power_maker")
         }
+    }
+}
+
+extension LocationSectionView: MKMapViewDelegate {
+    func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+        delegate?.mapViewReginDidChange(centerCoordinate: mapView.centerCoordinate)
     }
 }
 
