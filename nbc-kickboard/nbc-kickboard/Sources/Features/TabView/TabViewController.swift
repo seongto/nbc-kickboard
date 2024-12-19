@@ -71,7 +71,7 @@ final class CustomTabBarController: UIViewController {
                     addViewController.delegate = self
                     viewController = addViewController
                 case .my:
-                    viewController = MyPageViewController()
+                    viewController = UINavigationController(rootViewController: MyPageViewController())
                 }
                 
                 addChild(viewController)

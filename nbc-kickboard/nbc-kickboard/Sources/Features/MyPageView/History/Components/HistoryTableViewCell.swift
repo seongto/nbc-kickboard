@@ -52,6 +52,14 @@ final class HistoryTableViewCell: UITableViewCell {
         return stackView
     }()
     
+    private let dateFormatter = DateFormatter()
+    
+    private let numberFormatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        return formatter
+    }()
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         configureUI()
@@ -82,11 +90,18 @@ final class HistoryTableViewCell: UITableViewCell {
         }
     }
     
-    func setupCell(_ type: String, date: String, time: String, price: String) {
-        typeImageView.image = type == "basic" ? UIImage(resource: .kickboardBasic) : UIImage(resource: .kickboardPower)
-        rentDateLabel.text = date
-        rentTimeLabel.text = time
-        rentPriceLabel.text = price
+    func setupCell(with history: History) {
+        typeImageView.image = history.kickboard.type == .basic ? UIImage(resource: .kickboardBasic) : UIImage(resource: .kickboardPower)
+        dateFormatter.dateFormat = "yyy-MM-dd"
+        rentDateLabel.text = dateFormatter.string(from: history.rentDate)
+        
+        let minutes = history.totalRentTime / 60
+        let seconds = history.totalRentTime % 60
+        rentTimeLabel.text = String(format: "%02dm%02ds", minutes, seconds)
+        
+        if let formattedCost = numberFormatter.string(from: NSNumber(value: history.cost)) {
+            rentPriceLabel.text = "\(formattedCost)won"
+        }
     }
     
     private func makeHistorySubViews() -> [UIView] {

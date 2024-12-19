@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "battery-low-1--phone-mobile-charge-device-electricity-power-battery-low.svg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

@@ -74,12 +74,18 @@ final class KickboardManager {
         
         do {
             // TODO: current User 저장하기
+            guard let username = UserDefaults.standard.value(forKey: "username") as? String,
+                  let isAdmin = UserDefaults.standard.value(forKey: "isAdmin") as? Bool else {
+                print("Failed to Create riding history: no user in userdefaults")
+                return
+            }
+            
             let newHistory = History(
                 cost: Int16(price),
                 rentDate: Date(),
                 totalRentTime: Int16(elapsedTime),
                 kickboard: kickboard,
-                user: User(username: "test", isAdmin: false)
+                user: User(username: username, isAdmin: isAdmin)
             )
             
             try historyRepository.saveHistory(newHistory)
