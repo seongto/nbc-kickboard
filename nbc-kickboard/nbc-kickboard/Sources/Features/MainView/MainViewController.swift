@@ -1,72 +1,45 @@
 import UIKit
 import MapKit
 import CoreLocation
-import SnapKit
 import Combine
 import CoreData
 
 class MainViewController: UIViewController {
+    private let mainView = MainView()
     private let locationManager = CLLocationManager()
     private let manager = KickboardManager.shared
     private let kickboardRepository: KickboardRepositoryProtocol = KickboardRepository()
     private var kickboards: [Kickboard] = []
-    
     private let maxRange = 0.036
-    
     private var cancellables = Set<AnyCancellable>()
-    
-    // MARK: - UI Components
-    private lazy var mapView: MKMapView = {
-        let map = MKMapView()
-        map.showsUserLocation = true
-        map.delegate = self
 
-        return map
-    }()
+    override func loadView() {
+        view = mainView
+    }
 
-    private lazy var locationButton: UIButton = {
-        let button = UIButton()
-        button.setImage(UIImage(systemName: "location.fill"), for: .normal)
-        button.backgroundColor = .white
-        button.layer.cornerRadius = 20
-        button.layer.shadowColor = UIColor.black.cgColor
-        button.layer.shadowOffset = CGSize(width: 0, height: 2)
-        button.layer.shadowOpacity = 0.2
-        button.layer.shadowRadius = 4
-        button.addTarget(self, action: #selector(locationButtonTapped), for: .touchUpInside)
-        return button
-    }()
-    
-    private lazy var searchButton: UIButton = {
-        let button = UIButton()
-        button.setImage(UIImage(systemName: "magnifyingglass"), for: .normal) // 검색 아이콘
-        button.backgroundColor = .white
-        button.layer.cornerRadius = 20
-        button.layer.shadowColor = UIColor.black.cgColor
-        button.layer.shadowOffset = CGSize(width: 0, height: 2)
-        button.layer.shadowOpacity = 0.2
-        button.layer.shadowRadius = 4
-        button.addTarget(self, action: #selector(searchButtonTapped), for: .touchUpInside)
-        return button
-    }()
-    
-    
-    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupUI()
+        setupActions()
         setupLocationManager()
         setupBindings()
     }
 
+    private func setupActions() {
+        mainView.locationButton.addTarget(self, action: #selector(locationButtonTapped), for: .touchUpInside)
+        mainView.searchButton.addTarget(self, action: #selector(searchButtonTapped), for: .touchUpInside)
+    }
+    
     private func setupBindings() {
         manager.$movingAnnotation
             .sink { [weak self] annotation in
-                if let existingAnnotations = self?.mapView.annotations.filter({ !($0 is MKUserLocation) }){
-                    self?.mapView.removeAnnotations(existingAnnotations)
-                }
+                guard let self = self else { return }
+                // 기존의 annotation 제거
+                let existingAnnotations = self.mainView.mapView.annotations.filter { !($0 is MKUserLocation) }
+                self.mainView.mapView.removeAnnotations(existingAnnotations)
+                
+                // 새 annotation 추가
                 if let newAnnotation = annotation {
-                    self?.mapView.addAnnotation(newAnnotation)
+                    self.mainView.mapView.addAnnotation(newAnnotation)
                 }
             }
             .store(in: &cancellables)
@@ -77,41 +50,7 @@ class MainViewController: UIViewController {
         searchVC.delegate = self
         present(searchVC, animated: true, completion: nil)
     }
-    
-    
-    // MARK: - Setup
-    private func setupUI() {
-        view.addSubview(mapView)
-        mapView.snp.makeConstraints { $0.edges.equalToSuperview() }
 
-        // UIView를 생성하여 버튼들을 넣을 공간을 마련합니다.
-        let buttonContainerView = UIView()
-        view.addSubview(buttonContainerView)
-        
-        //버튼 두개 공간
-        buttonContainerView.snp.makeConstraints {
-            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-20)
-            $0.trailing.equalToSuperview().offset(-20)
-            $0.height.equalTo(80)
-            $0.width.equalTo(60)
-        }
-            
-        // locationButton 추가
-        buttonContainerView.addSubview(locationButton)
-        locationButton.snp.makeConstraints {
-            $0.top.leading.trailing.equalToSuperview()
-            $0.height.equalTo(40) // 버튼 크기
-        }
-        
-        // searchButton 추가
-        buttonContainerView.addSubview(searchButton)
-        searchButton.snp.makeConstraints {
-            $0.top.equalTo(locationButton.snp.bottom).offset(10) // locationButton 바로 아래에 배치
-            $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(40) // 버튼 크기
-        }
-    }
-    
     private func setupLocationManager() {
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
@@ -119,7 +58,7 @@ class MainViewController: UIViewController {
     }
     
     private func loadNearbyKickboards(at location: CLLocation) {
-        let spanRange = min(mapView.region.span.latitudeDelta / 2, maxRange/2)
+        let spanRange = min(mainView.mapView.region.span.latitudeDelta / 2, maxRange / 2)
 
         let minLat = location.coordinate.latitude - spanRange
         let maxLat = location.coordinate.latitude + spanRange
@@ -140,29 +79,30 @@ class MainViewController: UIViewController {
     }
     
     private func drawRoute(to coordinate: CLLocationCoordinate2D) {
-            guard let userLocation = locationManager.location?.coordinate else { return }
-            
-            if let existingRoute = manager.currentRoute {
-                mapView.removeOverlay(existingRoute.polyline)
-            }
-            
-            let request = MKDirections.Request()
-            request.source = MKMapItem(placemark: MKPlacemark(coordinate: coordinate))
-            request.destination = MKMapItem(placemark: MKPlacemark(coordinate: userLocation))
-            request.transportType = .walking
-            
-            let directions = MKDirections(request: request)
-            directions.calculate { [weak self] response, error in
-                guard let self = self,
-                      let route = response?.routes.first else { return }
-                
-                self.mapView.addOverlay(route.polyline)
-                self.manager.setCurrentRoute(route)
-                
-                let rect = route.polyline.boundingMapRect
-                self.mapView.setVisibleMapRect(rect, edgePadding: UIEdgeInsets(top: 80, left: 40, bottom: 300, right: 40), animated: true)
-            }
+        guard let userLocation = locationManager.location?.coordinate else { return }
+        
+        if let existingRoute = manager.currentRoute {
+            mainView.mapView.removeOverlay(existingRoute.polyline)
         }
+        
+        let request = MKDirections.Request()
+        request.source = MKMapItem(placemark: MKPlacemark(coordinate: coordinate))
+        request.destination = MKMapItem(placemark: MKPlacemark(coordinate: userLocation))
+        request.transportType = .walking
+        
+        let directions = MKDirections(request: request)
+        directions.calculate { [weak self] response, error in
+            guard let self = self,
+                  let route = response?.routes.first else { return }
+            
+            self.mainView.mapView.addOverlay(route.polyline)
+            self.manager.setCurrentRoute(route)
+            
+            let rect = route.polyline.boundingMapRect
+            self.mainView.mapView.setVisibleMapRect(rect, edgePadding: UIEdgeInsets(top: 80, left: 40, bottom: 300, right: 40), animated: true)
+        }
+    }
+
     
     private func showLocationPermissionAlert() {
         let alert = UIAlertController(
@@ -188,8 +128,8 @@ class MainViewController: UIViewController {
     
     // MARK: - Map Functions
     private func updateAnnotations() {
-        let existingAnnotations = mapView.annotations.filter { !($0 is MKUserLocation) }
-        mapView.removeAnnotations(existingAnnotations)
+        let existingAnnotations = mainView.mapView.annotations.filter { !($0 is MKUserLocation) }
+        mainView.mapView.removeAnnotations(existingAnnotations)
         
         // 지도 위치 변경 시, 새로 보이는 영역에 있는 킥보드들 지도에 표시
         let annotations = kickboards.map { kickboard -> MKPointAnnotation in
@@ -204,7 +144,7 @@ class MainViewController: UIViewController {
             return annotation
         }
         
-        mapView.addAnnotations(annotations)
+        mainView.mapView.addAnnotations(annotations)
     }
     
     private func moveToCurrentLocation() {
@@ -214,7 +154,7 @@ class MainViewController: UIViewController {
             latitudinalMeters: 1000,
             longitudinalMeters: 1000
         )
-        mapView.setRegion(region, animated: true)
+        mainView.mapView.setRegion(region, animated: true)
     }
     
     
@@ -347,7 +287,7 @@ extension MainViewController: SearchViewControllerDelegate {
         // 지도 카메라 이동
         let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
         let camera = MKMapCamera(lookingAtCenter: coordinate, fromDistance: 1000, pitch: 0, heading: 0)
-        mapView.setCamera(camera, animated: true)
+        mainView.mapView.setCamera(camera, animated: true)
         
         print("위도: \(latitude), 경도: \(longitude)")
     }
@@ -360,7 +300,7 @@ extension MainViewController: CustomTabBarControllerDelegate {
             latitude: location.latitude,
             longitude: location.longitude)
         let camera = MKMapCamera(lookingAtCenter: coordinate, fromDistance: 1000, pitch: 0, heading: 0)
-        mapView.setCamera(camera, animated: true)
+        mainView.mapView.setCamera(camera, animated: true)
     }
 }
 
