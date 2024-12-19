@@ -56,7 +56,33 @@ final class AddViewController: UIViewController {
             bgColor: UIColor(named: "colorMain")!,
             isRadius: true)
         button.isEnabled = false
-        button.addTarget(self, action: #selector(addButtonDidTap), for: .touchUpInside)
+        
+        button.applyButtonAction { [weak self] in
+            guard let self = self else { return }
+            
+            do {
+                let newKickboard = Kickboard(
+                    longitude: currentLongitude,
+                    latitude: currentLatitude,
+                    kickboardCode: kickboardCode,
+                    isRented: false,
+                    batteryStatus: 100,
+                    type: kickboardType
+                )
+                
+                try kickboardRepository.saveKickboard(newKickboard)
+            } catch {
+                print("ERROR: \(error.localizedDescription)")
+            }
+            
+            delegate?.addViewController(
+                self,
+                createdKickboardLoaction: (
+                    Location(latitude: currentLatitude,
+                             longitude: currentLongitude)))
+            
+            resetData()
+        }
         
         return button
     }()
@@ -104,31 +130,6 @@ final class AddViewController: UIViewController {
         sortSectionView.resetSelectedIndex()
         locationSectionView.resetCoordinate()
         addButton.isEnabled = false
-    }
-    
-    @objc private func addButtonDidTap() {
-        do {
-            let newKickboard = Kickboard(
-                longitude: currentLongitude,
-                latitude: currentLatitude,
-                kickboardCode: kickboardCode,
-                isRented: false,
-                batteryStatus: 100,
-                type: kickboardType
-            )
-            
-            try kickboardRepository.saveKickboard(newKickboard)
-        } catch {
-            print("ERROR: \(error.localizedDescription)")
-        }
-        
-        delegate?.addViewController(
-            self,
-            createdKickboardLoaction: (
-                Location(latitude: currentLatitude,
-                         longitude: currentLongitude)))
-        
-        resetData()
     }
 }
 
