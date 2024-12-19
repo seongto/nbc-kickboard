@@ -53,7 +53,7 @@ final class AddViewController: UIViewController {
         let button = UIButton()
         button.applyFullSizeButtonStyle(
             title: "등록",
-            bgColor: UIColor(named: "colorMain")!,
+            bgColor: Colors.main,
             isRadius: true)
         button.isEnabled = false
         

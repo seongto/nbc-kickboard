@@ -19,7 +19,7 @@ final class CodeSectionView: UIStackView {
         let button = UIButton()
         button.setTitle("코드 생성", for: .normal)
         button.setTitleColor(.white, for: .normal)
-        button.backgroundColor = UIColor(named: "colorMain")
+        button.backgroundColor = Colors.main
         button.titleLabel?.font = Fonts.bodyBold
         button.layer.cornerRadius = 12.0
         
@@ -50,7 +50,7 @@ final class CodeSectionView: UIStackView {
     private let codeLabel: UILabel = {
         let label = UILabel()
         label.text = "-"
-        label.textColor = UIColor(named: "colorPlaceholder")
+        label.textColor = Colors.placeHolder
         label.font = Fonts.bodyBold
         
         return label
