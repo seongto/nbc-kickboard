@@ -31,7 +31,7 @@ class KickboardDetailView: UIView {
     lazy var codeLabel: UILabel = {
         let label = UILabel()
         label.font = Fonts.bodyBold
-        label.text = "None" // 기본값 설정
+        label.text = "None"
         label.textColor = Colors.gray4
         return label
     }()
@@ -49,17 +49,19 @@ class KickboardDetailView: UIView {
         return stack
     }()
     
-    private lazy var progressView: UIProgressView = {
-        let progress = UIProgressView(progressViewStyle: .default)
-        progress.trackTintColor = Colors.gray4
-        progress.progressTintColor = Colors.mint
-        return progress
-    }()
-    
-    private lazy var timeLabel: UILabel = {
+    lazy var timeLabel: UILabel = {
         let label = UILabel()
         label.font = Fonts.bodyBold
         label.textColor = Colors.gray3
+        return label
+    }()
+    
+    lazy var remainingTimeLabel: UILabel = {
+        let label = UILabel()
+        label.font = Fonts.bodyBold
+        label.textAlignment = .left
+        label.textColor = Colors.gray3
+        
         return label
     }()
     
@@ -109,10 +111,10 @@ class KickboardDetailView: UIView {
 
         containerView.addSubview(kickboardImageView)
         containerView.addSubview(infoStackView)
-        containerView.addSubview(progressView)
         containerView.addSubview(timeLabel)
         containerView.addSubview(priceLabel)
         containerView.addSubview(buttonStackView)
+        containerView.addSubview(remainingTimeLabel)
         
         infoStackView.addArrangedSubview(codeLabel)
         infoStackView.addArrangedSubview(batteryView)
@@ -138,21 +140,19 @@ class KickboardDetailView: UIView {
             $0.trailing.equalToSuperview().offset(-20)
         }
         
-        progressView.snp.makeConstraints {
-            $0.leading.equalToSuperview().offset(20)
-            $0.trailing.equalToSuperview().offset(-20)
-            $0.top.equalTo(infoStackView.snp.bottom).offset(20)
-            $0.height.equalTo(4)
-        }
-        
         timeLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(20)
-            $0.top.equalTo(progressView.snp.bottom).offset(8)
+            $0.top.equalTo(infoStackView.snp.bottom).offset(8)
         }
         
         priceLabel.snp.makeConstraints {
             $0.trailing.equalToSuperview().offset(-20)
             $0.centerY.equalTo(timeLabel)
+        }
+        
+        remainingTimeLabel.snp.makeConstraints {
+            $0.leading.equalToSuperview().offset(20)
+            $0.top.equalTo(infoStackView.snp.bottom).offset(8)
         }
         
         buttonStackView.snp.makeConstraints {
@@ -196,9 +196,5 @@ class KickboardDetailView: UIView {
         let minutes = time / 60
         let seconds = time % 60
         timeLabel.text = String(format: "%02d:%02d", minutes, seconds)
-    }
-    
-    func updateProgress(progress: Float) {
-        self.progressView.progress = progress
     }
 }
