@@ -352,6 +352,17 @@ extension MainViewController: SearchViewControllerDelegate {
     }
 }
 
+// MARK: - CustomTabBarControllerDelegate 구현
+extension MainViewController: CustomTabBarControllerDelegate {
+    func createKickboardLocation(_ location: Location) {
+        let coordinate = CLLocationCoordinate2D(
+            latitude: location.latitude,
+            longitude: location.longitude)
+        let camera = MKMapCamera(lookingAtCenter: coordinate, fromDistance: 1000, pitch: 0, heading: 0)
+        mapView.setCamera(camera, animated: true)
+    }
+}
+
 @available(iOS 17, *)
 #Preview {
     MainViewController()

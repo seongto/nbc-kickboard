@@ -11,6 +11,6 @@ import Testing
 struct PasswordManagerTests {
     @Test func testEncryption() async throws {
         let manager = PasswordManager()
-        print(try manager.encryptPassword("samplePassword"))
+        print(try PasswordManager.encryptPassword("samplePassword"))
     }
 }
