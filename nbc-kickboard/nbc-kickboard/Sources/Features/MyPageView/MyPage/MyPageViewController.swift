@@ -14,7 +14,7 @@ final class MyPageViewController: UIViewController {
     private let myPageView = MyPageView()
     private let kickboardManager = KickboardManager.shared
     private var cancellables = Set<AnyCancellable>()
-    
+    private var currentUser: User?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,7 +24,13 @@ final class MyPageViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if let currentUserName = UserDefaults.standard.object(forKey: "username") as? String {
+        
+        if let currentUserName = UserDefaults.standard.object(forKey: "username") as? String,
+           let currentUserIsAdmin = UserDefaults.standard.object(forKey: "isAdmin") as? Bool {
+            currentUser = User(
+                username: currentUserName,
+                isAdmin: currentUserIsAdmin
+            )
             myPageView.configureUserName(currentUserName)
         }
     }
@@ -49,7 +55,12 @@ final class MyPageViewController: UIViewController {
 // MARK: - User Input
 extension MyPageViewController: MyPageViewDelegate {
     func historyButtonDidTapped() {
-        print("history Tapped")
+        if let currentUser {
+            let newVC = HistoryViewController(user: currentUser)
+            navigationController?.pushViewController(newVC, animated: true)
+        } else {
+            print("no user!")
+        }
     }
     
     func changePasswordButtonDidTapped() {

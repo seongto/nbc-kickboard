@@ -82,11 +82,11 @@ final class HistoryTableViewCell: UITableViewCell {
         }
     }
     
-    func setupCell(_ type: String, date: String, time: String, price: String) {
-        typeImageView.image = type == "basic" ? UIImage(resource: .kickboardBasic) : UIImage(resource: .kickboardPower)
-        rentDateLabel.text = date
-        rentTimeLabel.text = time
-        rentPriceLabel.text = price
+    func setupCell(with history: History) {
+        typeImageView.image = history.kickboard.type == .basic ? UIImage(resource: .kickboardBasic) : UIImage(resource: .kickboardPower)
+        rentDateLabel.text = history.rentDate.description
+        rentTimeLabel.text = history.totalRentTime.description
+        rentPriceLabel.text = "\(history.cost)won"
     }
     
     private func makeHistorySubViews() -> [UIView] {

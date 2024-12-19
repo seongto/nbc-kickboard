@@ -16,6 +16,10 @@ final class HistoryView: UIView {
         return tableView
     }()
     
+    var histories: [History] = [] {
+        didSet { tableView.reloadData() }
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureTableView()
@@ -56,7 +60,7 @@ extension HistoryView: UITableViewDelegate {
 
 extension HistoryView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return histories.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -64,7 +68,9 @@ extension HistoryView: UITableViewDataSource {
             return HistoryTableViewCell()
         }
         
-        cell.setupCell("basic", date: "24.12.14", time: "12m36s", price: "3,000won")
+        let history = histories[indexPath.row]
+        
+        cell.setupCell(with: history)
         cell.selectionStyle = .none
         
         return cell
