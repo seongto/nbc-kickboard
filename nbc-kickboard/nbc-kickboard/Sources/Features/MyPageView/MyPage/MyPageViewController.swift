@@ -9,12 +9,18 @@ import UIKit
 import SnapKit
 import Combine
 
+protocol MyPageViewControllerDelegate: AnyObject {
+    func requestLogout()
+}
+
 
 final class MyPageViewController: UIViewController {
     private let myPageView = MyPageView()
     private let kickboardManager = KickboardManager.shared
     private var cancellables = Set<AnyCancellable>()
     private var currentUser: User?
+    
+    weak var delegate: MyPageViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -70,12 +76,7 @@ extension MyPageViewController: MyPageViewDelegate {
         }
     }
     
-    func logoutButtonDidTapped() {
-        print("logoutTapped")
-        UserDefaults.standard.removeObject(forKey: "username")
-        UserDefaults.standard.removeObject(forKey: "isAdmin")
-        navigationController?.popViewController(animated: false)
-    }
+    func logoutButtonDidTapped() { delegate?.requestLogout() }
 }
 
 // MARK: - Business Logic

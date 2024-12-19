@@ -4,6 +4,20 @@ import CoreLocation
 import Combine
 import CoreData
 
+class CustomAnnotation: NSObject, MKAnnotation {
+    var coordinate: CLLocationCoordinate2D
+    var title: String?
+    var subtitle: String?
+    var kickboardType: KickboardType?
+    
+    init(coordinate: CLLocationCoordinate2D, title: String? = nil, subtitle: String? = nil, kickboardType: KickboardType? = nil) {
+        self.coordinate = coordinate
+        self.title = title
+        self.subtitle = subtitle
+        self.kickboardType = kickboardType
+    }
+}
+
 class MainViewController: UIViewController {
     private let mainView = MainView()
     private let locationManager = CLLocationManager()
@@ -133,15 +147,28 @@ class MainViewController: UIViewController {
         mainView.mapView.removeAnnotations(existingAnnotations)
         
         // 지도 위치 변경 시, 새로 보이는 영역에 있는 킥보드들 지도에 표시
-        let annotations = kickboards.map { kickboard -> MKPointAnnotation in
-            let annotation = MKPointAnnotation()
-            annotation.coordinate = CLLocationCoordinate2D(
-                latitude: kickboard.latitude,
-                longitude: kickboard.longitude
+//        let annotations = kickboards.map { kickboard -> MKPointAnnotation in
+//            let annotation = MKPointAnnotation()
+//            annotation.coordinate = CLLocationCoordinate2D(
+//                latitude: kickboard.latitude,
+//                longitude: kickboard.longitude
+//            )
+//            
+//            annotation.title = "배터리: \(kickboard.batteryStatus)%"
+//            annotation.subtitle = kickboard.kickboardCode
+//            return annotation
+//        }
+        
+        let annotations = kickboards.map { kickboard -> CustomAnnotation in
+            let annotation = CustomAnnotation(
+                coordinate: CLLocationCoordinate2D(
+                    latitude: kickboard.latitude,
+                    longitude: kickboard.longitude)
             )
             
             annotation.title = "배터리: \(kickboard.batteryStatus)%"
             annotation.subtitle = kickboard.kickboardCode
+            annotation.kickboardType = kickboard.type
             return annotation
         }
         
@@ -198,7 +225,7 @@ extension MainViewController: MKMapViewDelegate {
         if annotationView == nil {
             annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: identifier)
             annotationView?.canShowCallout = true
-            annotationView?.image = UIImage(named: "map_pin2")
+//            annotationView?.image = UIImage(named: "map_pin2")
             
             // 오른쪽 버튼 추가
             let rightButton = UIButton(type: .detailDisclosure)
@@ -207,6 +234,17 @@ extension MainViewController: MKMapViewDelegate {
         }
         
         annotationView?.annotation = annotation
+        
+        if let customAnnotation = annotation as? CustomAnnotation {
+            switch customAnnotation.kickboardType {
+            case .basic:
+                annotationView?.image = UIImage(named: "map_pin1")
+            case .power:
+                annotationView?.image = UIImage(named: "map_pin2")
+            case .none:
+                break
+            }
+        }
         
         return annotationView
     }

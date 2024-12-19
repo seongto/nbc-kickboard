@@ -71,7 +71,9 @@ final class CustomTabBarController: UIViewController {
                     addViewController.delegate = self
                     viewController = addViewController
                 case .my:
-                    viewController = UINavigationController(rootViewController: MyPageViewController())
+                    let myPageViewController = MyPageViewController()
+                    myPageViewController.delegate = self
+                    viewController = UINavigationController(rootViewController: myPageViewController)
                 }
                 
                 addChild(viewController)
@@ -108,6 +110,14 @@ extension CustomTabBarController: AddViewControllerDelegate {
         customTabBar.selectedIndex = 0
         
         delegate?.createKickboardLocation(createdKickboardLoaction)
+    }
+}
+
+extension CustomTabBarController: MyPageViewControllerDelegate {
+    func requestLogout() {
+        UserDefaults.standard.removeObject(forKey: "username")
+        UserDefaults.standard.removeObject(forKey: "isAdmin")
+        navigationController?.popViewController(animated: false)
     }
 }
 
