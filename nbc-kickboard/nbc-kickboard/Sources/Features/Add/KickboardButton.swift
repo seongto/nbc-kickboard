@@ -8,13 +8,8 @@
 import UIKit
 import SnapKit
 
-enum KickboardButtonType: String {
-    case basic = "베이직"
-    case power = "파워"
-}
-
 final class KickboardButton: UIButton {
-    var type: KickboardButtonType
+    var type: KickboardType
     
     private let contentVStackView: UIStackView = {
         let stackView = UIStackView()
@@ -36,14 +31,19 @@ final class KickboardButton: UIButton {
     
     private lazy var typeLabel: UILabel = {
         let label = UILabel()
-        label.text = type.rawValue
+        switch type {
+        case .basic:
+            label.text = "베이직"
+        case .power:
+            label.text = "파워"
+        }
         label.textColor = UIColor(named: "colorPlaceholder")
         label.font = UIFont.paybooc(ofSize: 12.0, weight: .medium)
         
         return label
     }()
     
-    init(type: KickboardButtonType) {
+    init(type: KickboardType) {
         self.type = type
         super.init(frame: .zero)
         
@@ -89,11 +89,6 @@ final class KickboardButton: UIButton {
             layer.borderColor = UIColor(named: "colorPlaceholder")?.cgColor
         }
     }
-    
-//    @objc private func kickboardButtonDidTap() {
-//        isSelected.toggle()
-//        updateConfig(isSelected: isSelected)
-//    }
 }
 #if DEBUG
 

@@ -8,10 +8,24 @@
 import UIKit
 import SnapKit
 
+protocol CustomTabBarControllerDelegate: AnyObject {
+    func createKickboardLocation(_ location: Location)
+}
+
 final class CustomTabBarController: UIViewController {
-    private let customTabBar = CustomTabBar(tabBarItems: [.main, .add, .my])
+    private lazy var customTabBar: CustomTabBar = {
+        let isAdmin = UserDefaults.standard.bool(forKey: "isAdmin")
+            
+        if true {
+            return CustomTabBar(tabBarItems: [.main, .add, .my])
+        } else {
+            return CustomTabBar(tabBarItems: [.main, .my])
+        }
+    }()
     
     private var viewControllers = [UIViewController]()
+    
+    weak var delegate: CustomTabBarControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,9 +58,13 @@ final class CustomTabBarController: UIViewController {
                 
                 switch item {
                 case .main:
-                    viewController = MainViewController()
+                    let mainViewController = MainViewController()
+                    self.delegate = (mainViewController as any CustomTabBarControllerDelegate)
+                    viewController = mainViewController
                 case .add:
-                    viewController = AddViewController()
+                    let addViewController = AddViewController()
+                    addViewController.delegate = self
+                    viewController = addViewController
                 case .my:
                     viewController = MyPageViewController()
                 }
@@ -75,6 +93,16 @@ extension CustomTabBarController: CustomTabBarDelegate {
         let selectedView = viewControllers[index].view
         view.bringSubviewToFront(selectedView!)
         view.bringSubviewToFront(tabBar)
+    }
+}
+
+extension CustomTabBarController: AddViewControllerDelegate {
+    func addViewController(_ viewController: AddViewController, createdKickboardLoaction: Location) {
+        let mainView = viewControllers[0].view
+        view.bringSubviewToFront(mainView!)
+        customTabBar.selectedIndex = 0
+        
+        delegate?.createKickboardLocation(createdKickboardLoaction)
     }
 }
 

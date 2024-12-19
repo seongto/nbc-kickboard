@@ -6,9 +6,23 @@
 //
 
 import UIKit
+import MapKit
 import SnapKit
 
+protocol AddViewControllerDelegate: AnyObject {
+    func addViewController(_ viewController: AddViewController, createdKickboardLoaction: Location)
+}
+
 final class AddViewController: UIViewController {
+    private var kickboardCode: String = "" {
+        didSet { addButton.isEnabled = !kickboardCode.isEmpty }
+    }
+    private var kickboardType: KickboardType = .basic
+    private var currentLatitude: Double = 0.0
+    private var currentLongitude: Double = 0.0
+    
+    weak var delegate: AddViewControllerDelegate?
+    
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "등록"
@@ -34,13 +48,14 @@ final class AddViewController: UIViewController {
     
     private let locationSectionView = LocationSectionView()
     
-    private let addButton: UIButton = {
+    private lazy var addButton: UIButton = {
         let button = UIButton()
-        button.setTitle("등록", for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        button.titleLabel?.font = UIFont.paybooc(ofSize: 20.0, weight: .bold)
-        button.backgroundColor = UIColor(named: "colorMain")
-        button.layer.cornerRadius = 60.0 / 2
+        button.applyFullSizeButtonStyle(
+            title: "등록",
+            bgColor: UIColor(named: "colorMain")!,
+            isRadius: true)
+        button.isEnabled = false
+        button.addTarget(self, action: #selector(addButtonDidTap), for: .touchUpInside)
         
         return button
     }()
@@ -51,7 +66,10 @@ final class AddViewController: UIViewController {
         self.configureUI()
         self.setupConstraints()
         
+        codeSectionView.delegate = self
         sortSectionView.delegate = locationSectionView
+        sortSectionView.delegate = self
+        locationSectionView.delegate = self
     }
     
     private func configureUI() {
@@ -78,6 +96,68 @@ final class AddViewController: UIViewController {
             $0.bottom.equalToSuperview().inset(10.0)
             $0.height.equalTo(60.0)
         }
+    }
+    
+    private func resetData() {
+        codeSectionView.resetCodeLabel()
+        sortSectionView.resetSelectedIndex()
+        locationSectionView.resetCoordinate()
+        addButton.isEnabled = false
+    }
+    
+    @objc private func addButtonDidTap() {
+        do {
+            try CoreDataStack.shared.createKickboard(
+                kickboardCode: kickboardCode,
+                batteryStatus: 100,
+                isRented: false,
+                latitude: currentLatitude,
+                longitude: currentLongitude,
+                type: kickboardType)
+        } catch {
+            print("ERROR: \(error.localizedDescription)")
+        }
+        
+        delegate?.addViewController(
+            self,
+            createdKickboardLoaction: (
+                Location(latitude: currentLatitude,
+                         longitude: currentLongitude)))
+        
+        resetData()
+    }
+}
+
+extension AddViewController: CodeSectoinViewDelegate {
+    func createRandomKickboardCode(completion: @escaping (String) -> Void) {
+        let characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+        
+        func generateCode() -> String { String((0..<8).compactMap { _ in characters.randomElement() }) }
+        
+        var newCode: String
+        var kickboard: Kickboard? = nil
+        
+        // KickboardCode 중복 방지
+        repeat {
+            newCode = generateCode()
+            kickboard = try? CoreDataStack.shared.readKickboard(kickboardCode: newCode)
+        } while kickboard != nil
+        
+        kickboardCode = newCode
+        completion(newCode)
+    }
+}
+
+extension AddViewController: SortsectionViewDelegate {
+    func sortSectionView(_ sortSectionView: SortSectionView, didSelectedButtonType: KickboardType) {
+        kickboardType = didSelectedButtonType
+    }
+}
+
+extension AddViewController: LocationSectionViewDelegate {
+    func mapViewReginDidChange(centerCoordinate: CLLocationCoordinate2D) {
+        currentLatitude = centerCoordinate.latitude
+        currentLongitude = centerCoordinate.longitude
     }
 }
 

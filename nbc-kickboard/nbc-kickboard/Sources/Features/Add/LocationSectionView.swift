@@ -9,7 +9,13 @@ import UIKit
 import MapKit
 import SnapKit
 
+protocol LocationSectionViewDelegate: AnyObject {
+    func mapViewReginDidChange(centerCoordinate: CLLocationCoordinate2D)
+}
+
 final class LocationSectionView: UIStackView {
+    weak var delegate: LocationSectionViewDelegate?
+    
     private let viewTitleLabel: UILabel = {
         let label = UILabel()
         label.text = "등록위치"
@@ -46,6 +52,8 @@ final class LocationSectionView: UIStackView {
         
         self.configureUI()
         self.setupConstratins()
+        
+        mapView.delegate = self
     }
     
     required init(coder: NSCoder) {
@@ -76,10 +84,28 @@ final class LocationSectionView: UIStackView {
             $0.bottom.equalTo(mapContentView.snp.centerY)
         }
     }
+    
+    func resetCoordinate() {
+        let coordinate = CLLocationCoordinate2D(
+            latitude: 37.5665,
+            longitude: 126.9780)
+        let region = MKCoordinateRegion(
+            center: coordinate,
+            latitudinalMeters: 5000,
+            longitudinalMeters: 5000)
+        
+        mapView.setRegion(region, animated: false)
+    }
+}
+
+extension LocationSectionView: MKMapViewDelegate {
+    func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+        delegate?.mapViewReginDidChange(centerCoordinate: mapView.centerCoordinate)
+    }
 }
 
 extension LocationSectionView: SortsectionViewDelegate {
-    func sortSectionView(_ sortSectionView: SortSectionView, didSelectedButtonType: KickboardButtonType) {
+    func sortSectionView(_ sortSectionView: SortSectionView, didSelectedButtonType: KickboardType) {
         switch didSelectedButtonType {
         case .basic:
             centerMarker.image = UIImage(named: "basic_maker")
