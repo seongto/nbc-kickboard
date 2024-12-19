@@ -10,7 +10,6 @@ import SnapKit
 
 protocol MyPageViewDelegate: AnyObject {
     func historyButtonDidTapped()
-    func changePasswordButtonDidTapped()
     func logoutButtonDidTapped()
 }
 
@@ -27,30 +26,12 @@ final class MyPageView: UIView {
     private let kickboardStatusView = KickboardStatusView(frame: .zero)
     private let settingsTableView = SettingsTableView()
     
-    private lazy var logoutLabel: UILabel = {
-        let label = UILabel()
-        let attributeString = NSMutableAttributedString(string: "로그아웃")
-        attributeString.addAttribute(
-            .underlineStyle ,
-            value: 1,
-            range: NSRange.init(
-                location: 0,
-                length: "로그아웃".count
-            )
-        )
-        label.attributedText = attributeString
-        label.textColor = .lightGray
-        label.isUserInteractionEnabled = true
-        return label
-    }()
-    
     weak var delegate: MyPageViewDelegate?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureUI()
         configureDelegate()
-        addGestureToLogoutLabel()
     }
     
     required init?(coder: NSCoder) {
@@ -69,7 +50,6 @@ final class MyPageView: UIView {
             userIDView,
             kickboardStatusView,
             settingsTableView,
-            logoutLabel
         ]
         
         subviews.forEach {
@@ -96,27 +76,10 @@ final class MyPageView: UIView {
             $0.leading.equalToSuperview()
             $0.trailing.equalToSuperview()
             $0.top.equalTo(kickboardStatusView.snp.bottom).offset(25)
-            $0.bottom.equalTo(logoutLabel.snp.top).offset(-50)
-        }
-        
-        logoutLabel.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
-            $0.bottom.equalToSuperview().offset(-70)
-            $0.width.equalTo(80)
-            $0.height.equalTo(44)
+            $0.bottom.equalToSuperview().offset(-50)
         }
     }
-    
-    private func addGestureToLogoutLabel() {
-        let labelTapGesture = UITapGestureRecognizer(
-            target: self,
-            action: #selector(
-                logoutButtonTapped
-            )
-        )
-        logoutLabel.addGestureRecognizer(labelTapGesture)
-    }
-    
+
     func configureUserName(_ username: String) {
         userIDView.configureUsername(username)
     }
@@ -126,20 +89,13 @@ final class MyPageView: UIView {
     }
 }
 
-private extension MyPageView {
-    @objc
-    func logoutButtonTapped() {
-        delegate?.logoutButtonDidTapped()
-    }
-}
-
 extension MyPageView: SettingsTableViewDelegate {
     func didSelectHistory() {
         delegate?.historyButtonDidTapped()
     }
     
-    func didSelectChangePassword() {
-        delegate?.changePasswordButtonDidTapped()
+    func didSelectLogout() {
+        delegate?.logoutButtonDidTapped()
     }
 }
 

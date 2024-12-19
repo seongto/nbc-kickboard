@@ -76,10 +76,6 @@ extension MyPageViewController: MyPageViewDelegate {
         }
     }
     
-    func changePasswordButtonDidTapped() {
-        print("change password Tapped")
-    }
-    
     func logoutButtonDidTapped() { delegate?.requestLogout() }
 }
 
