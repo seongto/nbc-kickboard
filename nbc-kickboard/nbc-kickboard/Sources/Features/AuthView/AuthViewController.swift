@@ -34,6 +34,7 @@ class AuthViewController: UIViewController, LoginViewDelegate {
         
         view = loginView
         setupUI()
+        setDefaultUserInfo()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -74,44 +75,27 @@ extension AuthViewController {
         
         switch result {
         case .success(let userEntity):
+            
+            // 현재 로그인된 사용자의 정보 저장
             UserDefaults.standard.set(userEntity.username, forKey: "username")
             UserDefaults.standard.set(userEntity.isAdmin, forKey: "isAdmin")
-            print("UserDefaults에 저장 완료. 이동을 어디로 어떻게 처리할까요?")
             
-            let alert = UIAlertController(
-                title: "로그인 성공",
-                message: "\(userEntity.username ?? "??")님 환영합니다. 이건 테스트용 경고.",
-                preferredStyle: .alert
-            )
+            // 마지막으로 로그인에 성공한 사용자아이디 및 암호 저장
+            UserDefaults.standard.set(username, forKey: "lastLoginUsername")
+            UserDefaults.standard.set(password, forKey: "lastLoginPassword")
             
-
-            let confirmAction = UIAlertAction(title: "확인", style: .default) { [weak self] _ in
-                guard let self = self else { return }
-                
-                UserDefaults.standard.set(userEntity.username, forKey: "username")
-                UserDefaults.standard.set(userEntity.isAdmin, forKey: "isAdmin")
-                
-                navigationController?.pushViewController(CustomTabBarController(), animated: false)
-            }
+            navigationController?.pushViewController(CustomTabBarController(), animated: false)
             
-            alert.addAction(confirmAction)
-            present(alert, animated: true)
         case .failure(let error):
             let errorMessage: String = error.messages.reduce("") { "\($0)\n- \($1)" }
             
-//            let alert = UIAlertController(
-//                title: "로그인 실패",
-//                message: errorMessage,
-//                preferredStyle: .alert
-//            )
-//            
-//            let confirmAction = UIAlertAction(title: "확인", style: .default)
-//            alert.addAction(confirmAction)
-//
-//            present(alert, animated: true)
-            
-            // 위의 Alert 코드를 전역 함수를 통해 아래의 코드로 대체. 위 주석은 추후 커밋에서 삭제 예정.
             AppHelpers.showBasicAlert(title: "로그인 실패", message: errorMessage, action: { print("Alert 종료")})
+        }
+    }
+    
+    func setDefaultUserInfo() {
+        if let username = UserDefaults.standard.object(forKey:"lastLoginUsername"), let password = UserDefaults.standard.object(forKey: "lastLoginPassword") {
+            loginView.setLastLoginUserData(username: username as! String, password: password as! String)
         }
     }
 }
