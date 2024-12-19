@@ -8,6 +8,7 @@ import CoreData
 class MainViewController: UIViewController {
     private let locationManager = CLLocationManager()
     private let manager = KickboardManager.shared
+    private let kickboardRepository: KickboardRepositoryProtocol = KickboardRepository()
     private var kickboards: [Kickboard] = []
     
     private let maxRange = 0.036
@@ -61,7 +62,7 @@ class MainViewController: UIViewController {
     private func setupBindings() {
         manager.$movingAnnotation
             .sink { [weak self] annotation in
-                if let existingAnnotations = self?.mapView.annotations.filter { !($0 is MKUserLocation) }{
+                if let existingAnnotations = self?.mapView.annotations.filter({ !($0 is MKUserLocation) }){
                     self?.mapView.removeAnnotations(existingAnnotations)
                 }
                 if let newAnnotation = annotation {
@@ -126,7 +127,7 @@ class MainViewController: UIViewController {
         let maxLng = location.coordinate.longitude + spanRange
         
         do {
-            kickboards = try CoreDataStack.shared.requestKickboards(
+            kickboards = try kickboardRepository.fetchKickboardsInAreaOf(
                 minLat: minLat,
                 maxLat: maxLat,
                 minLng: minLng,

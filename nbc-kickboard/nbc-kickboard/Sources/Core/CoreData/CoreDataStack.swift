@@ -12,6 +12,7 @@ final class CoreDataStack {
     static let shared = CoreDataStack()
     
     var persistentContainer: NSPersistentContainer
+    var context: NSManagedObjectContext
     
     private init() {
         let container = NSPersistentContainer(name: "nbc_kickboard")
@@ -23,6 +24,7 @@ final class CoreDataStack {
         }
         
         persistentContainer = container
+        context = container.viewContext
     }
     
     private func save() {
@@ -81,6 +83,27 @@ extension CoreDataStack {
         
         guard let userEntity = try persistentContainer.viewContext.fetch(fetchRequest).first else {
             throw AppError.CoreDataStackError.noMatchingItem
+        }
+        if let username = userEntity.value(forKey: UserEntity.Key.username) as? String,
+           let isAdmin = userEntity.value(forKey: UserEntity.Key.isAdmin) as? Bool {
+            let newUser = User(username: username, isAdmin: isAdmin)
+            return newUser
+        } else {
+            throw AppError.CoreDataStackError.dataTransformationFailed
+        }
+    }
+    
+    /// 로그인 시 유저 검증
+    /// - Parameters:
+    ///   - name: 사용자가 입력한 username
+    ///   - hashedPassword: 사용자가 입력한 비밀번호의 암호화 결과
+    /// - Returns: 일치하는 유저가 있다면 User, 없다면 nil
+    func authenticateUser(name: String, hashedPassword: String) throws -> User? {
+        let fetchRequest = UserEntity.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "username == %@ AND password == %@", name, hashedPassword)
+        
+        guard let userEntity = try persistentContainer.viewContext.fetch(fetchRequest).first else {
+            return nil
         }
         if let username = userEntity.value(forKey: UserEntity.Key.username) as? String,
            let isAdmin = userEntity.value(forKey: UserEntity.Key.isAdmin) as? Bool {
@@ -383,7 +406,7 @@ extension CoreDataStack {
     func isKickboardInfoSaved() throws -> Bool {
         let fetchRequest = KickboardEntity.fetchRequest()
         
-        if let result = try persistentContainer.viewContext.fetch(fetchRequest).first {
+        if let _ = try persistentContainer.viewContext.fetch(fetchRequest).first {
             return true
         } else {
             return false

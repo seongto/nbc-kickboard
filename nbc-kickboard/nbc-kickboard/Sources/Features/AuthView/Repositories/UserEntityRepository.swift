@@ -21,7 +21,7 @@ protocol UserEntityRepositoryProtocol {
 final class UserEntityRepository: UserEntityRepositoryProtocol {
     private let context: NSManagedObjectContext
     
-    init(context: NSManagedObjectContext = CoreDataManager.shared.context) {
+    init(context: NSManagedObjectContext = CoreDataStack.shared.context) {
         self.context = context
     }
     

@@ -13,7 +13,10 @@ enum KickboardStatus {
 
 final class KickboardManager {
     static let shared = KickboardManager()
-    private init() {}
+    private init() {
+        historyRepository = HistoryRepository()
+        kickboardRepository = KickboardRepository()
+    }
     
     // MARK: - 출판된 속성들
     @Published private(set) var currentStatus: KickboardStatus = .idle
@@ -29,6 +32,8 @@ final class KickboardManager {
     private var routeCoordinates: [CLLocationCoordinate2D] = []
     private var timer: Timer?
     private var currentPathIndex: Int = 0
+    private let historyRepository: HistoryRepositoryProtocol
+    private let kickboardRepository: KickboardRepositoryProtocol
     
     var remainingTime: Int {
         guard currentStatus == .isComing else { return 0 }
@@ -67,28 +72,25 @@ final class KickboardManager {
         guard currentStatus == .riding,
               let kickboard = currentKickboard else { return }
         
-        let context = CoreDataManager.shared.context
-        
         do {
-            let historyEntity = HistoryEntity(context: context)
-            historyEntity.rentDate = Date()
-            historyEntity.totalRentTime = Int16(elapsedTime)
-            historyEntity.cost = Int16(price)
+            // TODO: current User 저장하기
+            let newHistory = History(
+                cost: Int16(price),
+                rentDate: Date(),
+                totalRentTime: Int16(elapsedTime),
+                kickboard: kickboard,
+                user: User(username: "test", isAdmin: false)
+            )
             
-            // 킥보드 상태 업데이트
-            let kickboardRequest = KickboardEntity.fetchRequest()
-            kickboardRequest.predicate = NSPredicate(format: "kickboardCode == %@", kickboard.kickboardCode)
+            try historyRepository.saveHistory(newHistory)
             
-            if let kickboardEntity = try context.fetch(kickboardRequest).first {
-                kickboardEntity.isRented = false
-                let usedBattery = Int16(elapsedTime / 60)
-                kickboardEntity.batteryStatus = max(0, kickboardEntity.batteryStatus - usedBattery)
-            }
+            var newKickboard = kickboard
+            newKickboard.isRented = false
+            newKickboard.batteryStatus = max(0, kickboard.batteryStatus - Int16(elapsedTime / 60))
             
-            try context.save()
+            try kickboardRepository.updateKickboard(by: kickboard.kickboardCode, to: newKickboard)
             
             resetState()
-            
         } catch {
             print("Failed to create riding history: \(error)")
         }
@@ -127,15 +129,10 @@ final class KickboardManager {
     private func updateKickboardCoreData(isRented: Bool) {
         guard let kickboard = currentKickboard else { return }
         
-        let context = CoreDataManager.shared.context
-        let request = KickboardEntity.fetchRequest()
-        request.predicate = NSPredicate(format: "kickboardCode == %@", kickboard.kickboardCode)
-        
         do {
-            if let entity = try context.fetch(request).first {
-                entity.isRented = isRented
-                try context.save()
-            }
+            var newKickboard = kickboard
+            newKickboard.isRented = isRented
+            try kickboardRepository.updateKickboard(by: kickboard.kickboardCode, to: newKickboard)
         } catch {
             print("Failed to update kickboard status: \(error)")
         }

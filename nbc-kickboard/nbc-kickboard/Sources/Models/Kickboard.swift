@@ -8,11 +8,11 @@
 import Foundation
 
 struct Kickboard {
-    let longitude: Double
-    let latitude: Double
+    var longitude: Double
+    var latitude: Double
     let kickboardCode: String
-    let isRented: Bool
-    let batteryStatus: Int16
+    var isRented: Bool
+    var batteryStatus: Int16
     let type: KickboardType
 }
 

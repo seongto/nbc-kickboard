@@ -20,6 +20,7 @@ final class AddViewController: UIViewController {
     private var kickboardType: KickboardType = .basic
     private var currentLatitude: Double = 0.0
     private var currentLongitude: Double = 0.0
+    private let kickboardRepository: KickboardRepositoryProtocol = KickboardRepository()
     
     weak var delegate: AddViewControllerDelegate?
     
@@ -107,13 +108,16 @@ final class AddViewController: UIViewController {
     
     @objc private func addButtonDidTap() {
         do {
-            try CoreDataStack.shared.createKickboard(
-                kickboardCode: kickboardCode,
-                batteryStatus: 100,
-                isRented: false,
-                latitude: currentLatitude,
+            let newKickboard = Kickboard(
                 longitude: currentLongitude,
-                type: kickboardType)
+                latitude: currentLatitude,
+                kickboardCode: kickboardCode,
+                isRented: false,
+                batteryStatus: 100,
+                type: kickboardType
+            )
+            
+            try kickboardRepository.saveKickboard(newKickboard)
         } catch {
             print("ERROR: \(error.localizedDescription)")
         }
@@ -140,7 +144,7 @@ extension AddViewController: CodeSectoinViewDelegate {
         // KickboardCode 중복 방지
         repeat {
             newCode = generateCode()
-            kickboard = try? CoreDataStack.shared.readKickboard(kickboardCode: newCode)
+            kickboard = try? kickboardRepository.fetchKickboard(by: newCode)
         } while kickboard != nil
         
         kickboardCode = newCode
