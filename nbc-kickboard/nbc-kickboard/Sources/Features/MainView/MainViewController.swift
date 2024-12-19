@@ -22,6 +22,7 @@ class MainViewController: UIViewController {
         setupActions()
         setupLocationManager()
         setupBindings()
+        mainView.mapView.delegate = self
     }
 
     private func setupActions() {
