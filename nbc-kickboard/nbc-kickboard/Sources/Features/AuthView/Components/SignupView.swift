@@ -40,6 +40,9 @@ final class SignupView: UIView {
         super.init(frame: .zero)
         setupUI()
         mapActionToButtons()
+        
+        inputUsername.delegate = self
+        inputPassword.delegate = self
     }
     
     required init?(coder: NSCoder) {
@@ -156,5 +159,17 @@ extension SignupView {
     
     func tapAgreementButton() {
         delegate?.toggleAgreementStatus()
+    }
+}
+
+extension SignupView: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField == inputUsername {
+            inputPassword.becomeFirstResponder()
+        } else {
+            textField.resignFirstResponder()
+        }
+        
+        return true
     }
 }
