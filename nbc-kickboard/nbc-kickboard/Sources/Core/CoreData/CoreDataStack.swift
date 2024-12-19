@@ -12,6 +12,7 @@ final class CoreDataStack {
     static let shared = CoreDataStack()
     
     var persistentContainer: NSPersistentContainer
+    var context: NSManagedObjectContext
     
     private init() {
         let container = NSPersistentContainer(name: "nbc_kickboard")
@@ -23,6 +24,7 @@ final class CoreDataStack {
         }
         
         persistentContainer = container
+        context = container.viewContext
     }
     
     private func save() {
