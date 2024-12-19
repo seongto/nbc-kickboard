@@ -44,7 +44,6 @@ final class KickboardStatusView: UIView {
     private let batteryImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
-        imageView.isHidden = true
         return imageView
     }()
     
@@ -53,7 +52,6 @@ final class KickboardStatusView: UIView {
         label.textColor = .systemMint
         label.font = .systemFont(ofSize: 16, weight: .bold)
         label.text = " "
-        label.isHidden = true
         return label
     }()
     
@@ -67,7 +65,7 @@ final class KickboardStatusView: UIView {
         stackView.spacing = 10
         stackView.distribution = .fillProportionally
         stackView.alignment = .center
-        
+        stackView.isHidden = true
         return stackView
     }()
     
@@ -127,6 +125,16 @@ final class KickboardStatusView: UIView {
                 kickboardTypeImageView.image = UIImage(resource: .kickboardBox1)
             case .power:
                 kickboardTypeImageView.image = UIImage(resource: .kickboardBox2)
+            }
+            switch kickboard.batteryStatus {
+            case 0...49:
+                batteryImageView.image = UIImage(resource: .batteryLow)
+            case 50...99:
+                batteryImageView.image = UIImage(resource: .batteryMedium)
+            case 100:
+                batteryImageView.image = UIImage(resource: .batteryFull)
+            default:
+                batteryImageView.image = UIImage(resource: .batteryFull)
             }
             batteryStatusLabel.text = "\(kickboard.batteryStatus)%"
             showKickboardViews()

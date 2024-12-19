@@ -20,6 +20,7 @@ final class MyPageViewController: UIViewController {
         super.viewDidLoad()
         view = myPageView
         configureDelegate()
+        bind()
     }
     
     override func viewWillAppear(_ animated: Bool) {
