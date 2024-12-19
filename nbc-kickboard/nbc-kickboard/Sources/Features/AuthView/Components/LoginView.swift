@@ -158,4 +158,9 @@ extension LoginView {
             delegate?.getAuthentication(username: username, password: password)
         }
     }
+    
+    func setLastLoginUserData(username: String, password: String) {
+        inputUsername.text = username
+        inputPassword.text = password
+    }
 }
