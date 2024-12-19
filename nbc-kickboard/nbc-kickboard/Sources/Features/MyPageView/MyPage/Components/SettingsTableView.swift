@@ -10,7 +10,7 @@ import SnapKit
 
 protocol SettingsTableViewDelegate: AnyObject {
     func didSelectHistory()
-    func didSelectChangePassword()
+    func didSelectLogout()
 }
 
 final class SettingsTableView: UIView {
@@ -62,7 +62,7 @@ extension SettingsTableView: UITableViewDelegate {
         case 0:
             delegate?.didSelectHistory()
         case 1:
-            delegate?.didSelectChangePassword()
+            delegate?.didSelectLogout()
         default:
             break
         }
@@ -85,7 +85,7 @@ extension SettingsTableView: UITableViewDataSource {
         case 0:
             cell.setupCell(with: "내역")
         case 1:
-            cell.setupCell(with: "비밀번호 변경")
+            cell.setupCell(with: "로그아웃")
         default:
             break
         }
