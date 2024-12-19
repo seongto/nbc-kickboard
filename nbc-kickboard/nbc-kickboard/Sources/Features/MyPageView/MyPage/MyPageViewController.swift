@@ -7,10 +7,14 @@
 
 import UIKit
 import SnapKit
+import Combine
 
 
 final class MyPageViewController: UIViewController {
     private let myPageView = MyPageView()
+    private let kickboardManager = KickboardManager.shared
+    private var cancellables = Set<AnyCancellable>()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,8 +22,27 @@ final class MyPageViewController: UIViewController {
         configureDelegate()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if let currentUserName = UserDefaults.standard.object(forKey: "username") as? String {
+            myPageView.configureUserName(currentUserName)
+        }
+    }
+    
     func configureDelegate() {
         myPageView.delegate = self
+    }
+    
+    func bind() {
+        kickboardManager.$currentKickboard
+            .receive(on: RunLoop.main)
+            .sink { kickboard in
+                guard let kickboard else {
+                    return
+                }
+                self.myPageView.configureKickboardStatus(with: kickboard)
+            }
+            .store(in: &cancellables)
     }
 }
 

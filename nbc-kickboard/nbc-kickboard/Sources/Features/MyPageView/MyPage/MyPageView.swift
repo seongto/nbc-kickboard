@@ -116,6 +116,14 @@ final class MyPageView: UIView {
         )
         logoutLabel.addGestureRecognizer(labelTapGesture)
     }
+    
+    func configureUserName(_ username: String) {
+        userIDView.configureUsername(username)
+    }
+    
+    func configureKickboardStatus(with kickboard: Kickboard?) {
+        kickboardStatusView.configureStatus(kickboard: kickboard)
+    }
 }
 
 private extension MyPageView {

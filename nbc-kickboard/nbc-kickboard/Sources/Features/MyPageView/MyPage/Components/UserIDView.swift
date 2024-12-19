@@ -21,7 +21,7 @@ final class UserIDView: UIView {
         let label = UILabel()
         label.textColor = .black
         label.font = .systemFont(ofSize: 16, weight: .regular)
-        label.text = "seoooooongGyu3807"
+        label.text = " "
         return label
     }()
     
@@ -46,7 +46,7 @@ final class UserIDView: UIView {
         fatalError( "init(coder:) has not been implemented")
     }
     
-    func configureUI() {
+    private func configureUI() {
         [
             userIDStackView
         ].forEach { addSubview($0) }
@@ -57,6 +57,10 @@ final class UserIDView: UIView {
             $0.top.equalToSuperview()
             $0.bottom.equalToSuperview()
         }
+    }
+    
+    func configureUsername(_ username: String) {
+        userIDLabel.text = username
     }
 }
 
