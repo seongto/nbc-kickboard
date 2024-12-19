@@ -13,10 +13,10 @@ protocol CustomTabBarControllerDelegate: AnyObject {
 }
 
 final class CustomTabBarController: UIViewController {
-    private lazy var customTabBar: CustomTabBar = {
+    private let customTabBar: CustomTabBar = {
         let isAdmin = UserDefaults.standard.bool(forKey: "isAdmin")
             
-        if true {
+        if isAdmin {
             return CustomTabBar(tabBarItems: [.main, .add, .my])
         } else {
             return CustomTabBar(tabBarItems: [.main, .my])
