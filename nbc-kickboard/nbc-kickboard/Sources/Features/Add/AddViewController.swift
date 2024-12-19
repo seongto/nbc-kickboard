@@ -38,7 +38,7 @@ final class AddViewController: UIViewController {
         let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.distribution = .equalSpacing
-        stackView.spacing = 30.0
+        stackView.spacing = Layouts.paddingBig
         
         return stackView
     }()
@@ -114,12 +114,12 @@ final class AddViewController: UIViewController {
         }
         
         contentVStackView.snp.makeConstraints {
-            $0.top.equalTo(titleLabel.snp.bottom).offset(30.0)
+            $0.top.equalTo(titleLabel.snp.bottom).offset(Layouts.paddingBig)
             $0.leading.trailing.equalToSuperview().inset(Layouts.padding)
         }
         
         addButton.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview().inset(20.0)
+            $0.leading.trailing.equalToSuperview().inset(Layouts.padding)
             $0.bottom.equalToSuperview().inset(10.0)
             $0.height.equalTo(60.0)
         }

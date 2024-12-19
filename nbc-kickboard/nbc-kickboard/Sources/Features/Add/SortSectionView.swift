@@ -43,7 +43,7 @@ final class SortSectionView: UIStackView {
     private let buttonHStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .horizontal
-        stackView.spacing = 20.0
+        stackView.spacing = Layouts.padding
         stackView.distribution = .fillProportionally
         
         return stackView
