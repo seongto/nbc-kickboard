@@ -178,6 +178,7 @@
 
 - 발표는 팀 전원이 협력하여 준비합니다.
 - 발표 자료는 Keynote로 제작
+- [키노트 발표 자료](https://www.icloud.com/keynote/0a2XLUVi9CaNaQS_vo8UHI9Pw#kickboard-keynote)
 
 ---
 
