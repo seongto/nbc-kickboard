@@ -51,7 +51,7 @@ final class CustomTabBarController: UIViewController {
         customTabBar.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview()
             $0.bottom.equalTo(view.safeAreaLayoutGuide)
-            $0.height.equalTo(55.0)
+            $0.height.equalTo(65.0)
         }
     }
     
