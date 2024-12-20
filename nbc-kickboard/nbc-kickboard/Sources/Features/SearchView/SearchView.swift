@@ -15,31 +15,34 @@ class SearchView: UIView {
     }
 
     private func setupUI() {
-        backgroundColor = .white
-
+        self.backgroundColor = .white
         // Search Bar 설정
-        searchBar.placeholder = "장소를 입력해주세요"
-        searchBar.layer.borderWidth = 1
-        searchBar.layer.borderColor = UIColor.gray.cgColor
-        searchBar.layer.cornerRadius = 8
-        searchBar.clipsToBounds = true
         addSubview(searchBar)
+        
+        searchBar.applyCustomSearchBarStyle(placeholder: "장소를 입력해주세요.")
 
         // TableView 설정
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
         addSubview(tableView)
+        
+        tableView.backgroundColor = Colors.white
+        tableView.separatorInset = .zero
+        tableView.register(SearchTableViewCell.self, forCellReuseIdentifier: SearchTableViewCell.id)
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 100
+        
+        
 
         // SnapKit으로 레이아웃 설정
         searchBar.snp.makeConstraints {
-            $0.top.equalTo(self.safeAreaLayoutGuide.snp.top).offset(10) 
-            $0.leading.equalToSuperview().offset(10)
-            $0.trailing.equalToSuperview().offset(-10)
+            $0.top.equalToSuperview().inset(30)
+            $0.leading.trailing.equalToSuperview().inset(Layouts.padding)
             $0.height.equalTo(50)
         }
                     
         tableView.snp.makeConstraints {
             $0.top.equalTo(searchBar.snp.bottom).offset(10)
-            $0.leading.trailing.bottom.equalToSuperview()
+            $0.leading.trailing.equalToSuperview().inset(Layouts.padding)
+            $0.bottom.equalToSuperview()
         }
     }
 }
