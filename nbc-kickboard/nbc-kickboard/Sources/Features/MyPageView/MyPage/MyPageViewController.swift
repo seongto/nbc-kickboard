@@ -57,7 +57,7 @@ final class MyPageViewController: UIViewController {
             .receive(on: RunLoop.main)
             .sink { kickboard in
                 guard let kickboard else {
-                    return
+                    return self.myPageView.configureKickboardStatus(with: nil)
                 }
                 self.myPageView.configureKickboardStatus(with: kickboard)
             }

@@ -94,6 +94,10 @@ final class KickboardManager {
             newKickboard.isRented = false
             newKickboard.batteryStatus = max(0, kickboard.batteryStatus - Int16(elapsedTime / 60))
             
+            guard let movingAnnotation = movingAnnotation else { return }
+            newKickboard.latitude = movingAnnotation.coordinate.latitude
+            newKickboard.longitude = movingAnnotation.coordinate.longitude
+            
             try kickboardRepository.updateKickboard(by: kickboard.kickboardCode, to: newKickboard)
             
             resetState()
