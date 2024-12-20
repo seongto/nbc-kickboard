@@ -83,7 +83,19 @@ class MainViewController: UIViewController {
     
     @objc private func searchButtonTapped() {
         let searchVC = SearchViewController()
+        searchVC.modalPresentationStyle = .pageSheet
         searchVC.delegate = self
+        
+        if let sheet = searchVC.sheetPresentationController {
+            let screenHeight = UIScreen.main.bounds.height
+            let customDetent = UISheetPresentationController.Detent.custom { context in
+                return screenHeight * 0.85 // 화면의 85%만 차지하도록 설정
+            }
+            sheet.detents = [customDetent] // 높이 조절
+            sheet.prefersGrabberVisible = true // 드래그 가능한 grabber 추가
+            sheet.preferredCornerRadius = 24 // 상단에 둥근 모서리 추가 (선택 사항)
+        }
+        
         present(searchVC, animated: true, completion: nil)
     }
 

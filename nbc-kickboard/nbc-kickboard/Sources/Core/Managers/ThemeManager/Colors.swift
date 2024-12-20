@@ -20,12 +20,12 @@ struct Colors {
     static let white: UIColor = UIColor.white
     static let black: UIColor = UIColor.black
 
-    static let gray1: UIColor = UIColor.systemGray
-    static let gray2: UIColor = UIColor.systemGray2
-    static let gray3: UIColor = UIColor.systemGray3
-    static let gray4: UIColor = UIColor.systemGray4
-    static let gray5: UIColor = UIColor.systemGray5
-    static let gray6: UIColor = UIColor.systemGray6
+    static let gray1: UIColor = UIColor.colorGray1
+    static let gray2: UIColor = UIColor.colorGray2
+    static let gray3: UIColor = UIColor.colorGray3
+    static let gray4: UIColor = UIColor.colorGray4
+    static let gray5: UIColor = UIColor.colorGray5
+    static let gray6: UIColor = UIColor.colorGray6
 
     static let red: UIColor = UIColor.systemRed
     static let blue: UIColor = UIColor.systemBlue

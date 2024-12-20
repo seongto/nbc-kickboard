@@ -70,8 +70,12 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-        cell.textLabel?.text = searchResults[indexPath.row].placeName
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: SearchTableViewCell.id, for: indexPath) as? SearchTableViewCell else {
+            fatalError("SearchTableViewCell을 dequeue하는데 실패했습니다.")
+        }
+        
+        cell.config(name: searchResults[indexPath.row].placeName, address: searchResults[indexPath.row].addressName)
+        
         return cell
     }
     
