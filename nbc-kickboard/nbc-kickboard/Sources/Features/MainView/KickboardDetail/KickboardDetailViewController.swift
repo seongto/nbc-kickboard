@@ -15,6 +15,8 @@ class KickboardDetailViewController: UIViewController {
         super.viewDidLoad()
         setupUI()
         setupBindings()
+        view.backgroundColor = .clear
+        modalPresentationStyle = .overFullScreen
     }
     
     private func setupUI() {
