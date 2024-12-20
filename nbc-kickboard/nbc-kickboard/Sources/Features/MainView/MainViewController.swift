@@ -79,6 +79,16 @@ class MainViewController: UIViewController {
                 }
             }
             .store(in: &cancellables)
+        
+        manager.$currentStatus
+            .sink { [weak self] status in
+                guard let self = self else { return }
+
+                if status == .idle {
+                    moveToCurrentLocation()
+                }
+            }
+            .store(in: &cancellables)
     }
     
     @objc private func searchButtonTapped() {
@@ -321,8 +331,9 @@ extension MainViewController: MKMapViewDelegate {
             drawRoute(to: coordinate)
         }
         
-        // DetailViewController 표시
+    
         let detailVC = KickboardDetailViewController()
+        detailVC.modalPresentationStyle = .overFullScreen
         if let sheet = detailVC.sheetPresentationController {
             let customDetent = UISheetPresentationController.Detent.custom { _ in
                 return 256
